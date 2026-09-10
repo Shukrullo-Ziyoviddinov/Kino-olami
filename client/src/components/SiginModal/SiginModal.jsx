@@ -130,8 +130,8 @@ const SiginModal = ({ onClose, onSuccess }) => {
         <div className="sigin-modal-header">
           <div className="sigin-modal-header-logo">
             <img
-              src="/img/chosontv_preview_rev_1.png"
-              alt="CHOSON.TV"
+              src="/img/kinoolamilogo_preview_rev_1.png"
+              alt="Kino Olami"
               className="sigin-modal-header-logo-img"
             />
           </div>

@@ -191,7 +191,7 @@ export default function Statistika() {
 
           <StatBlock
             title="Sayt statistikasi"
-            subtitle="KinoMax web app foydalanuvchilari bo'yicha ko'rsatkichlar"
+            subtitle="Kinolar olami web app foydalanuvchilari bo'yicha ko'rsatkichlar"
             totalUsers={site.totalUsers}
             totalBeforeThisMonth={site.totalBeforeThisMonth}
             activeUsers={site.activeUsers}
