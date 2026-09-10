@@ -1,0 +1,30 @@
+.video-loader {
+  position: absolute;
+  inset: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.video-loader__spinner {
+  width: 47px;
+  height: 47px;
+  border-radius: 50%;
+  border: 5px solid rgba(255, 255, 255, 0.25);
+  border-top-color: #ffffff;
+  border-right-color: rgba(255, 255, 255, 0.85);
+  animation: videoLoaderSpin 0.9s linear infinite;
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.35));
+}
+
+.video-loader__text {
+  display: none;
+}
+
+@keyframes videoLoaderSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}

@@ -1,0 +1,18 @@
+.content-section-page {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.content-section-page__title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: #2c3141;
+}
+
+.content-section-page__error {
+  margin: 0;
+  color: #cb2d4d;
+  font-size: 13px;
+}

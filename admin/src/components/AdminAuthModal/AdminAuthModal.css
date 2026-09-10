@@ -1,0 +1,93 @@
+.admin-auth-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  background: #0b1020;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.admin-auth-modal__panel {
+  width: min(420px, 100%);
+  background: #fff;
+  border-radius: 14px;
+  border: 1px solid #e5e9f2;
+  box-shadow: 0 18px 44px rgba(15, 19, 39, 0.24);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.admin-auth-modal__title {
+  margin: 0 0 4px;
+  font-size: 22px;
+  color: #1f2436;
+}
+
+.admin-auth-modal__label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #48506a;
+}
+
+.admin-auth-modal__input {
+  width: 100%;
+  min-height: 42px;
+  border: 1px solid #d6ddef;
+  border-radius: 10px;
+  padding: 9px 12px;
+  font-size: 14px;
+}
+
+.admin-auth-modal__password-wrap {
+  position: relative;
+}
+
+.admin-auth-modal__input--password {
+  padding-right: 46px;
+}
+
+.admin-auth-modal__eye-btn {
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 34px;
+  height: 34px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.admin-auth-modal__eye-btn svg {
+  width: 18px;
+  height: 18px;
+  color: #5a637d;
+}
+
+.admin-auth-modal__error {
+  margin: 4px 0 0;
+  font-size: 13px;
+  color: #c92f55;
+}
+
+.admin-auth-modal__submit {
+  margin-top: 8px;
+  border: none;
+  border-radius: 10px;
+  min-height: 42px;
+  background: #5b3fe7;
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.admin-auth-modal__submit:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}

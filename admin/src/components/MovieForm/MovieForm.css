@@ -1,0 +1,708 @@
+.movie-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.movie-form__intro {
+  margin: 0;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: #f3f1ff;
+  border: 1px solid #ddd6fe;
+  color: #4338ca;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.movie-form__block {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.movie-form__block-head .movie-form__section {
+  margin: 0;
+}
+
+.movie-form__block-help {
+  margin: 0;
+  padding: 0 14px 10px;
+  background: #eef0f6;
+  border-left: 1px solid #e0e4ef;
+  border-right: 1px solid #e0e4ef;
+  color: #5a6175;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.movie-form__field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+  padding: 14px;
+  border: 1px solid #e8ebf4;
+  border-radius: 12px;
+  background: #fbfcfe;
+  box-sizing: border-box;
+}
+
+.movie-form__field:focus-within {
+  border-color: #c4b5fd;
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(109, 86, 239, 0.08);
+}
+
+.movie-form__help {
+  display: block;
+  margin: -2px 0 0;
+  font-size: 12px;
+  line-height: 1.45;
+  color: #7b8499;
+  font-weight: 400;
+}
+
+.movie-form__req {
+  color: #dc2626;
+  font-weight: 700;
+}
+
+.movie-form__lang-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+@media (min-width: 900px) {
+  .movie-form__lang-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.movie-form__lang-col {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid #e8ebf4;
+  border-radius: 10px;
+  background: #fafbfe;
+}
+
+.movie-form__lang-title {
+  margin: 0 0 4px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #3730a3;
+}
+
+/* —— Bo‘lim sarlavhasi + kartochka bir butun blok —— */
+.movie-form__section {
+  margin: 8px 0 0;
+  padding: 11px 14px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  color: #1f2433;
+  background: #eef0f6;
+  border: 1px solid #e0e4ef;
+  border-bottom: none;
+  border-radius: 12px 12px 0 0;
+}
+
+.movie-form__block .movie-form__section-card {
+  margin-top: 0;
+  border-radius: 0 0 12px 12px;
+}
+
+.movie-form__block .movie-form__add-btn {
+  margin-top: 10px;
+}
+
+.movie-form__optional-hint {
+  font-weight: 500;
+  color: #6b7280;
+  font-size: 12px;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.movie-form__hint {
+  grid-column: 1 / -1;
+  margin: 0 0 4px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: #fff8e6;
+  border: 1px solid #f0e0b2;
+  color: #6b5a2a;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.movie-form__section-card {
+  border: 1px solid #e0e4ef;
+  background: #fff;
+  border-radius: 12px;
+  padding: 14px;
+  box-shadow: 0 1px 2px rgba(24, 28, 48, 0.04);
+}
+
+.movie-form__section-card--compact {
+  padding: 14px;
+  border-radius: 12px;
+}
+
+/* Sarlavhasiz birinchi blok (ID / Title) */
+.movie-form > .movie-form__section-card:first-child {
+  border-radius: 12px;
+}
+
+.movie-form__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  align-items: stretch;
+}
+
+.movie-form__grid--two {
+  grid-template-columns: 1fr;
+}
+
+.movie-form__label {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  color: #2d3344;
+  margin: 0;
+  padding: 0;
+  line-height: 1.35;
+}
+
+.movie-form__input,
+.movie-form__textarea,
+.movie-form__dropdown-trigger {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #d5dae8;
+  border-radius: 10px;
+  padding: 11px 12px;
+  background: #fff;
+  font-size: 14px;
+  color: #252b3a;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+.movie-form__input:hover,
+.movie-form__textarea:hover,
+.movie-form__dropdown-trigger:hover {
+  background: #fff;
+  border-color: #c4cadc;
+}
+
+.movie-form__input:focus,
+.movie-form__textarea:focus,
+.movie-form__dropdown-trigger:focus {
+  background: #fff;
+  border-color: #6d56ef;
+  box-shadow: 0 0 0 3px rgba(109, 86, 239, 0.12);
+}
+
+.movie-form__input:disabled {
+  background: #f1f3f8;
+  color: #6b7280;
+  cursor: not-allowed;
+}
+
+.movie-form__textarea {
+  min-height: 110px;
+  resize: vertical;
+  line-height: 1.45;
+}
+
+.movie-form__field .movie-form__dropdown {
+  width: 100%;
+}
+
+.movie-form__field .movie-form__upload-field {
+  margin-top: 2px;
+}
+
+/* —— Upload bloklari —— */
+.movie-form__upload-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.movie-form__upload-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.movie-form__file-input {
+  display: none;
+}
+
+.movie-form__upload-field {
+  display: block;
+  border: 1.5px dashed #c9d0e4;
+  border-radius: 12px;
+  padding: 12px 14px;
+  background: #f8f9fd;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+}
+
+.movie-form__upload-field:hover {
+  border-color: #8d7cf5;
+  background: #f3f1ff;
+  box-shadow: 0 0 0 3px rgba(109, 86, 239, 0.08);
+}
+
+.movie-form__upload-preview {
+  display: block;
+  width: 100%;
+  max-height: 160px;
+  margin-top: 0.75rem;
+  object-fit: cover;
+  border-radius: 10px;
+  background: #111;
+}
+
+.movie-form__upload-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.movie-form__upload-icon {
+  width: 28px;
+  height: 28px;
+  color: #5f42ef;
+  flex-shrink: 0;
+}
+
+.movie-form__upload-meta {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.movie-form__upload-meta strong {
+  font-size: 13px;
+  color: #2b3040;
+}
+
+.movie-form__upload-meta span {
+  font-size: 12px;
+  color: #6a7288;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.movie-form__video-dual {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #e8ebf3;
+}
+
+.movie-form__video-dual:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.movie-form__video-or {
+  margin: 2px 0 0;
+  font-size: 12px;
+  font-weight: 600;
+  color: #6a7288;
+  text-align: center;
+  text-transform: lowercase;
+}
+
+.movie-form__preview-box {
+  width: 100%;
+  min-height: 180px;
+  border: 1px solid #e0e4ef;
+  border-radius: 12px;
+  background: #0f1117;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.movie-form__video-preview {
+  width: 100%;
+  max-height: 280px;
+  display: block;
+  background: #000;
+}
+
+.movie-form__video-preview--embed {
+  min-height: 200px;
+  border: 0;
+}
+
+.movie-form__preview-empty {
+  padding: 16px;
+  font-size: 12px;
+  color: #9aa3b5;
+  text-align: center;
+}
+
+.movie-form__box--inner .movie-form__upload-grid {
+  gap: 16px;
+}
+
+.movie-form__box--inner .movie-form__video-dual {
+  border-bottom: 1px solid #e8ebf3;
+  padding-bottom: 12px;
+}
+
+.movie-form__box--inner .movie-form__video-dual:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.movie-form__box--inner .movie-form__preview-box {
+  min-height: 160px;
+}
+
+.movie-form__box--inner .movie-form__video-preview--embed {
+  min-height: 180px;
+}
+
+
+/* —— Seasons / episode qutilari —— */
+.movie-form__box {
+  border: 1px solid #e0e4ef;
+  border-radius: 12px;
+  padding: 14px;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: 0 1px 2px rgba(24, 28, 48, 0.04);
+}
+
+.movie-form__box--inner {
+  margin-top: 0;
+  background: #f8f9fd;
+  border-style: dashed;
+}
+
+.movie-form__box-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 8px;
+  margin-bottom: 2px;
+  border-bottom: 1px solid #eef0f5;
+}
+
+.movie-form__box-head strong {
+  font-size: 13px;
+  color: #2a3042;
+}
+
+.movie-form__mini-btn,
+.movie-form__add-btn {
+  border: 1px solid #d0d6e8;
+  background: #fff;
+  color: #2e3550;
+  border-radius: 9px;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.movie-form__mini-btn:hover,
+.movie-form__add-btn:hover {
+  background: #f4f5fb;
+  border-color: #aeb6d4;
+}
+
+.movie-form__mini-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.movie-form__add-btn {
+  align-self: stretch;
+  width: 100%;
+  border-style: dashed;
+  background: #f8f9fd;
+  color: #3d4560;
+  padding: 11px 14px;
+}
+
+.movie-form__section + .movie-form__add-btn,
+.movie-form__box + .movie-form__add-btn {
+  margin-top: 0;
+}
+
+.movie-form__box + .movie-form__box {
+  margin-top: 0;
+}
+
+/* —— Dropdown / tanlovlar —— */
+.movie-form__dropdown {
+  position: relative;
+  background: #fff;
+  border: 1px solid #e0e4ef;
+  border-radius: 12px;
+  padding: 10px 12px;
+  box-shadow: 0 1px 2px rgba(24, 28, 48, 0.04);
+}
+
+.movie-form__section-card .movie-form__dropdown {
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  box-shadow: none;
+  background: transparent;
+}
+
+.movie-form__dropdown-trigger {
+  text-align: left;
+  cursor: pointer;
+  font-weight: 600;
+  color: #2b3146;
+}
+
+.movie-form__dropdown-menu {
+  position: absolute;
+  z-index: 30;
+  left: 12px;
+  right: 12px;
+  top: calc(100% - 4px);
+  max-height: 220px;
+  overflow: auto;
+  background: #fff;
+  border: 1px solid #d9deed;
+  border-radius: 10px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  box-shadow: 0 14px 28px rgba(26, 34, 67, 0.14);
+}
+
+.movie-form__dropdown-menu--actors {
+  max-height: 280px;
+  overflow: hidden;
+  padding: 8px;
+  gap: 8px;
+}
+
+.movie-form__dropdown-search {
+  flex-shrink: 0;
+}
+
+.movie-form__dropdown-search-input {
+  width: 100%;
+  min-height: 36px;
+  padding: 8px 10px;
+  font-size: 13px;
+}
+
+.movie-form__dropdown-list {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.movie-form__dropdown-empty {
+  margin: 0;
+  padding: 10px 8px;
+  font-size: 13px;
+  color: #6f7487;
+}
+
+.movie-form__check-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.movie-form__check-sub {
+  font-size: 11px;
+  color: #7a7f92;
+  font-weight: 500;
+}
+
+.movie-form__section-card .movie-form__dropdown-menu {
+  left: 0;
+  right: 0;
+}
+
+.movie-form__option-btn {
+  width: 100%;
+  border: 1px solid transparent;
+  background: #fff;
+  border-radius: 8px;
+  padding: 8px 10px;
+  text-align: left;
+  color: #2b3146;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.movie-form__option-btn:hover {
+  background: #f4f5fb;
+}
+
+.movie-form__option-btn.is-active {
+  background: #ece9ff;
+  border-color: #c8bcff;
+  color: #4d37d9;
+  font-weight: 600;
+}
+
+.movie-form__check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  padding: 6px 8px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.movie-form__check:hover {
+  background: #f4f5fb;
+}
+
+.movie-form__error {
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: #fff1f2;
+  border: 1px solid #ffd0d6;
+  color: #c62828;
+  font-size: 13px;
+}
+
+.movie-form__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 8px;
+  padding: 14px 0 2px;
+  position: sticky;
+  bottom: -4px;
+  background: linear-gradient(180deg, rgba(245, 246, 250, 0) 0%, #f5f6fa 28%);
+  z-index: 5;
+}
+
+.element-add-modal__body .movie-form__actions {
+  margin-left: -2px;
+  margin-right: -2px;
+  padding-left: 2px;
+  padding-right: 2px;
+}
+
+.movie-form__cancel-btn,
+.movie-form__save-btn {
+  border: none;
+  border-radius: 10px;
+  padding: 11px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  min-width: 120px;
+}
+
+.movie-form__cancel-btn {
+  background: #e8ebf4;
+  color: #37405a;
+}
+
+.movie-form__cancel-btn:hover {
+  background: #dde1ee;
+}
+
+.movie-form__save-btn {
+  background: #5f42ef;
+  color: #fff;
+}
+
+.movie-form__save-btn:hover {
+  background: #5338d8;
+}
+
+.movie-form__save-btn:disabled {
+  opacity: 0.72;
+  cursor: not-allowed;
+}
+
+/* —— Desktop: har maydon o‘z kartasi, 2 ustun —— */
+@media (min-width: 720px) {
+  .movie-form {
+    gap: 18px;
+  }
+
+  .movie-form__grid,
+  .movie-form__grid--two {
+    grid-template-columns: 1fr 1fr;
+    column-gap: 14px;
+    row-gap: 14px;
+    align-items: stretch;
+  }
+
+  .movie-form__upload-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 719px) {
+  .movie-form__section {
+    border-radius: 10px 10px 0 0;
+    font-size: 13px;
+  }
+
+  .movie-form__grid,
+  .movie-form__grid--two {
+    gap: 10px;
+  }
+
+  .movie-form__field {
+    padding: 12px;
+  }
+}
+
+@media (max-width: 540px) {
+  .movie-form__actions {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .movie-form__cancel-btn,
+  .movie-form__save-btn {
+    width: auto;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .movie-form__upload-grid {
+    grid-template-columns: 1fr;
+  }
+}

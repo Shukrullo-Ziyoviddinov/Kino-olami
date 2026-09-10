@@ -1,0 +1,15 @@
+export const FILTER_GENRE_OPTIONS = [
+  "Drama",
+  "Romantika",
+  "Sarguzasht",
+  "Qo'rqinchli",
+  "Jangari",
+  "Anime",
+  "Boevik",
+  "Komediya",
+  "Detektiv",
+  "Oilaviy",
+  "Fantastika",
+  "Multfilim",
+  "Melodrama",
+];

@@ -1,0 +1,331 @@
+/* LoaderSkeleton - Backend loading uchun skeleton loader */
+
+.loader-skeleton {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.06) 25%,
+    rgba(255, 255, 255, 0.14) 50%,
+    rgba(255, 255, 255, 0.06) 75%
+  );
+  background-size: 200% 100%;
+  animation: loader-skeleton-shimmer 1.5s ease-in-out infinite;
+  border-radius: inherit;
+}
+
+.loader-skeleton__shimmer {
+  display: none;
+}
+
+@keyframes loader-skeleton-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Image / Movie card */
+.loader-skeleton--image,
+.loader-skeleton--movie-card {
+  width: 100%;
+  padding-top: 150%;
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+/* Text */
+.loader-skeleton--text {
+  height: 1em;
+  border-radius: 4px;
+  min-width: 60px;
+}
+
+/* Button / More btn */
+.loader-skeleton--button,
+.loader-skeleton--more-btn {
+  height: 36px;
+  min-width: 80px;
+  border-radius: 20px;
+}
+
+/* Avatar */
+.loader-skeleton--avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+}
+
+/* Search */
+.loader-skeleton--search,
+.loader-skeleton--navbar-search {
+  height: 44px;
+  border-radius: 24px;
+  min-width: 200px;
+}
+
+/* Logo */
+.loader-skeleton--logo,
+.loader-skeleton--navbar-logo {
+  width: 120px;
+  height: 40px;
+  border-radius: 4px;
+}
+
+/* Icon */
+.loader-skeleton--icon,
+.loader-skeleton--navbar-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+/* Language button */
+.loader-skeleton--language-btn {
+  width: 50px;
+  height: 35px;
+  border-radius: 4px;
+}
+
+/* Profile top block */
+.loader-skeleton--profile-top {
+  height: 90px;
+  border-radius: 12px;
+  width: 100%;
+}
+
+/* Wishlist block */
+.loader-skeleton--wishlist-block {
+  height: 56px;
+  border-radius: 12px;
+  width: 100%;
+}
+
+/* Detail page */
+.loader-skeleton--detail-image {
+  width: 100%;
+  height: 600px;
+  border-radius: 15px;
+}
+
+.loader-skeleton--detail-title {
+  height: 40px;
+  border-radius: 4px;
+  max-width: 280px;
+}
+
+.loader-skeleton--detail-specs {
+  height: 100px;
+  border-radius: 8px;
+  width: 100%;
+}
+
+.loader-skeleton--detail-actions {
+  height: 80px;
+  border-radius: 20px;
+  width: 100%;
+}
+
+/* Banner image */
+.loader-skeleton--banner-image {
+  width: 100%;
+  height: 100%;
+  min-height: 400px;
+  border-radius: 15px;
+}
+
+/* Categories item */
+.loader-skeleton--categories-item {
+  height: 44px;
+  min-width: 100px;
+  border-radius: 25px;
+}
+
+/* Wishlist empty */
+.loader-skeleton--wishlist-empty-img {
+  width: 200px;
+  height: 200px;
+  border-radius: 12px;
+}
+
+.loader-skeleton--wishlist-empty-btn {
+  height: 44px;
+  min-width: 140px;
+  border-radius: 20px;
+}
+
+/* App store img */
+.loader-skeleton--app-store-img {
+  width: 100%;
+  height: 44px;
+  min-width: 120px;
+  border-radius: 8px;
+}
+
+/* Detail description */
+.loader-skeleton--detail-description {
+  height: 80px;
+  border-radius: 10px;
+  width: 100%;
+}
+
+.loader-skeleton--detail-description-more-btn {
+  height: 36px;
+  min-width: 100px;
+  border-radius: 25px;
+}
+
+/* Seasons */
+.loader-skeleton--seasons-tab {
+  height: 40px;
+  min-width: 50px;
+  border-radius: 8px;
+}
+
+.loader-skeleton--season-btn {
+  height: 40px;
+  min-width: 100px;
+  border-radius: 8px;
+}
+
+.loader-skeleton--episode-video {
+  width: 160px;
+  height: 90px;
+  border-radius: 8px;
+}
+
+/* Actor item */
+.loader-skeleton--actor-item {
+  width: 80px;
+  height: 100px;
+  border-radius: 5px;
+}
+
+/* Similar movies */
+.loader-skeleton--similar-movies-item-image {
+  width: 100%;
+  padding-top: 150%;
+  border-radius: 8px;
+}
+
+.loader-skeleton--similar-movies-title {
+  height: 28px;
+  min-width: 180px;
+  border-radius: 4px;
+}
+
+/* Comments */
+.loader-skeleton--comments-title {
+  height: 28px;
+  min-width: 150px;
+  border-radius: 4px;
+}
+
+.loader-skeleton--comments-input-wrap {
+  height: 48px;
+  border-radius: 12px;
+  width: 100%;
+}
+
+.loader-skeleton--comments-modal {
+  min-height: 300px;
+  border-radius: 20px;
+  width: 100%;
+}
+
+/* Description modal */
+.loader-skeleton--description-modal-content {
+  width: 90%;
+  max-width: 800px;
+  min-height: 400px;
+  border-radius: 20px;
+}
+
+.loader-skeleton--description-modal-info {
+  width: 100%;
+  min-height: 200px;
+  border-radius: 12px;
+}
+
+.loader-skeleton--description-modal-info-item {
+  height: 44px;
+  width: 100%;
+  border-radius: 6px;
+}
+
+.loader-skeleton--description-modal-close {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.loader-skeleton--filters-btn {
+  height: 44px;
+  min-width: 120px;
+  border-radius: 25px;
+  flex-shrink: 0;
+}
+
+/* Actors page */
+.loader-skeleton--actors-page-back {
+  height: 40px;
+  width: 40px;
+  min-width: 40px;
+  border-radius: 50%;
+}
+
+.loader-skeleton--actors-page-image {
+  width: 120px;
+  aspect-ratio: 3/4;
+  border-radius: 12px;
+}
+
+.loader-skeleton--actors-page-name {
+  height: 36px;
+  min-width: 180px;
+  border-radius: 6px;
+}
+
+.loader-skeleton--actors-page-desc {
+  height: 60px;
+  min-width: 100%;
+  border-radius: 6px;
+}
+
+.loader-skeleton--actors-page-profile {
+  min-height: 200px;
+  border-radius: 20px;
+  width: 100%;
+}
+
+/* Group */
+.loader-skeleton-group {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .loader-skeleton--avatar {
+    width: 64px;
+    height: 64px;
+  }
+
+  .loader-skeleton--logo,
+  .loader-skeleton--navbar-logo {
+    width: 100px;
+    height: 36px;
+  }
+
+  .loader-skeleton--search,
+  .loader-skeleton--navbar-search {
+    min-width: 150px;
+  }
+
+  .loader-skeleton--detail-image {
+    height: 500px;
+  }
+}

@@ -1,0 +1,23 @@
+.scroll-touch {
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  /* Gorizontal surish + sahifa vertikal scrolli uchun */
+  touch-action: pan-x pan-y;
+  cursor: grab;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.scroll-touch::-webkit-scrollbar {
+  display: none;
+}
+
+.scroll-touch--dragging {
+  cursor: grabbing;
+  user-select: none;
+}
+
+.scroll-touch--dragging * {
+  user-select: none;
+}

@@ -1,0 +1,105 @@
+.App {
+  min-height: 100vh;
+  min-height: 100dvh;
+  background:
+    radial-gradient(circle at 85% 8%, rgba(0, 38, 105, 0.07), transparent 30%),
+    radial-gradient(circle at 8% 78%, rgba(0, 25, 75, 0.04), transparent 26%),
+    var(--bg-body);
+
+
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+
+
+}
+
+/* Asosiy sahifa scrollbar yashirish */
+html,
+body {
+  scrollbar-width: none;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
+}
+
+/* Barcha elementlar (modallar, sheet'lar va boshqalar) uchun scrollbar yashirish */
+* {
+  scrollbar-width: none;
+}
+
+*::-webkit-scrollbar {
+  display: none;
+}
+
+/* ===== GLOBAL BLOCK ===== */
+/* Matn belgilanishini o'chirish */
+* {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Mobile bosilganda ko'k highlightni o'chirish */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Focus outline ni o'chirish */
+*:focus {
+  outline: none !important;
+}
+
+/* Rasmni drag va select qilishni o'chirish */
+img {
+  -webkit-user-drag: none;
+  user-drag: none;
+  pointer-events: none;
+}
+
+/* Link va buttonlarda ham highlight chiqmasin */
+a,
+button,
+.mb-nav__link {
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
+
+/* Input yozishiga ta'sir qilmasligi uchun */
+input,
+textarea,
+select,
+[contenteditable='true'] {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+
+/* movie-detail-comments-modal uchun scrollbar yashirish va copy bloklash */
+.movie-detail-comments-modal,
+.movie-detail-comments-modal * {
+  scrollbar-width: none !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -webkit-touch-callout: none !important;
+}
+
+.movie-detail-comments-modal-body::-webkit-scrollbar,
+.movie-detail-comments-modal *::-webkit-scrollbar {
+  display: none !important;
+}
+
+.App-main {
+  min-height: calc(100vh - 80px);
+  min-height: calc(100dvh - 80px);
+}
+
+@media (max-width: 768px) {
+  .App-main {
+    padding-bottom: calc(84px + env(safe-area-inset-bottom, 0));
+  }
+}

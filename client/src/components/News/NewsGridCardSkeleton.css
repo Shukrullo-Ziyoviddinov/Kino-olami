@@ -1,0 +1,130 @@
+.news-grid-card--skeleton {
+  pointer-events: none;
+}
+
+.news-grid-card--skeleton .news-grid-card-media {
+  position: relative;
+  overflow: hidden;
+}
+
+.news-grid-card-skel-media {
+  position: absolute;
+  inset: 12px 12px 0;
+  width: auto;
+  height: auto;
+}
+
+.news-grid-card-skel-media .loader-skeleton {
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  padding-top: 0 !important;
+  border-radius: 8px;
+}
+
+.news-grid-card--skeleton .news-grid-card-body {
+  overflow: hidden;
+}
+
+.news-grid-card-skel-name {
+  margin: 0;
+  flex-shrink: 0;
+}
+
+.news-grid-card-skel-name .loader-skeleton {
+  height: 20px;
+  border-radius: 6px;
+}
+
+.news-grid-card-skel-description-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  flex-shrink: 0;
+}
+
+.news-grid-card-skel-description {
+  margin: 0;
+}
+
+.news-grid-card-skel-description .loader-skeleton {
+  height: 13px;
+  border-radius: 5px;
+}
+
+.news-grid-card-skel-meta {
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.news-grid-card-skel-meta .loader-skeleton {
+  height: 13px;
+  border-radius: 4px;
+}
+
+.news-grid-card-skel-more {
+  margin-top: auto;
+  align-self: flex-start;
+  flex-shrink: 0;
+}
+
+.news-grid-card-skel-more .loader-skeleton {
+  height: 16px;
+  border-radius: 5px;
+}
+
+@media (max-width: 768px) {
+  .news-grid-card-skel-media {
+    inset: 12px 12px 0;
+  }
+}
+
+@media (max-width: 560px) {
+  .news-grid-card--skeleton {
+    min-height: 120px;
+    max-height: 136px;
+    overflow: hidden;
+  }
+
+  .news-grid-card--skeleton .news-grid-card-media {
+    width: 48%;
+    flex-shrink: 0;
+    aspect-ratio: auto;
+    min-height: 120px;
+    max-height: 136px;
+    align-self: stretch;
+    padding: 8px 0 8px 10px;
+  }
+
+  .news-grid-card-skel-media {
+    inset: 8px 0 8px 10px;
+  }
+
+  .news-grid-card--skeleton .news-grid-card-body {
+    width: 52%;
+    min-width: 0;
+    padding: 8px 10px 10px;
+    gap: 0.3rem;
+  }
+
+  .news-grid-card-skel-name .loader-skeleton {
+    height: 16px;
+  }
+
+  .news-grid-card-skel-description-wrap {
+    gap: 0.3rem;
+  }
+
+  .news-grid-card-skel-description .loader-skeleton {
+    height: 12px;
+  }
+
+  .news-grid-card-skel-meta .loader-skeleton {
+    height: 12px;
+  }
+
+  .news-grid-card-skel-more .loader-skeleton {
+    height: 14px;
+    width: 96px !important;
+  }
+}

@@ -1,0 +1,193 @@
+.navbar-mobile {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .navbar-mobile {
+    display: flex;
+    position: fixed;
+    bottom: calc(0px + env(safe-area-inset-bottom, 0));
+    left: 0;
+    right: 0;
+    height: 64px;
+    border-radius: 0;
+    z-index: 999;
+    align-items: center;
+    justify-content: space-around;
+    padding: 0 0.5rem;
+    background: var(--bg-card);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: none;
+    box-shadow: 
+      0 8px 32px rgba(0, 0, 0, 0.5),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  }
+
+  .navbar-mobile-skeleton-item {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .navbar-mobile-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.15rem;
+    padding: 0.35rem 0.15rem;
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.85);
+    cursor: pointer;
+    transition: color 0.2s, background 0.2s;
+    border-radius: 8px;
+    min-width: 0;
+  }
+
+  .navbar-mobile-item span {
+    font-size: 10px;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+  }
+
+
+  .navbar-mobile-item-active {
+    color: #ffc107 !important;
+    background: none !important;
+    transition: color 0.25s ease;
+  }
+
+  .navbar-mobile-item-active span {
+    font-weight: 700;
+    color: #ffc107;
+  }
+
+  .navbar-mobile-item-active svg {
+    color: #ffc107;
+  }
+
+  .navbar-mobile-item svg {
+    flex-shrink: 0;
+  }
+
+  /* Search overlay - full screen */
+  .navbar-mobile-search-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.85);
+    z-index: 1100;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 0;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .navbar-mobile-search-box {
+    align-items: stretch;
+    background: var(--bg-body);
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    max-width: none;
+    overflow-y: auto;
+    padding: calc(18px + .25rem) 1rem 1rem;
+    width: 100%;
+  }
+
+  .navbar-mobile-search-form-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .navbar-mobile-search-form {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    min-width: 0;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 25px;
+    padding: 1rem 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
+  .navbar-mobile-search-back {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.9);
+    cursor: pointer;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s;
+  }
+
+  .navbar-mobile-search-back:hover {
+    color: #ca4edd;
+  }
+
+  .navbar-mobile-search-input-wrap {
+    position: relative;
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+  }
+
+  .navbar-mobile-search-input-wrap .navbar-mobile-search-input {
+    padding-right: 3rem;
+  }
+
+  .navbar-mobile-search-icon-btn {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.08);
+    border: none;
+    color: rgba(255, 255, 255, 0.6);
+    cursor: pointer;
+    padding: 0.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: color 0.2s, background 0.2s;
+  }
+
+  .navbar-mobile-search-icon-btn:hover {
+    color: #e53935;
+    background: rgba(229, 57, 53, 0.18);
+  }
+
+  .navbar-mobile-search-input {
+    flex: 1;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1rem;
+    outline: none;
+  }
+
+  .navbar-mobile-search-input::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+  }
+}

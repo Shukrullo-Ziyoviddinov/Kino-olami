@@ -1,0 +1,44 @@
+.dashboard-home {
+  max-width: 1200px;
+  padding: 28px 24px;
+  background: #fff;
+  border-radius: 14px;
+  border: 1px solid #e8eaef;
+  box-shadow: 0 4px 24px rgba(18, 18, 43, 0.06);
+}
+
+.dashboard-home__error {
+  margin: 0 0 14px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #b91c1c;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.dashboard-home__stats {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 14px;
+  align-items: stretch;
+  width: 100%;
+}
+
+.dashboard-home__stat-wrap {
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 auto;
+  max-width: 100%;
+  min-width: 0;
+  align-items: stretch;
+  flex-shrink: 0;
+}
+
+@media (max-width: 767px) {
+  .dashboard-home {
+    padding: 20px 16px;
+  }
+}

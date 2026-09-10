@@ -1,0 +1,125 @@
+.translation-settings-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 100%;
+}
+
+.translation-settings-form__hint {
+  margin: 0;
+  font-size: 13px;
+  color: #5b647a;
+}
+
+.translation-settings-form__list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: min(54vh, 540px);
+  overflow: auto;
+  padding-right: 4px;
+}
+
+.translation-settings-form__row {
+  border: 1px solid #dde3f1;
+  border-radius: 12px;
+  padding: 10px;
+  background: #f9fbff;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.translation-settings-form__input,
+.translation-settings-form__textarea {
+  width: 100%;
+  border: 1px solid #d8dfef;
+  border-radius: 10px;
+  padding: 8px 10px;
+  font-size: 14px;
+}
+
+.translation-settings-form__input--key {
+  font-family: Consolas, "Courier New", monospace;
+  font-size: 13px;
+}
+
+.translation-settings-form__textarea {
+  min-height: 74px;
+  resize: vertical;
+}
+
+.translation-settings-form__add-btn,
+.translation-settings-form__remove-btn {
+  align-self: flex-start;
+  border: 1px solid #d0d8ec;
+  background: #fff;
+  border-radius: 8px;
+  padding: 6px 10px;
+  cursor: pointer;
+}
+
+.translation-settings-form__error {
+  margin: 0;
+  color: #cf2c4f;
+  font-size: 13px;
+}
+
+.translation-settings-form__actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.translation-settings-form__footer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.translation-settings-form__cancel-btn,
+.translation-settings-form__save-btn {
+  border: none;
+  border-radius: 10px;
+  min-height: 40px;
+  padding: 10px 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.translation-settings-form__cancel-btn {
+  background: #eef2fb;
+  color: #2f3851;
+}
+
+.translation-settings-form__save-btn {
+  background: #5b3fe7;
+  color: #fff;
+}
+
+@media (max-width: 767px) {
+  .translation-settings-form {
+    min-height: calc(100vh - 150px);
+  }
+
+  .translation-settings-form__list {
+    flex: 1;
+    max-height: none;
+    min-height: 0;
+  }
+
+  .translation-settings-form__footer {
+    position: sticky;
+    bottom: -1px;
+    background: #fff;
+    padding-top: 8px;
+    border-top: 1px solid #e7ebf5;
+    z-index: 5;
+  }
+
+  .translation-settings-form__remove-btn {
+    position: sticky;
+    bottom: 0;
+    background: #fff;
+  }
+}

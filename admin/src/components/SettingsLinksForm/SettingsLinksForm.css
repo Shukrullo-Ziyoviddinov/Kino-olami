@@ -1,0 +1,149 @@
+.settings-links-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.settings-links-form__hint {
+  margin: 0;
+  color: #5a6177;
+  font-size: 13px;
+}
+
+.settings-links-form__list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.settings-links-form__card {
+  border: 1px solid #dde3f0;
+  background: #f9fbff;
+  border-radius: 12px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.settings-links-form__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 6px;
+}
+
+.settings-links-form__label {
+  font-size: 12px;
+  color: #4e556b;
+  font-weight: 600;
+}
+
+.settings-links-form__input {
+  width: 100%;
+  min-height: 40px;
+  border: 1px solid #d8dfee;
+  border-radius: 10px;
+  padding: 8px 10px;
+  font-size: 14px;
+}
+
+.settings-links-form__file-input {
+  display: none;
+}
+
+.settings-links-form__icon-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.settings-links-form__icon-upload {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  justify-content: center;
+  border: 1px dashed #bfc9e8;
+  background: #fff;
+  color: #374264;
+  border-radius: 8px;
+  padding: 8px 10px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.settings-links-form__icon-preview-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.settings-links-form__icon-preview {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  object-fit: cover;
+  border: 1px solid #d8deed;
+}
+
+.settings-links-form__icon-remove {
+  border: 1px solid #d2daef;
+  background: #fff;
+  border-radius: 8px;
+  padding: 5px 8px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.settings-links-form__icon-empty {
+  font-size: 12px;
+  color: #6b7288;
+}
+
+.settings-links-form__remove-btn,
+.settings-links-form__add-btn {
+  align-self: flex-start;
+  border: 1px solid #ccd6ed;
+  background: #fff;
+  border-radius: 9px;
+  padding: 7px 11px;
+  cursor: pointer;
+}
+
+.settings-links-form__error {
+  margin: 0;
+  color: #c7254d;
+  font-size: 13px;
+}
+
+.settings-links-form__actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.settings-links-form__cancel-btn,
+.settings-links-form__save-btn {
+  border: none;
+  border-radius: 10px;
+  min-height: 40px;
+  padding: 10px 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.settings-links-form__cancel-btn {
+  background: #eef1f8;
+}
+
+.settings-links-form__save-btn {
+  background: #5b3fe7;
+  color: #fff;
+}
+
+@media (min-width: 900px) {
+  .settings-links-form__grid {
+    grid-template-columns: 120px 1fr 120px 1fr;
+    align-items: center;
+  }
+}

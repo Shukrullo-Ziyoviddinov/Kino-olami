@@ -1,0 +1,158 @@
+.triller-video-controls {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(0, 0, 0, 0.18) 0%,
+    rgba(0, 0, 0, 0.45) 55%,
+    rgba(0, 0, 0, 0.72) 100%
+  );
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: none;
+  z-index: 3;
+}
+
+.triller-video-controls.show {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: all;
+  touch-action: manipulation;
+}
+
+.triller-video-controls-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2.4rem;
+}
+
+.triller-video-control-btn {
+  width: 52px;
+  height: 52px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  backdrop-filter: blur(4px);
+}
+
+.triller-video-control-btn-play {
+  width: 68px;
+  height: 68px;
+  background: rgba(229, 57, 53, 0.92);
+}
+
+.triller-video-control-btn:active {
+  transform: scale(0.96);
+}
+
+.triller-video-bottom {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 0.5rem 0.85rem 0.7rem;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.65));
+  transition: none;
+}
+
+.triller-video-bottom.show {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: all;
+}
+
+.triller-progress-container {
+  width: 100%;
+  padding: 0.55rem 0 0.35rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+.triller-progress-bar {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.35);
+  border-radius: 8px;
+  position: relative;
+  overflow: visible;
+}
+
+.triller-progress-filled {
+  height: 100%;
+  background: linear-gradient(135deg, #ff6b73 0%, #e50914 100%);
+  border-radius: 8px;
+  position: relative;
+  transition: width 0.08s linear;
+}
+
+.triller-progress-thumb {
+  position: absolute;
+  right: -4px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 14px;
+  height: 14px;
+  background: linear-gradient(135deg, #ff6b73 0%, #e50914 100%);
+  border-radius: 50%;
+  border: 2px solid #fff;
+}
+
+.triller-progress-tooltip {
+  position: absolute;
+  top: -28px;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  font-size: 0.72rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.triller-progress-time {
+  display: flex;
+  justify-content: space-between;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.75rem;
+  margin-top: 0.15rem;
+}
+
+@media (max-width: 480px) {
+  .triller-video-controls-center {
+    gap: 1.6rem;
+  }
+
+  .triller-video-control-btn {
+    width: 46px;
+    height: 46px;
+  }
+
+  .triller-video-control-btn-play {
+    width: 60px;
+    height: 60px;
+  }
+
+  .triller-progress-bar {
+    height: 5px;
+  }
+
+  .triller-progress-thumb {
+    width: 12px;
+    height: 12px;
+  }
+}

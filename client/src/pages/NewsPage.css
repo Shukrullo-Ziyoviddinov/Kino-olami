@@ -1,0 +1,10 @@
+.news-page {
+  padding: 1.25rem 0 2.5rem;
+  min-height: 50vh;
+}
+
+@media (max-width: 768px) {
+  .news-page {
+    padding: 0.85rem 0 5.5rem;
+  }
+}

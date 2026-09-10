@@ -1,0 +1,62 @@
+.profile-logout-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1450;
+  background: rgba(0, 0, 0, 0.72);
+}
+
+.profile-logout-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1451;
+  width: min(92vw, 420px);
+  background: var(--bg-card);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 14px;
+  padding: 1rem;
+  color: #fff;
+}
+
+.profile-logout-heading {
+  margin: 0 0 0.35rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.profile-logout-title {
+  margin: 0 0 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.profile-logout-text {
+  margin: 0 0 0.9rem;
+  color: rgba(255, 255, 255, 0.86);
+  line-height: 1.4;
+}
+
+.profile-logout-actions {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.profile-logout-btn {
+  flex: 1;
+  border-radius: 10px;
+  border: none;
+  padding: 0.72rem 1rem;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.profile-logout-btn-no {
+  background: #ffffff;
+  color: #151515;
+}
+
+.profile-logout-btn-yes {
+  background: #cf2f2f;
+}

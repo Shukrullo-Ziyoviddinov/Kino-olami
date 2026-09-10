@@ -1,0 +1,147 @@
+.news-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.news-form__label {
+  margin-top: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #2a2d40;
+}
+
+.news-form__input,
+.news-form__textarea {
+  width: 100%;
+  border: 1px solid #dfe3ec;
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-size: 14px;
+}
+
+.news-form__input {
+  min-height: 42px;
+}
+
+.news-form__textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+
+.news-form__preview-box {
+  border: 1px dashed #cfd5e3;
+  background: #fafbff;
+  border-radius: 12px;
+  min-height: 140px;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.news-form__upload {
+  border: 1px dashed #cfd5e3;
+  background: #fafbff;
+  border-radius: 12px;
+  min-height: 140px;
+  cursor: pointer;
+  padding: 8px;
+}
+
+.news-form__upload-inner {
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  color: #666d86;
+}
+
+.news-form__upload-icon {
+  width: 28px;
+  height: 28px;
+  color: #5b3fe7;
+}
+
+.news-form__file-input {
+  display: none;
+}
+
+.news-form__preview-empty {
+  color: #666d86;
+  font-size: 13px;
+  text-align: center;
+  padding: 24px 12px;
+}
+
+.news-form__img-preview {
+  width: 100%;
+  max-height: 240px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.news-form__video-preview {
+  width: 100%;
+  max-height: 260px;
+  border-radius: 10px;
+  background: #000;
+  display: block;
+}
+
+.news-form__video-preview--embed {
+  min-height: 220px;
+  height: 220px;
+  max-height: none;
+  border: 0;
+}
+
+.news-form__switch {
+  margin-top: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #2f3347;
+}
+
+.news-form__error {
+  margin: 2px 0 0;
+  color: #dc2626;
+  font-size: 13px;
+}
+
+.news-form__actions {
+  margin-top: 8px;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.news-form__cancel-btn,
+.news-form__save-btn {
+  border: none;
+  border-radius: 10px;
+  min-height: 40px;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.news-form__cancel-btn {
+  background: #f1f3f8;
+  color: #2f3347;
+}
+
+.news-form__save-btn {
+  background: #5b3fe7;
+  color: #fff;
+}
+
+.news-form__save-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
