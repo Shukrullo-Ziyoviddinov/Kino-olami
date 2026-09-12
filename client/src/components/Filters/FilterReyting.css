@@ -45,14 +45,17 @@
 }
 
 .filters-btn-badge {
-  background-color: #0313eacc;
+  background-color: rgb(245, 197, 24);
+  color: #111111;
   border-radius: 12px;
-  font-size: .65rem;
+  font-size: .7rem;
+  font-weight: 700;
   max-width: 120px;
   overflow: hidden;
-  padding: .15rem .4rem;
+  padding: .2rem .55rem;
   text-overflow: ellipsis;
   white-space: nowrap;
+  line-height: 1.2;
 }
 
 .filters-modal-overlay {
@@ -185,13 +188,13 @@
 }
 
 .filters-modal-reyting-option:hover {
-  background-color: rgba(3, 19, 234, 0.2);
-  border-color: rgb(3, 19, 234);
+  background-color: rgba(245, 197, 24, 0.2);
+  border-color: rgb(245, 197, 24);
 }
 
 .filters-modal-reyting-option--active {
-  background-color: rgba(3, 19, 234, 0.4);
-  border-color: rgb(3, 19, 234);
+  background-color: rgba(245, 197, 24, 0.4);
+  border-color: rgb(245, 197, 24);
 }
 
 @media (max-width: 768px) {

@@ -263,9 +263,17 @@
 
 .loader-skeleton--filters-btn {
   height: 44px;
-  min-width: 120px;
+  min-width: 90px;
   border-radius: 25px;
   flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .loader-skeleton--filters-btn {
+    height: 28px;
+    min-width: 56px;
+    border-radius: 20px;
+  }
 }
 
 /* Actors page */

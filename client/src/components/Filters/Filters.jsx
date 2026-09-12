@@ -87,10 +87,10 @@ const Filters = ({
         <ScrollTouch className="filters-scroll">
         {isLoading ? (
           <div className="filters-skeleton-row">
-            <LoaderSkeleton variant="filters-btn" width={140} height={44} />
-            <LoaderSkeleton variant="filters-btn" width={120} height={44} />
-            <LoaderSkeleton variant="filters-btn" width={100} height={44} />
-            <LoaderSkeleton variant="filters-btn" width={90} height={44} />
+            <LoaderSkeleton variant="filters-btn" width={88} />
+            <LoaderSkeleton variant="filters-btn" width={76} />
+            <LoaderSkeleton variant="filters-btn" width={68} />
+            <LoaderSkeleton variant="filters-btn" width={60} />
           </div>
         ) : (
         <div className="filters-row">

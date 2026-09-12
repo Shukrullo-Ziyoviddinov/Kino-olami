@@ -74,13 +74,13 @@
 }
 
 .filters-modal-age-option:hover {
-  background-color: rgba(3, 19, 234, 0.2);
-  border-color: rgb(3, 19, 234);
+  background-color: rgba(245, 197, 24, 0.2);
+  border-color: rgb(245, 197, 24);
 }
 
 .filters-modal-age-option--active {
-  background-color: rgba(3, 19, 234, 0.4);
-  border-color: rgb(3, 19, 234);
+  background-color: rgba(245, 197, 24, 0.4);
+  border-color: rgb(245, 197, 24);
 }
 
 @media (max-width: 768px) {
