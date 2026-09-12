@@ -40,7 +40,7 @@ const ShareButton = ({ movie }) => {
       ? `/movie/${Number(movie.id)}`
       : location.pathname;
   const shareUrl = getShareUrl(sharePath);
-  const shareText = getMovieTitle();
+  const shareText = `${getMovieTitle()} | Kinolar Olami`;
 
   const shareLinks = [
     {
