@@ -30,7 +30,7 @@ function uploadByFolderParam(req, res, next) {
   if (!config) {
     return fail(
       res,
-      "Noto'g'ri folder. Ruxsat: movies, actors, banners, genres, news, trillers, ads, socialLink, avatars/users, temp, cache",
+      "Noto'g'ri folder. Ruxsat: movies, actors, banners, genres, trillers, ads, socialLink, avatars/users, temp, cache",
       400
     );
   }

@@ -6,7 +6,6 @@ export const UPLOAD_FOLDERS = Object.freeze({
   actors: "actors",
   banners: "banners",
   genres: "genres",
-  news: "news",
   trillers: "trillers",
   ads: "ads",
   socialLink: "socialLink",

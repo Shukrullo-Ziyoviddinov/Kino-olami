@@ -16,7 +16,6 @@ export async function deleteRecentItem(section, item) {
   if (section === 'ads') url = `${API_BASE}/api/ads/${item.id}`;
   if (section === 'genres') url = `${API_BASE}/api/genres/${item.id}`;
   if (section === 'trillers') url = `${API_BASE}/api/trillers/${item.id}`;
-  if (section === 'news') url = `${API_BASE}/api/news/${item.id}`;
   if (!url) throw new Error("Noto'g'ri bo'lim.");
 
   const response = await fetch(url, { method: 'DELETE', headers: { Accept: 'application/json' } });
@@ -31,7 +30,6 @@ export async function updateRecentItem(section, item, payload) {
   if (section === 'ads') url = `${API_BASE}/api/ads/${item.id}`;
   if (section === 'genres') url = `${API_BASE}/api/genres/${item.id}`;
   if (section === 'trillers') url = `${API_BASE}/api/trillers/${item.id}`;
-  if (section === 'news') url = `${API_BASE}/api/news/${item.id}`;
   if (!url) throw new Error("Noto'g'ri bo'lim.");
 
   const response = await fetch(url, {

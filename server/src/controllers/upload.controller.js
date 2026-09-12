@@ -10,7 +10,6 @@ const UPLOAD_FOLDERS = {
   actors: { folder: "actors", kind: "image" },
   banners: { folder: "banners", kind: "image" },
   genres: { folder: "genres", kind: "image" },
-  news: { folder: "news", kind: "image" },
   trillers: { folder: "trillers", kind: "image" },
   ads: { folder: "ads", kind: "video" },
   socialLink: { folder: "socialLink", kind: "image" },
@@ -51,7 +50,7 @@ async function uploadToFolder(req, res, next) {
     if (!config) {
       return fail(
         res,
-        "Noto'g'ri folder. Ruxsat: movies, actors, banners, genres, news, trillers, ads, socialLink, avatars/users, temp, cache",
+        "Noto'g'ri folder. Ruxsat: movies, actors, banners, genres, trillers, ads, socialLink, avatars/users, temp, cache",
         400
       );
     }

@@ -58,8 +58,8 @@ function sortNewestFirst(items) {
     const db = new Date(b.createdAt || 0).getTime();
     if (db !== da) return db - da;
 
-    const ia = Number(a.id || a.movieId || a.actorId || a.bannerId || a.adId || a.trillerId || a.newsId || 0);
-    const ib = Number(b.id || b.movieId || b.actorId || b.bannerId || b.adId || b.trillerId || b.newsId || 0);
+    const ia = Number(a.id || a.movieId || a.actorId || a.bannerId || a.adId || a.trillerId || 0);
+    const ib = Number(b.id || b.movieId || b.actorId || b.bannerId || b.adId || b.trillerId || 0);
     return ib - ia;
   });
 }
@@ -92,14 +92,13 @@ function collapseLocalizedRows(rows, getKey) {
 }
 
 export async function fetchRecentItems() {
-  const [movies, actors, banners, ads, genres, trillers, news] = await Promise.all([
+  const [movies, actors, banners, ads, genres, trillers] = await Promise.all([
     fetchAllPages('/api/movies'),
     fetchAllPages('/api/actors'),
     fetchAllPages('/api/banners'),
     fetchAllPages('/api/ads'),
     fetchAllPages('/api/genres'),
     fetchAllPages('/api/trillers'),
-    fetchAllPages('/api/news'),
   ]);
 
   const movieTitleById = new Map(
@@ -142,17 +141,6 @@ export async function fetchRecentItems() {
     (item) => item.trillerId ?? item.id ?? item._id ?? ''
   );
 
-  const collapsedNews = collapseLocalizedRows(
-    news,
-    (item) => item.newsId ?? item.id ?? item._id ?? ''
-  );
-
-  const SECTION_LABELS = {
-    yangiliklar: 'Yangiliklar',
-    trenddagiYangiliklar: 'Trend',
-    yangiliklarGrid: 'Grid',
-  };
-
   return {
     movies: sortNewestFirst(
       collapsedMovies.map((item) => ({
@@ -182,17 +170,6 @@ export async function fetchRecentItems() {
         section: 'trillers',
         title: localized(item.name),
         subtitle: localized(item.name?.ru),
-        image: toImageUrl(item.img),
-        createdAt: item.createdAt,
-        raw: item,
-      }))
-    ),
-    news: sortNewestFirst(
-      collapsedNews.map((item) => ({
-        id: item.newsId ?? item.id,
-        section: 'news',
-        title: localized(item.name),
-        subtitle: SECTION_LABELS[item.section] || localized(item.name?.ru),
         image: toImageUrl(item.img),
         createdAt: item.createdAt,
         raw: item,

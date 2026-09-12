@@ -10,7 +10,6 @@ import BannerForm from '../BannerForm/BannerForm';
 import AdsForm from '../AdsForm/AdsForm';
 import GenreForm from '../GenreForm/GenreForm';
 import TrillerForm from '../TrillerForm/TrillerForm';
-import NewsForm from '../NewsForm/NewsForm';
 import './RecentItemsSection.css';
 
 export default function RecentItemsSection() {
@@ -24,7 +23,6 @@ export default function RecentItemsSection() {
     movies: [],
     actors: [],
     trillers: [],
-    news: [],
     banners: [],
     ads: [],
     genres: [],
@@ -140,17 +138,6 @@ export default function RecentItemsSection() {
             initialData={editItem.raw}
             onCancel={() => setEditItem(null)}
             onSubmitData={(payload) => updateRecentItem('trillers', editItem, payload)}
-            onSaved={async () => {
-              setEditItem(null);
-              await loadData();
-            }}
-          />
-        ) : editItem && activeTab === 'news' ? (
-          <NewsForm
-            mode="edit"
-            initialData={editItem.raw}
-            onCancel={() => setEditItem(null)}
-            onSubmitData={(payload) => updateRecentItem('news', editItem, payload)}
             onSaved={async () => {
               setEditItem(null);
               await loadData();

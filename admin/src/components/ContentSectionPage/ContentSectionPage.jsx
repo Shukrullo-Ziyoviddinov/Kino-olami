@@ -9,7 +9,6 @@ import BannerForm from '../BannerForm/BannerForm';
 import AdsForm from '../AdsForm/AdsForm';
 import GenreForm from '../GenreForm/GenreForm';
 import TrillerForm from '../TrillerForm/TrillerForm';
-import NewsForm from '../NewsForm/NewsForm';
 import '../RecentItems/RecentItemsSection.css';
 import './ContentSectionPage.css';
 
@@ -17,7 +16,6 @@ const TITLE_MAP = {
   movies: 'Kinolar',
   actors: 'Aktyorlar',
   trillers: 'Trillerlar',
-  news: 'Yangiliklar',
   banners: 'Bannerlar',
   ads: 'Reklamalar',
   genres: 'Janrlar',
@@ -105,17 +103,6 @@ export default function ContentSectionPage({ section = 'movies' }) {
             initialData={editItem.raw}
             onCancel={() => setEditItem(null)}
             onSubmitData={(payload) => updateRecentItem('trillers', editItem, payload)}
-            onSaved={async () => {
-              setEditItem(null);
-              await loadData();
-            }}
-          />
-        ) : editItem && section === 'news' ? (
-          <NewsForm
-            mode="edit"
-            initialData={editItem.raw}
-            onCancel={() => setEditItem(null)}
-            onSubmitData={(payload) => updateRecentItem('news', editItem, payload)}
             onSaved={async () => {
               setEditItem(null);
               await loadData();
