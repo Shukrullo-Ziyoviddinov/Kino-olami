@@ -97,17 +97,17 @@
 }
 
 .profile-edit-avatar-preview {
-  flex-shrink: 0;
-  width: 84px;
-  height: 84px;
-  margin: 0;
-  border-radius: 50%;
-  border: 3px solid #ffc107;
-  background: rgba(0, 0, 0, 0.45);
-  display: flex;
   align-items: center;
+  background: #00000073;
+  border: 3px solid #ffc107;
+  border-radius: 50%;
+  display: flex;
+  flex-shrink: 0;
+  height: 64px;
   justify-content: center;
+  margin: 0;
   overflow: hidden;
+  width: 64px;
 }
 
 .profile-edit-avatar-img {
@@ -176,8 +176,8 @@
 }
 
 .profile-edit-avatar-btn-delete {
-  background: #f5c518;
-  color: #111111;
+  background: #e53935;
+  color: #ffffff;
   flex-shrink: 0;
   width: 44px;
   height: 44px;

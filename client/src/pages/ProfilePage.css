@@ -39,26 +39,34 @@
   background-color: var(--bg-card);
 }
 
+.profile-menu-list {
+  margin-top: 1.5rem;
+  padding: 0.35rem 0;
+  background-color: var(--bg-card);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
 .profile-wishlist-block {
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
   max-width: 100%;
-  margin-top: 1rem;
+  margin: 0;
   padding: 1rem 1.25rem;
-  /* background: rgba(255, 255, 255, 0.06); */
-  background-color: var(--bg-card);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
+  background: transparent;
+  border: none;
+  border-radius: 0;
   cursor: pointer;
-  transition: background 0.25s, border-color 0.25s;
+  transition: background 0.25s;
   box-sizing: border-box;
 }
 
 .profile-wishlist-block:first-of-type {
-  margin-top: 1.5rem;
-  background-color: var(--bg-card);
+  margin-top: 0;
+  background: transparent;
 }
 
 .profile-page-top-skeleton .loader-skeleton,
@@ -99,11 +107,11 @@
 }
 
 .profile-wishlist-block:hover {
-  border-color: #f5c518;
+  background: rgba(245, 197, 24, 0.12);
 }
 
 .profile-wishlist-block:first-of-type:hover {
-  border-color: rgba(255, 255, 255, 0.1);
+  background: rgba(245, 197, 24, 0.12);
 }
 
 .profile-wishlist-left {
@@ -196,14 +204,23 @@
   min-width: 0;
 }
 
+.profile-name-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.4rem;
+  min-width: 0;
+}
+
 .profile-name {
   font-size: 1.35rem;
   font-weight: 600;
   color: #fff;
-  margin-bottom: 0.4rem;
+  margin-bottom: 0;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  min-width: 0;
 }
 
 .profile-secondary {
@@ -225,22 +242,24 @@
 
 .profile-edit-btn {
   flex-shrink: 0;
-  width: 44px;
-  height: 44px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   border: none;
-  background: #ffc107;
-  color: white;
+  background: transparent;
+  color: #ffc107;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.25s, color 0.25s;
+  transition: color 0.25s, opacity 0.25s;
+  padding: 0;
 }
 
 .profile-edit-btn:hover {
-  background: #e6ac00;
-  color: #fff;
+  background: transparent;
+  color: #ffd54a;
+  opacity: 0.9;
 }
 
 @media (max-width: 768px) {
@@ -287,12 +306,12 @@
   }
 
   .profile-wishlist-block {
-    margin-top: 1rem;
+    margin-top: 0;
     padding: 1rem 1.25rem;
   }
 
   .profile-wishlist-block:first-of-type {
-    margin-top: 1.25rem;
+    margin-top: 0;
   }
 
   .profile-wishlist-left {
