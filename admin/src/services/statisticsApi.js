@@ -30,7 +30,6 @@ export async function fetchDashboardCounts() {
       banners: 0,
       ads: 0,
       genres: 0,
-      trillers: 0,
     }
   );
 }

@@ -58,8 +58,8 @@ function sortNewestFirst(items) {
     const db = new Date(b.createdAt || 0).getTime();
     if (db !== da) return db - da;
 
-    const ia = Number(a.id || a.movieId || a.actorId || a.bannerId || a.adId || a.trillerId || 0);
-    const ib = Number(b.id || b.movieId || b.actorId || b.bannerId || b.adId || b.trillerId || 0);
+    const ia = Number(a.id || a.movieId || a.actorId || a.bannerId || a.adId || 0);
+    const ib = Number(b.id || b.movieId || b.actorId || b.bannerId || b.adId || 0);
     return ib - ia;
   });
 }
@@ -92,13 +92,12 @@ function collapseLocalizedRows(rows, getKey) {
 }
 
 export async function fetchRecentItems() {
-  const [movies, actors, banners, ads, genres, trillers] = await Promise.all([
+  const [movies, actors, banners, ads, genres] = await Promise.all([
     fetchAllPages('/api/movies'),
     fetchAllPages('/api/actors'),
     fetchAllPages('/api/banners'),
     fetchAllPages('/api/ads'),
     fetchAllPages('/api/genres'),
-    fetchAllPages('/api/trillers'),
   ]);
 
   const movieTitleById = new Map(
@@ -136,11 +135,6 @@ export async function fetchRecentItems() {
     (item) => item.genreId ?? item._id ?? ''
   );
 
-  const collapsedTrillers = collapseLocalizedRows(
-    trillers,
-    (item) => item.trillerId ?? item.id ?? item._id ?? ''
-  );
-
   return {
     movies: sortNewestFirst(
       collapsedMovies.map((item) => ({
@@ -160,17 +154,6 @@ export async function fetchRecentItems() {
         title: localized(item.name),
         subtitle: localized(item.name?.ru),
         image: toImageUrl(item.image),
-        createdAt: item.createdAt,
-        raw: item,
-      }))
-    ),
-    trillers: sortNewestFirst(
-      collapsedTrillers.map((item) => ({
-        id: item.trillerId ?? item.id,
-        section: 'trillers',
-        title: localized(item.name),
-        subtitle: localized(item.name?.ru),
-        image: toImageUrl(item.img),
         createdAt: item.createdAt,
         raw: item,
       }))

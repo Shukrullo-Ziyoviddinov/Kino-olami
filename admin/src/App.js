@@ -9,7 +9,6 @@ import GenreForm from './components/GenreForm/GenreForm';
 import AdsForm from './components/AdsForm/AdsForm';
 import ActorForm from './components/ActorForm/ActorForm';
 import MovieForm from './components/MovieForm/MovieForm';
-import TrillerForm from './components/TrillerForm/TrillerForm';
 import SettingsLinksForm from './components/SettingsLinksForm/SettingsLinksForm';
 import TranslationSettingsForm from './components/TranslationSettingsForm/TranslationSettingsForm';
 import SubscriptionChannelsForm from './components/SubscriptionChannelsForm/SubscriptionChannelsForm';
@@ -43,8 +42,7 @@ function App() {
       actionId === 'genre' ||
       actionId === 'ad' ||
       actionId === 'actor' ||
-      actionId === 'movie' ||
-      actionId === 'triller'
+      actionId === 'movie'
     ) {
       setActiveModal(actionId);
     }
@@ -65,7 +63,6 @@ function App() {
     ad: "Reklama qo'shish",
     actor: "Aktyor qo'shish",
     movie: "Kino qo'shish",
-    triller: "Triller qo'shish",
     'settings-social': 'Ijtimoiy tarmoqlar',
     'settings-app-links': 'Ilova havolalari',
     'settings-language': 'Til sozlamalari',
@@ -112,8 +109,6 @@ function App() {
           <Statistika />
         ) : activeView === 'actors' ? (
           <ContentSectionPage section="actors" />
-        ) : activeView === 'trillers' ? (
-          <ContentSectionPage section="trillers" />
         ) : activeView === 'banners' ? (
           <ContentSectionPage section="banners" />
         ) : activeView === 'ads' ? (
@@ -147,8 +142,6 @@ function App() {
             <BotBroadcastForm onCancel={closeModal} onSaved={closeModal} />
           ) : activeModal === 'actor' ? (
             <ActorForm onCancel={closeModal} onSaved={closeModal} />
-          ) : activeModal === 'triller' ? (
-            <TrillerForm onCancel={closeModal} onSaved={closeModal} />
           ) : activeModal === 'ad' ? (
             <AdsForm onCancel={closeModal} onSaved={closeModal} />
           ) : (

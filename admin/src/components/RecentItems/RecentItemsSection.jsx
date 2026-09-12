@@ -9,7 +9,6 @@ import ActorForm from '../ActorForm/ActorForm';
 import BannerForm from '../BannerForm/BannerForm';
 import AdsForm from '../AdsForm/AdsForm';
 import GenreForm from '../GenreForm/GenreForm';
-import TrillerForm from '../TrillerForm/TrillerForm';
 import './RecentItemsSection.css';
 
 export default function RecentItemsSection() {
@@ -22,7 +21,6 @@ export default function RecentItemsSection() {
   const [data, setData] = useState({
     movies: [],
     actors: [],
-    trillers: [],
     banners: [],
     ads: [],
     genres: [],
@@ -127,17 +125,6 @@ export default function RecentItemsSection() {
             initialData={editItem.raw}
             onCancel={() => setEditItem(null)}
             onSubmitData={(payload) => updateRecentItem('genres', editItem, payload)}
-            onSaved={async () => {
-              setEditItem(null);
-              await loadData();
-            }}
-          />
-        ) : editItem && activeTab === 'trillers' ? (
-          <TrillerForm
-            mode="edit"
-            initialData={editItem.raw}
-            onCancel={() => setEditItem(null)}
-            onSubmitData={(payload) => updateRecentItem('trillers', editItem, payload)}
             onSaved={async () => {
               setEditItem(null);
               await loadData();

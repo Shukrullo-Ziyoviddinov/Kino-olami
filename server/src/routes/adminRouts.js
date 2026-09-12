@@ -8,7 +8,6 @@ const Actor = require("../models/actors");
 const Banner = require("../models/banner");
 const Ads = require("../models/ads");
 const Genre = require("../models/genres");
-const Triller = require("../models/triller");
 const { success, fail } = require("../utils/apiResponse");
 const bot = require("../bot/bot");
 const { sendBroadcastToAll } = require("../bot/handlers/broadcastSender");
@@ -220,18 +219,17 @@ router.get("/statistics", async (_req, res, next) => {
  */
 router.get("/dashboard-counts", async (_req, res, next) => {
   try {
-    const [movies, actors, banners, ads, genres, trillers] = await Promise.all([
+    const [movies, actors, banners, ads, genres] = await Promise.all([
       Movie.countDocuments(),
       Actor.countDocuments(),
       Banner.countDocuments(),
       Ads.countDocuments(),
       Genre.countDocuments(),
-      Triller.countDocuments(),
     ]);
 
     return success(
       res,
-      { movies, actors, banners, ads, genres, trillers },
+      { movies, actors, banners, ads, genres },
       "Dashboard sonlari olindi."
     );
   } catch (err) {

@@ -10,7 +10,6 @@ const STAT_ITEMS = [
   { variant: 'banners', label: 'Bannerlar', key: 'banners' },
   { variant: 'ads', label: 'Reklamalar', key: 'ads' },
   { variant: 'genres', label: 'Janrlar', key: 'genres' },
-  { variant: 'trillers', label: 'Trillerlar', key: 'trillers' },
 ];
 
 function formatCount(value) {
@@ -24,7 +23,6 @@ export default function DashboardHome() {
     banners: 0,
     ads: 0,
     genres: 0,
-    trillers: 0,
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -44,7 +42,6 @@ export default function DashboardHome() {
           banners: Number(data.banners) || 0,
           ads: Number(data.ads) || 0,
           genres: Number(data.genres) || 0,
-          trillers: Number(data.trillers) || 0,
         });
       } catch (err) {
         if (cancelled) return;

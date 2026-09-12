@@ -903,7 +903,7 @@ export default function MovieForm({ onCancel, onSaved, mode = "create", initialD
                 </Field>
                 <Field
                   label="Saytda chiqadigan janrlar"
-                  help="Kino detail sahifasidagi “Janr:” yonidagi badge’lar. Vergul bilan yozing. Masalan: Drama, Triller, Jangari"
+                  help="Kino detail sahifasidagi “Janr:” yonidagi badge’lar. Vergul bilan yozing. Masalan: Drama, Komediya, Jangari"
                 >
                   <input
                     className="movie-form__input"
