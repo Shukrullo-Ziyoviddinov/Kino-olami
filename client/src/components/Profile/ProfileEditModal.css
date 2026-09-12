@@ -169,13 +169,15 @@
 }
 
 .profile-edit-avatar-btn-edit {
-  background: #1f9d57;
+  background: #ffffff;
+  color: #111111;
   flex: 1;
   min-width: 0;
 }
 
 .profile-edit-avatar-btn-delete {
-  background: #e53935;
+  background: #f5c518;
+  color: #111111;
   flex-shrink: 0;
   width: 44px;
   height: 44px;
@@ -217,10 +219,10 @@
 .profile-edit-save {
   margin-top: 0.5rem;
   padding: 0.85rem 1.5rem;
-  background: #e53935;
+  background: #f5c518;
   border: none;
   border-radius: 12px;
-  color: #fff;
+  color: #111111;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
