@@ -18,7 +18,7 @@
   background: var(--bg-card);
   border-radius: 16px 16px 0 0;
   z-index: 1301;
-  border: 1px solid rgba(229, 57, 53, 0.55);
+  border: 1px solid rgb(245, 197, 24);
   border-bottom: none;
   box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.5);
   padding-bottom: env(safe-area-inset-bottom, 0);
@@ -97,13 +97,13 @@
 }
 
 .profile-lang-modal-item:hover {
-  background: rgba(229, 57, 53, 0.18);
-  border-color: #e53935;
+  background: rgba(245, 197, 24, 0.18);
+  border-color: rgb(245, 197, 24);
 }
 
 .profile-lang-modal-item.active {
-  background: rgba(229, 57, 53, 0.22);
-  border-color: #e53935;
+  background: rgba(245, 197, 24, 0.22);
+  border-color: rgb(245, 197, 24);
 }
 
 .profile-lang-modal-flag {
@@ -121,7 +121,7 @@
 .profile-lang-modal-save {
   width: 100%;
   padding: 0.85rem 1.5rem;
-  background: #e53935;
+  background: #1f9d57;
   border: none;
   border-radius: 12px;
   color: #fff;
@@ -143,7 +143,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     border-radius: 16px;
-    border: 1px solid rgba(229, 57, 53, 0.55);
+    border: 1px solid rgb(245, 197, 24);
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
   }
 
