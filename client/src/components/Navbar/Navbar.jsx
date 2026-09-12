@@ -21,6 +21,9 @@ const Navbar = () => {
   const languageWrapperRef = useRef(null);
   const searchInputRef = useRef(null);
   const modalRef = useRef(null);
+  const lastScrollYRef = useRef(0);
+  const [navScrolled, setNavScrolled] = useState(false);
+  const [navHidden, setNavHidden] = useState(false);
 
   const updateModalPosition = () => {
     if (modalRef.current && searchInputRef.current) {
@@ -61,6 +64,49 @@ const Navbar = () => {
       localStorage.setItem('i18nextLng', 'uz');
     }
   }, [i18n]);
+
+  useEffect(() => {
+    lastScrollYRef.current = window.scrollY || 0;
+
+    const isPastBanner = () => {
+      const banner = document.querySelector('.banner');
+      if (banner) {
+        return banner.getBoundingClientRect().bottom <= 0;
+      }
+      return window.scrollY > 180;
+    };
+
+    const onScroll = () => {
+      const currentY = window.scrollY || 0;
+      const delta = currentY - lastScrollYRef.current;
+
+      setNavScrolled(currentY > 8);
+
+      if (currentY <= 8) {
+        setNavHidden(false);
+        lastScrollYRef.current = currentY;
+        return;
+      }
+
+      if (!isPastBanner()) {
+        setNavHidden(false);
+        lastScrollYRef.current = currentY;
+        return;
+      }
+
+      if (delta > 5) {
+        setNavHidden(true);
+      } else if (delta < -3) {
+        setNavHidden(false);
+      }
+
+      lastScrollYRef.current = currentY;
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener('scroll', onScroll);
+  }, [location.pathname]);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -154,7 +200,9 @@ const Navbar = () => {
 
   return (
     <>
-    <nav className="navbar">
+    <nav
+      className={`navbar${navScrolled ? ' navbar--scrolled' : ''}${navHidden ? ' navbar--hidden' : ''}`}
+    >
       <div className="navbar-container">
         <div className="navbar-left">
           <div className="navbar-logo" onClick={() => navigate('/')}>
