@@ -198,10 +198,12 @@ const Navbar = () => {
     navigate('/profile');
   };
 
+  const isMovieDetailPage = /^\/movie\/[^/]+/.test(location.pathname);
+
   return (
     <>
     <nav
-      className={`navbar${navScrolled ? ' navbar--scrolled' : ''}${navHidden ? ' navbar--hidden' : ''}`}
+      className={`navbar${navScrolled ? ' navbar--scrolled' : ''}${navHidden ? ' navbar--hidden' : ''}${isMovieDetailPage ? ' navbar--movie-detail' : ''}`}
     >
       <div className="navbar-container">
         <div className="navbar-left">

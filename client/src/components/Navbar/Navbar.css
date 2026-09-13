@@ -150,13 +150,13 @@
 }
 
 .navbar-search-icon:hover {
-  color: #e53935;
-  background: rgba(229, 57, 53, 0.18);
+  color: #f5c518;
+  background: rgba(245, 197, 24, 0.18);
 }
 
 .navbar-search-wrap:focus-within .navbar-search-icon {
-  color: #e53935;
-  background: rgba(229, 57, 53, 0.18);
+  color: #f5c518;
+  background: rgba(245, 197, 24, 0.18);
 }
 
 .navbar-right {
@@ -386,6 +386,19 @@
     border-bottom: none;
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
+  }
+
+  /* Movie detail: mobil navbar yashirish */
+  .navbar--movie-detail {
+    display: none;
+    height: 0;
+    min-height: 0;
+    max-height: 0;
+    pointer-events: none;
+  }
+
+  .navbar--movie-detail .navbar-container {
+    display: none;
   }
 
   .navbar-container {

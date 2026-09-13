@@ -25,7 +25,7 @@
 }
 
 .movie-detail-comments-input-wrap:hover {
-  border-color: #e50914;
+  border-color: #f5c518;
 }
 
 .movie-detail-comments-input {
@@ -47,8 +47,8 @@
   height: 40px;
   border-radius: 50%;
   border: none;
-  background: linear-gradient(135deg, #f0141e 0%, #c9000b 100%);
-  color: #fff;
+  background: linear-gradient(135deg, #ffd54a 0%, #f5c518 100%);
+  color: #111111;
   cursor: pointer;
   display: flex;
   align-items: center;

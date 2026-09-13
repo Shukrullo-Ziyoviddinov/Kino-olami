@@ -446,16 +446,16 @@
 }
 
 .movie-detail-btn-primary {
-  background: linear-gradient(135deg, #f0141e 0%, #c9000b 100%);
+  background: linear-gradient(135deg, #ffd54a 0%, #f5c518 100%);
   border: 2px solid rgba(255, 255, 255, 0.12);
-  color: #ffffff;
+  color: #111111;
 }
 
 .movie-detail-btn-primary:hover {
   transform: translateY(-2px);
   filter: brightness(1.06);
   box-shadow:
-    0 8px 26px rgba(229, 9, 20, 0.4),
+    0 8px 26px rgba(245, 197, 24, 0.4),
     inset 0 1px 0 rgba(255, 255, 255, 0.16);
 }
 
@@ -515,8 +515,8 @@
 }
 
 .movie-detail-description-more-btn {
-  background-color: #e50914;
-  color: #ffffff;
+  background-color: #f5c518;
+  color: #111111;
   border: none;
   padding: .35rem 1.3rem;
   border-radius: 25px;
@@ -1017,8 +1017,8 @@
 }
 
 .movie-detail-description-modal-close:hover {
-  border-color: #e50914;
-  background-color: rgba(229, 9, 20, 0.2);
+  border-color: #f5c518;
+  background-color: rgba(245, 197, 24, 0.2);
 }
 
 .movie-detail-description-modal-body {
@@ -1214,6 +1214,13 @@
   }
 }
 
+/* Mobile: navbar yashirilgani uchun negative margin kerak emas */
+@media (max-width: 768px) {
+  .movie-detail {
+    margin-top: 0;
+  }
+}
+
 /* Mobile version */
 @media (max-width: 767px) {
   .movie-detail-description {
@@ -1226,7 +1233,7 @@
 
   .movie-detail {
     padding: 0 0 1rem 0;
-    margin-top: -45px;
+    margin-top: 0;
   }
 
   .movie-detail-container {
@@ -1433,7 +1440,7 @@
 @media (max-width: 480px) {
   .movie-detail {
     padding: 0 0 0.75rem 0;
-    margin-top: -45px;
+    margin-top: 0;
   }
 
   .movie-detail-container {
