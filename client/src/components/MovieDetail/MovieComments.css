@@ -504,8 +504,8 @@
   height: 40px;
   border-radius: 50%;
   border: none;
-  background: linear-gradient(135deg, #ff4d57 0%, #e50914 100%);
-  color: #fff;
+  background: linear-gradient(135deg, #ffd54a 0%, #f5c518 100%);
+  color: #111111;
   cursor: pointer;
   display: flex;
   align-items: center;

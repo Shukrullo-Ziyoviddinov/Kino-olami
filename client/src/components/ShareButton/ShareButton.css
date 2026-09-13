@@ -190,15 +190,15 @@
 }
 
 .share-modal-item:hover {
-  background: rgba(229, 57, 53, 0.18);
-  border-color: rgba(229, 57, 53, 0.55);
-  color: #ff6b66;
+  background: rgba(245, 197, 24, 0.18);
+  border-color: rgba(245, 197, 24, 0.55);
+  color: #f5c518;
 }
 
 .share-modal-item:active {
-  background: rgba(229, 57, 53, 0.28);
-  border-color: rgba(229, 57, 53, 0.7);
-  color: #ff6b66;
+  background: rgba(245, 197, 24, 0.28);
+  border-color: rgba(245, 197, 24, 0.7);
+  color: #f5c518;
 }
 
 .share-modal-icon {
