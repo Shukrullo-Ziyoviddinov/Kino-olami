@@ -9,6 +9,14 @@ import './Banner.css';
 
 const BannerSlideImage = ({ src, alt, showSkeleton, onImageLoad }) => {
     const normalizedSrc = normalizeImagePath(src);
+    const imgRef = useRef(null);
+
+    useEffect(() => {
+        const img = imgRef.current;
+        if (img?.complete && img.naturalWidth > 0) {
+            onImageLoad(normalizedSrc);
+        }
+    }, [normalizedSrc, onImageLoad]);
 
     return (
         <>
@@ -16,6 +24,7 @@ const BannerSlideImage = ({ src, alt, showSkeleton, onImageLoad }) => {
                 <LoaderSkeleton variant="banner-image" className="manga-image-skeleton" />
             )}
             <img
+                ref={imgRef}
                 src={normalizedSrc}
                 alt={alt}
                 draggable={false}
@@ -36,6 +45,14 @@ const BannerSlideImage = ({ src, alt, showSkeleton, onImageLoad }) => {
 
 const BannerTitleImage = ({ src, showSkeleton, onImageLoad }) => {
     const normalizedSrc = normalizeImagePath(src);
+    const imgRef = useRef(null);
+
+    useEffect(() => {
+        const img = imgRef.current;
+        if (img?.complete && img.naturalWidth > 0) {
+            onImageLoad(normalizedSrc);
+        }
+    }, [normalizedSrc, onImageLoad]);
 
     return (
         <div className="manga-title-img-wrapper">
@@ -43,6 +60,7 @@ const BannerTitleImage = ({ src, showSkeleton, onImageLoad }) => {
                 <LoaderSkeleton variant="text" className="manga-title-img-skeleton" width="100%" height={120} />
             )}
             <img
+                ref={imgRef}
                 className={`manga-title-img ${showSkeleton ? 'is-loading' : ''}`}
                 src={normalizedSrc}
                 alt=""
@@ -58,6 +76,37 @@ const BannerTitleImage = ({ src, showSkeleton, onImageLoad }) => {
                 }}
             />
         </div>
+    );
+};
+
+const BannerTitlePreload = ({ src, onImageLoad }) => {
+    const normalizedSrc = normalizeImagePath(src);
+    const imgRef = useRef(null);
+
+    useEffect(() => {
+        const img = imgRef.current;
+        if (img?.complete && img.naturalWidth > 0) {
+            onImageLoad(normalizedSrc);
+        }
+    }, [normalizedSrc, onImageLoad]);
+
+    return (
+        <img
+            ref={imgRef}
+            src={normalizedSrc}
+            alt=""
+            aria-hidden="true"
+            className="manga-title-img-preload"
+            onLoad={() => onImageLoad(normalizedSrc)}
+            onError={(e) => {
+                const fallbackSrc = normalizeImagePath('/img/no-image.png');
+                if (e.currentTarget.src !== fallbackSrc) {
+                    e.currentTarget.src = fallbackSrc;
+                    return;
+                }
+                onImageLoad(normalizedSrc);
+            }}
+        />
     );
 };
 
@@ -460,20 +509,9 @@ const Banner = () => {
             />
 
             {isVisibleSlide && normalizedTitleSrc && !isActive && !isTitleLoaded && (
-                <img
+                <BannerTitlePreload
                     src={normalizedTitleSrc}
-                    alt=""
-                    aria-hidden="true"
-                    className="manga-title-img-preload"
-                    onLoad={() => handleImageLoaded(normalizedTitleSrc)}
-                    onError={(e) => {
-                        const fallbackSrc = normalizeImagePath('/img/no-image.png');
-                        if (e.currentTarget.src !== fallbackSrc) {
-                            e.currentTarget.src = fallbackSrc;
-                            return;
-                        }
-                        handleImageLoaded(normalizedTitleSrc);
-                    }}
+                    onImageLoad={handleImageLoaded}
                 />
             )}
 
