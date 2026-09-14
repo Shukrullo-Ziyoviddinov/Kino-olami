@@ -106,6 +106,24 @@ const emptySeason = (seasonNumber = 1) => ({
   episodes: [{ uz: "", ru: "" }],
 });
 
+const genresToInputText = (list) =>
+  (Array.isArray(list) ? list : [])
+    .map((v) => String(v || "").trim())
+    .filter(Boolean)
+    .join(", ");
+
+/** Prabeg/vergul: "Komediya " → "Komediya, " (vergul esdan chiqsa ham) */
+const formatGenreDraftText = (raw) => {
+  let text = String(raw || "");
+  if (/[^,\s]\s+$/.test(text)) {
+    text = text.replace(/\s+$/, ", ");
+  }
+  if (/,$/.test(text)) {
+    text = `${text} `;
+  }
+  return text;
+};
+
 function normalizeInitialMovie(data = {}) {
   const safeSeasons = Array.isArray(data.seasons) && data.seasons.length
     ? data.seasons.map((season, idx) => ({
@@ -234,6 +252,7 @@ export default function MovieForm({ onCancel, onSaved, mode = "create", initialD
   const [typeCategoryOpen, setTypeCategoryOpen] = useState(false);
   const [categoryNameOpen, setCategoryNameOpen] = useState(false);
   const [uploadState, setUploadState] = useState({});
+  const [genreDraft, setGenreDraft] = useState({ uz: "", ru: "" });
   const [form, setForm] = useState({
     movieId: "",
     movieCode: "",
@@ -277,7 +296,18 @@ export default function MovieForm({ onCancel, onSaved, mode = "create", initialD
           fetchGenres(),
         ]);
         if (mode === "edit" && initialData) {
-          setForm((prev) => ({ ...prev, ...normalizeInitialMovie(initialData) }));
+          const normalized = normalizeInitialMovie(initialData);
+          setForm((prev) => ({ ...prev, ...normalized }));
+          setGenreDraft({
+            uz: genresToInputText(
+              normalized.genre?.uz?.length ? normalized.genre.uz : normalized.description?.uz?.genre
+            ),
+            ru: genresToInputText(
+              normalized.genre?.ru?.length ? normalized.genre.ru : normalized.description?.ru?.genre
+            ),
+          });
+        } else if (mode === "create") {
+          setGenreDraft({ uz: "", ru: "" });
         }
         setActors(actorRows);
 
@@ -439,10 +469,25 @@ export default function MovieForm({ onCancel, onSaved, mode = "create", initialD
       .map((v) => v.trim())
       .filter(Boolean);
 
-  const genresUzText =
-    (form.genre?.uz?.length ? form.genre.uz : form.description?.uz?.genre)?.join(", ") || "";
-  const genresRuText =
-    (form.genre?.ru?.length ? form.genre.ru : form.description?.ru?.genre)?.join(", ") || "";
+  const applyGenreDraft = (lang, rawText) => {
+    const text = formatGenreDraftText(rawText);
+    setGenreDraft((prev) => ({ ...prev, [lang]: text }));
+    const nextGenres = normalizeCommaText(text);
+    setForm((prev) => ({
+      ...prev,
+      genre: {
+        ...prev.genre,
+        [lang]: nextGenres,
+      },
+      description: {
+        ...prev.description,
+        [lang]: {
+          ...prev.description[lang],
+          genre: nextGenres,
+        },
+      },
+    }));
+  };
 
   const renderUploadField = ({ keyName, label, help, accept, onFile, previewUrl }) => {
     const upload = uploadState[keyName] || {};
@@ -818,7 +863,7 @@ export default function MovieForm({ onCancel, onSaved, mode = "create", initialD
         <div className="movie-form__lang-grid">
           {["uz", "ru"].map((lang) => {
             const langTitle = lang === "uz" ? "O‘zbekcha" : "Ruscha";
-            const genreText = lang === "uz" ? genresUzText : genresRuText;
+            const genreText = genreDraft[lang] || "";
             return (
               <div className="movie-form__lang-col" key={lang}>
                 <h5 className="movie-form__lang-title">{langTitle}</h5>
@@ -903,26 +948,23 @@ export default function MovieForm({ onCancel, onSaved, mode = "create", initialD
                 </Field>
                 <Field
                   label="Saytda chiqadigan janrlar"
-                  help="Kino detail sahifasidagi “Janr:” yonidagi badge’lar. Vergul bilan yozing. Masalan: Drama, Komediya, Jangari"
+                  help="Prabeg yoki vergul bilan keyingi janrni yozing. Masalan: Komediya + probel + Drama → Komediya, Drama. Saytda badge va tavsifdagi janr shundan chiqadi."
                 >
                   <input
                     className="movie-form__input"
                     value={genreText}
-                    onChange={(e) => {
-                      const nextGenres = normalizeCommaText(e.target.value);
-                      patch({
-                        genre: {
-                          ...form.genre,
-                          [lang]: nextGenres,
-                        },
-                        description: {
-                          ...form.description,
-                          [lang]: {
-                            ...form.description[lang],
-                            genre: nextGenres,
-                          },
-                        },
-                      });
+                    placeholder="Komediya, Drama, Jangari"
+                    onChange={(e) => applyGenreDraft(lang, e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key !== " " && e.key !== ",") return;
+                      const input = e.currentTarget;
+                      const value = String(input.value || "");
+                      const start = input.selectionStart ?? value.length;
+                      const end = input.selectionEnd ?? value.length;
+                      const before = value.slice(0, start);
+                      if (!/[^,\s]$/.test(before)) return;
+                      e.preventDefault();
+                      applyGenreDraft(lang, `${before}, ${value.slice(end)}`);
                     }}
                   />
                 </Field>
