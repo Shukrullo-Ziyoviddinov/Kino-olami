@@ -51,11 +51,33 @@ const WatchModal = ({ movie, videoUrl, onClose }) => {
     if (movie.watchVideo && typeof movie.watchVideo === 'object') {
       const wv = movie.watchVideo;
       if (wv.uz && wv.ru) {
-        return wv[watchVideoTrack] || '';
+        const dual = wv[watchVideoTrack] || '';
+        if (dual) return dual;
       }
-      return wv[contentLang] || wv.uz || wv.ru;
+      const single = wv[contentLang] || wv.uz || wv.ru || '';
+      if (single) return single;
     }
     if (movie.watchUrl) return movie.watchUrl;
+
+    // Watch maydoni bo'sh: serial 1-qismidan olish
+    const seasons = Array.isArray(movie?.seasons) ? movie.seasons : [];
+    const seasonsSorted = seasons
+      .filter((season) => (season?.episodes || []).some((ep) => {
+        const uz = String(ep?.uz || '').trim();
+        const ru = String(ep?.ru || '').trim();
+        return (uz && uz !== 'none') || (ru && ru !== 'none');
+      }))
+      .sort((a, b) => Number(a?.seasonNumber || 0) - Number(b?.seasonNumber || 0));
+    const ep1 = seasonsSorted[0]?.episodes?.[0];
+    if (ep1) {
+      const lang = contentLang === 'ru' ? 'ru' : 'uz';
+      const preferred = String(ep1[lang] || '').trim();
+      if (preferred && preferred !== 'none') return preferred;
+      const uz = String(ep1.uz || '').trim();
+      if (uz && uz !== 'none') return uz;
+      const ru = String(ep1.ru || '').trim();
+      if (ru && ru !== 'none') return ru;
+    }
     return '';
   };
 

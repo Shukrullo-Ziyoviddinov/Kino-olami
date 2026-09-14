@@ -88,6 +88,43 @@ const getSeasonsWithEpisodes = (seasons) =>
     (season?.episodes || []).some(hasEpisodeVideo)
   );
 
+const getEpisodeVideoSrc = (ep, lang) => {
+  if (!ep) return '';
+  const order = lang === 'ru' ? ['ru', 'uz'] : ['uz', 'ru'];
+  for (const key of order) {
+    const value = String(ep?.[key] || '').trim();
+    if (value && value !== 'none') return value;
+  }
+  return '';
+};
+
+/** Faqat 1-mavsum (yoki birinchi mavjud mavsum) ning 1-qismi — 2/3/4 emas */
+const getFirstEpisodeVideoSrc = (seasons, lang) => {
+  const seasonsSorted = getSeasonsWithEpisodes(seasons)
+    .slice()
+    .sort((a, b) => Number(a?.seasonNumber || 0) - Number(b?.seasonNumber || 0));
+  const firstSeason = seasonsSorted[0];
+  if (!firstSeason) return '';
+  return getEpisodeVideoSrc((firstSeason.episodes || [])[0], lang);
+};
+
+const getMovieWatchVideoSrc = (movie) => {
+  if (movie?.watchVideo && typeof movie.watchVideo === 'object') {
+    const uz = String(movie.watchVideo.uz || '').trim();
+    const ru = String(movie.watchVideo.ru || '').trim();
+    if (uz && uz !== 'none') return uz;
+    if (ru && ru !== 'none') return ru;
+  } else if (movie?.watchVideo) {
+    const value = String(movie.watchVideo).trim();
+    if (value && value !== 'none') return value;
+  }
+  const watchUrl = String(movie?.watchUrl || '').trim();
+  if (watchUrl && watchUrl !== 'none') return watchUrl;
+  const videoUrl = String(movie?.videoUrl || '').trim();
+  if (videoUrl && videoUrl !== 'none') return videoUrl;
+  return '';
+};
+
 const MovieDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -656,11 +693,7 @@ const MovieDetail = () => {
     movie?.categoryName === 'anons' ||
     (Array.isArray(movie?.typeCategory) && movie.typeCategory.includes('anonslar'));
   const hasWatchVideo = Boolean(
-    (movie?.watchVideo && typeof movie.watchVideo === 'object'
-      ? movie.watchVideo.uz || movie.watchVideo.ru
-      : movie?.watchVideo) ||
-      movie?.watchUrl ||
-      movie?.videoUrl
+    getMovieWatchVideoSrc(movie) || getFirstEpisodeVideoSrc(movie?.seasons, seasonsLang)
   );
   // Anonsda tugma faqat qisqa video yuklangan bo'lsa ko'rinadi
   const showWatchButton = !isAnonsMovie || hasWatchVideo;
@@ -819,7 +852,14 @@ const MovieDetail = () => {
                   <button
                     className="movie-detail-btn movie-detail-btn-primary"
                     onClick={() => {
-                      setSelectedVideoUrl(null);
+                      // Watch bo'sh bo'lsa — faqat 1-qisim videosini ochish (ikkinchi yuklash shart emas)
+                      const watchSrc = getMovieWatchVideoSrc(movie);
+                      if (watchSrc) {
+                        setSelectedVideoUrl(null);
+                      } else {
+                        const ep1Src = getFirstEpisodeVideoSrc(movie?.seasons, seasonsLang);
+                        setSelectedVideoUrl(ep1Src || null);
+                      }
                       setShowWatchModal(true);
                     }}
                   >
