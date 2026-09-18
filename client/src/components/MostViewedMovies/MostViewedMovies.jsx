@@ -6,7 +6,6 @@ import HorizontalScroll from '../HorizontalScroll/HorizontalScroll';
 import ShowMoreButton, { getDisplayItems, shouldShowMore, DEFAULT_LIMIT } from '../ShowMoreButton/ShowMoreButton';
 import LoaderSkeleton from '../LoaderSkeleton/LoaderSkeleton';
 import MovieItem from '../Movies/MovieItem';
-import MostViewedViewsBadge from './MostViewedViewsBadge';
 import './MostViewedMovies.css';
 
 /**
@@ -73,9 +72,6 @@ const MostViewedMovies = ({
   };
 
   const renderCard = (movie, index, isPlaceholder = false) => {
-    const rank = movie?.rank || index + 1;
-    const uniqueUsers = movie?.uniqueUsers ?? 0;
-
     if (isPlaceholder) {
       return (
         <div
@@ -85,7 +81,6 @@ const MostViewedMovies = ({
           <div className={`movies-item ${isDetail ? 'movies-item-horizontal' : ''} most-viewed-card`}>
             <div className="movies-item-image-wrapper">
               <LoaderSkeleton variant="image" />
-              <MostViewedViewsBadge rank={index + 1} uniqueUsers={0} />
             </div>
             <LoaderSkeleton variant="text" className="movies-item-title-skeleton" width="85%" height={16} />
           </div>
@@ -95,7 +90,7 @@ const MostViewedMovies = ({
 
     return (
       <div
-        key={`${movie.id}-${rank}`}
+        key={movie.id}
         className={`most-viewed-item ${isPage ? 'most-viewed-item--grid' : ''}`}
       >
         <MovieItem
@@ -103,7 +98,6 @@ const MostViewedMovies = ({
           isDataLoading={isLoading}
           isHorizontal={isDetail}
           className="most-viewed-card"
-          imageOverlay={<MostViewedViewsBadge rank={rank} uniqueUsers={uniqueUsers} />}
           onMovieClick={handleMovieClick}
         />
       </div>

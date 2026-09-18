@@ -61,12 +61,6 @@
   position: relative;
 }
 
-/* Pastki views strip — age/IMDb bilan to'qnashmasin */
-.most-viewed-card .movies-item-badge-age,
-.most-viewed-card .movies-item-rating {
-  display: none;
-}
-
 .most-viewed--page .most-viewed-grid {
   margin-top: 8px;
 }
