@@ -28,7 +28,7 @@
   display: flex;
   flex-direction: column;
   background: var(--bg-card);
-  border: 1px solid rgba(229, 57, 53, 0.45);
+  border: none;
   border-radius: 16px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55);
   color: #fff;

@@ -418,7 +418,7 @@
 
 .watch-modal-progress-filled {
   height: 100%;
-  background: linear-gradient(135deg, #ff6b73 0%, #e50914 100%);
+  background: linear-gradient(135deg, #ffd54a 0%, #f5c518 100%);
   border-radius: 8px;
   transition: width 0.1s linear;
   position: relative;
@@ -431,7 +431,7 @@
   transform: translateY(-50%);
   width: 16px;
   height: 16px;
-  background: linear-gradient(135deg, #ff6b73 0%, #e50914 100%);
+  background: linear-gradient(135deg, #ffd54a 0%, #f5c518 100%);
   border-radius: 50%;
   border: 3px solid #ffffff;
   transition: all 0.2s ease;
@@ -440,7 +440,7 @@
 .watch-modal-progress-container:hover .watch-modal-progress-thumb {
   width: 18px;
   height: 18px;
-  box-shadow: 0 0 20px rgba(255, 91, 99, 0.85),
+  box-shadow: 0 0 20px rgba(245, 197, 24, 0.85),
               0 2px 12px rgba(0, 0, 0, 0.7);
 }
 

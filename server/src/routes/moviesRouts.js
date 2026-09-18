@@ -4,7 +4,7 @@ const { success, fail } = require("../utils/apiResponse");
 const { parsePagination, buildPaginationMeta } = require("../utils/pagination");
 const { applyPagination } = require("../utils/queryOptimizer");
 const { validateIdParam } = require("../middlewares/validateRequest");
-const { buildTopRatedMovies } = require("../services/topRatedService");
+const { paginateTopRatedMovies, TOP_RATED_LIMIT } = require("../services/topRatedService");
 const { buildWeeklyTopMovies, MAX_WEEKLY_TOP } = require("../services/weeklyTopService");
 const { toPublicMovie, buildSimilarMovies } = require("../services/similarMoviesService");
 const authMiddleware = require("../middlewares/auth.middleware");
@@ -88,20 +88,23 @@ router.get("/top-rated", async (req, res, next) => {
   try {
     const pagination = parsePagination(req.query);
     const rows = await Movie.find().select("-__v").lean();
-    const movies = rows.map(toApiMovie);
 
-    const topRatedMovies = buildTopRatedMovies(movies);
-    const paginatedItems = topRatedMovies.slice(
-      pagination.skip,
-      pagination.skip + pagination.limit
-    );
+    // Avval raw docs bilan sort (createdAt saqlanadi), keyin API shape
+    const { items: rankedRows, totalItems } = paginateTopRatedMovies(rows, {
+      skip: pagination.skip,
+      limit: pagination.limit,
+    });
+    const items = rankedRows.map(toApiMovie);
 
     return success(
       res,
-      paginatedItems,
+      items,
       "Yuqori reytingli kinolar",
       200,
-      buildPaginationMeta(topRatedMovies.length, pagination)
+      {
+        ...buildPaginationMeta(totalItems, pagination),
+        maxItems: TOP_RATED_LIMIT,
+      }
     );
   } catch (error) {
     return next(error);
