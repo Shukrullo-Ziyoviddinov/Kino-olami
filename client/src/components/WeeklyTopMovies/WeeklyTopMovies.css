@@ -19,7 +19,7 @@
 .weekly-top-card .movies-item-image-wrapper .weekly-top-rank,
 .weekly-top-item .movies-item-image-wrapper .weekly-top-rank {
   position: absolute;
-  left: 0.5rem;
+  left: 0;
   bottom: 0.5rem;
   z-index: 3;
   display: flex;
@@ -28,6 +28,7 @@
   pointer-events: none;
   user-select: none;
   line-height: 1;
+  transform: translateX(-0.35rem);
 }
 
 .weekly-top-rank-text {
@@ -39,7 +40,7 @@
   font-style: italic;
   line-height: 0.82;
   letter-spacing: -0.06em;
-  color: #000000;
+  color: #f5c518;
   -webkit-text-stroke: 0;
   text-shadow: none;
 }
