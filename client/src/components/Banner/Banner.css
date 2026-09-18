@@ -137,7 +137,7 @@
 .manga-title-img-wrapper {
     position: relative;
     width: min(440px, 100%);
-    min-height: 80px;
+    min-height: 10px;
     max-height: 155px;
 }
 
@@ -226,13 +226,16 @@
 }
 
 .manga-action-btn.watch {
-    border: 1px solid #e50914;
-    background: #e50914;
-    box-shadow: 0 8px 24px rgba(229, 9, 20, 0.3);
+    border: 1px solid #f5c518;
+    background: #f5c518;
+    color: #111111;
+    box-shadow: 0 8px 24px rgba(245, 197, 24, 0.3);
 }
 
 .manga-action-btn.watch:hover {
-    background: #f21622;
+    background: #ffd54a;
+    border-color: #ffd54a;
+    color: #111111;
 }
 
 .manga-action-btn.details {

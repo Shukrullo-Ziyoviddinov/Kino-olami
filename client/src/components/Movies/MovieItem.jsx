@@ -28,6 +28,8 @@ const MovieItem = ({
   isWideLayout = false,
   className = '',
   onMovieClick,
+  rank = null,
+  hideAgeBadge = false,
 }) => {
   const { t } = useTranslation();
   const { toggleWishlist, isInWishlist } = useWishlist();
@@ -44,6 +46,7 @@ const MovieItem = ({
   const showLoading = isDataLoading || imageLoading;
   const imdbRating = getImdbRating(movie);
   const ageRestriction = getMovieAgeRestriction(movie);
+  const showAgeBadge = !hideAgeBadge && rank == null && ageRestriction != null;
 
   return (
     <div
@@ -63,6 +66,11 @@ const MovieItem = ({
             onError={onError}
           />
         ) : null}
+        {rank != null && (
+          <span className="weekly-top-rank" aria-hidden="true">
+            <span className="weekly-top-rank-text" data-rank={rank}>{rank}</span>
+          </span>
+        )}
         {!showLoading && (
           <>
             <button
@@ -82,7 +90,7 @@ const MovieItem = ({
             ) : (
               <div className="movies-item-badge movies-item-badge-fhd">FHD</div>
             )}
-            {ageRestriction != null && (
+            {showAgeBadge && (
               <div className="movies-item-badge movies-item-badge-age">{ageRestriction}+</div>
             )}
             {imdbRating != null && (
