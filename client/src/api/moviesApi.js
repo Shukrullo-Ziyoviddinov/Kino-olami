@@ -76,3 +76,22 @@ export const fetchWeeklyTopMovies = async ({ limit = WEEKLY_TOP_LIMIT } = {}) =>
     meta: data?.meta || null,
   };
 };
+
+/** Eng ko'p ko'rilgan — max 20; preview + /category/mostViewed */
+export const MOST_VIEWED_LIMIT = 20;
+
+export const fetchMostViewedMovies = async ({ limit = MOST_VIEWED_LIMIT } = {}) => {
+  const safeLimit = Math.min(Math.max(1, Number(limit) || MOST_VIEWED_LIMIT), MOST_VIEWED_LIMIT);
+  const query = `?limit=${safeLimit}`;
+  const data = await apiClient.get(`/api/movies/most-viewed${query}`, {
+    cacheKey: `movies:most-viewed:${safeLimit}`,
+    ttlMs: 60 * 1000,
+    dedupeKey: `movies:most-viewed:${safeLimit}`,
+    includeMeta: true,
+  });
+
+  return {
+    items: Array.isArray(data?.data) ? data.data : [],
+    meta: data?.meta || null,
+  };
+};

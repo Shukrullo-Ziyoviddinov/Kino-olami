@@ -1,0 +1,86 @@
+/* Movie detail — SimilarMovies bilan bir xil ritm */
+.most-viewed--detail {
+  width: 100%;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.most-viewed-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+.most-viewed-title {
+  font-size: 1.75rem;
+  font-weight: bold;
+  margin: 0;
+  background: linear-gradient(
+    135deg,
+    #ffffff 0%,
+    #e8e8e8 30%,
+    #c0c0c0 60%,
+    #a0a0a0 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.most-viewed-header .show-more-btn {
+  flex-shrink: 0;
+}
+
+.most-viewed--detail .horizontal-scroll-wrapper {
+  width: 100%;
+}
+
+.most-viewed-item {
+  flex-shrink: 0;
+  width: 180px;
+  box-sizing: border-box;
+}
+
+.most-viewed-item--grid {
+  width: auto;
+  flex-shrink: unset;
+}
+
+.most-viewed-card {
+  width: 100%;
+}
+
+/* MovieItem horizontal default 200px — detailda parent (180px) ga moslash */
+.most-viewed--detail .most-viewed-card.movies-item-horizontal {
+  width: 100%;
+}
+
+.most-viewed-card .movies-item-image-wrapper {
+  position: relative;
+}
+
+/* Pastki views strip — age/IMDb bilan to'qnashmasin */
+.most-viewed-card .movies-item-badge-age,
+.most-viewed-card .movies-item-rating {
+  display: none;
+}
+
+.most-viewed--page .most-viewed-grid {
+  margin-top: 8px;
+}
+
+@media (max-width: 768px) {
+  .most-viewed-item {
+    width: 150px;
+  }
+
+  .most-viewed-title {
+    font-size: 1.35rem;
+  }
+
+  .most-viewed-header {
+    margin-bottom: 1.25rem;
+  }
+}

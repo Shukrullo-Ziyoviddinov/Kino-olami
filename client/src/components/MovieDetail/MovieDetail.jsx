@@ -11,6 +11,7 @@ import { MovieDetailMediaImage, MovieDetailTitleImage, MovieDetailActorItem } fr
 import WatchModal from './WatchModal';
 import MovieComments from './MovieComments';
 import SimilarMovies from './SimilarMovies';
+import MostViewedMovies from '../MostViewedMovies/MostViewedMovies';
 import ScrollTouch from '../ScrollTouch/ScrollTouch';
 import ShareButton from '../ShareButton/ShareButton';
 import { formatActionCount } from '../../utils/utils';
@@ -1127,6 +1128,11 @@ const MovieDetail = () => {
       </div>
       <div className="movie-detail-container movie-detail-similar-wrapper">
         <SimilarMovies currentMovie={movie} />
+        <MostViewedMovies
+          variant="detail"
+          excludeMovieId={movie?.id}
+          moreTo="/category/mostViewed"
+        />
       </div>
 
       {showWatchModal && (

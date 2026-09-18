@@ -6,6 +6,7 @@ import { fetchTopRatedMovies } from '../api/moviesApi';
 import { fetchMoviesCatalog } from '../api/moviesCatalogApi';
 import Filters from '../components/Filters';
 import Movies from '../components/Movies/Movies';
+import MostViewedMovies from '../components/MostViewedMovies/MostViewedMovies';
 import './RecommendedPage.css';
 
 const CATEGORY_GENRE_MAP = {
@@ -53,9 +54,12 @@ const shouldLoadMoreByScroll = () => {
   return scrollBottom >= docHeight - threshold || docHeight <= window.innerHeight + threshold;
 };
 
+const isMostViewedCategory = (categoryId) =>
+  categoryId === 'mostViewed' || categoryId === 'most-viewed';
+
 const resolveSectionKey = (categoryId, pathname) => {
   if (pathname === '/recommended') return 'recommended';
-  if (!categoryId || categoryId === 'topRated') return null;
+  if (!categoryId || categoryId === 'topRated' || isMostViewedCategory(categoryId)) return null;
   if (categoryId === 'korea') return 'koreaDrama';
   if (CATALOG_SECTIONS.has(categoryId)) return categoryId;
   return null;
@@ -331,7 +335,7 @@ const RecommendedPage = () => {
   // Genre / similar sahifalar — kerakli to'liq katalog (lazy)
   const isSimilarMoviesPage = location.pathname.startsWith('/similar-movies/');
   const isGenreCategoryPage = Boolean(categoryId && CATEGORY_GENRE_MAP[categoryId]);
-  const useCatalogScroll = !sectionKey && categoryId !== 'topRated' && (isSimilarMoviesPage || isGenreCategoryPage || Boolean(genreFromUrl));
+  const useCatalogScroll = !sectionKey && categoryId !== 'topRated' && !isMostViewedCategory(categoryId) && (isSimilarMoviesPage || isGenreCategoryPage || Boolean(genreFromUrl));
 
   useEffect(() => {
     if (!useCatalogScroll) return undefined;
@@ -388,33 +392,43 @@ const RecommendedPage = () => {
 
   return (
     <div className="recommended-page">
-      <Filters
-        isLoading={recommendedLoading}
-        movies={categoryFiltered}
-        selectedRating={selectedRating}
-        onRatingSelect={setSelectedRating}
-        selectedCountry={selectedCountry}
-        onCountrySelect={setSelectedCountry}
-        selectedGenres={selectedGenres}
-        onGenreSelect={setSelectedGenres}
-        selectedAge={selectedAge}
-        onAgeSelect={setSelectedAge}
-      />
-      <Movies
-        sectionType="all"
-        limit={null}
-        filteredMovies={filteredMovies}
-        hideHeader
-        isLoading={recommendedLoading}
-      />
-      {loadingMore && (
-        <Movies
-          sectionType="all"
-          limit={null}
-          filteredMovies={[]}
+      {isMostViewedCategory(categoryId) ? (
+        <MostViewedMovies
+          variant="page"
+          moreTo={null}
           hideHeader
-          isLoading
         />
+      ) : (
+        <>
+          <Filters
+            isLoading={recommendedLoading}
+            movies={categoryFiltered}
+            selectedRating={selectedRating}
+            onRatingSelect={setSelectedRating}
+            selectedCountry={selectedCountry}
+            onCountrySelect={setSelectedCountry}
+            selectedGenres={selectedGenres}
+            onGenreSelect={setSelectedGenres}
+            selectedAge={selectedAge}
+            onAgeSelect={setSelectedAge}
+          />
+          <Movies
+            sectionType="all"
+            limit={null}
+            filteredMovies={filteredMovies}
+            hideHeader
+            isLoading={recommendedLoading}
+          />
+          {loadingMore && (
+            <Movies
+              sectionType="all"
+              limit={null}
+              filteredMovies={[]}
+              hideHeader
+              isLoading
+            />
+          )}
+        </>
       )}
     </div>
   );

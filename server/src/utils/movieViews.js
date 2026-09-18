@@ -1,11 +1,13 @@
 /**
  * Kino ko'rishlar: User.viewedMovies da saqlanadi.
- * Haftalik top uchun unique user + joriy hafta (Dushanba–Yakshanba) asosida hisoblanadi.
+ * - Haftalik top: unique user + joriy hafta (Dushanba–Yakshanba)
+ * - Most viewed: all-time uniqueUsers + totalViews, hard cap 20
  */
 
 const User = require("../models/User");
 
 const VIEWED_MOVIES_LIMIT = 150;
+const MAX_MOST_VIEWED = 20;
 
 /** Joriy kalendar haftasi: dushanba 00:00 → yakshanba oxiri (Asia/Tashkent, UTC+5). */
 const TASHKENT_OFFSET_MS = 5 * 60 * 60 * 1000;
@@ -120,10 +122,56 @@ const getWeeklyUniqueViewRows = async ({
   }));
 };
 
+/**
+ * All-time eng ko'p ko'rilgan kinolar (Top-N).
+ * Sort: uniqueUsers DESC → totalViews DESC → movieId ASC
+ * Hard cap: MAX_MOST_VIEWED (20)
+ *
+ * @returns {Promise<Array<{ movieId: number, uniqueUsers: number, totalViews: number }>>}
+ */
+const getMostViewedRows = async ({
+  limit = MAX_MOST_VIEWED,
+  minUniqueUsers = 1,
+} = {}) => {
+  const safeLimit = Math.min(
+    Math.max(1, Number(limit) || MAX_MOST_VIEWED),
+    MAX_MOST_VIEWED
+  );
+  const safeMin = Math.max(1, Number(minUniqueUsers) || 1);
+
+  const rows = await User.aggregate([
+    { $match: { "viewedMovies.0": { $exists: true } } },
+    { $unwind: "$viewedMovies" },
+    {
+      $match: {
+        "viewedMovies.movieId": { $type: "number", $gt: 0 },
+      },
+    },
+    {
+      $group: {
+        _id: "$viewedMovies.movieId",
+        uniqueUsers: { $sum: 1 },
+        totalViews: { $sum: { $ifNull: ["$viewedMovies.viewCount", 1] } },
+      },
+    },
+    { $match: { uniqueUsers: { $gte: safeMin } } },
+    { $sort: { uniqueUsers: -1, totalViews: -1, _id: 1 } },
+    { $limit: safeLimit },
+  ]);
+
+  return rows.map((row) => ({
+    movieId: Number(row._id),
+    uniqueUsers: Number(row.uniqueUsers) || 0,
+    totalViews: Number(row.totalViews) || 0,
+  }));
+};
+
 module.exports = {
   VIEWED_MOVIES_LIMIT,
+  MAX_MOST_VIEWED,
   getCurrentWeekRange,
   toMovieId,
   registerMovieView,
   getWeeklyUniqueViewRows,
+  getMostViewedRows,
 };

@@ -6,6 +6,7 @@ const { applyPagination } = require("../utils/queryOptimizer");
 const { validateIdParam } = require("../middlewares/validateRequest");
 const { paginateTopRatedMovies, TOP_RATED_LIMIT } = require("../services/topRatedService");
 const { buildWeeklyTopMovies, MAX_WEEKLY_TOP } = require("../services/weeklyTopService");
+const { buildMostViewedMovies, MAX_MOST_VIEWED } = require("../services/mostViewedService");
 const { toPublicMovie, buildSimilarMovies } = require("../services/similarMoviesService");
 const authMiddleware = require("../middlewares/auth.middleware");
 const MovieComment = require("../models/movieComment");
@@ -123,6 +124,30 @@ router.get("/weekly-top", async (req, res, next) => {
 
     return success(res, items, "Haftaning top 5 filimi", 200, {
       ...meta,
+      page: 1,
+      limit,
+      totalPages: 1,
+      hasNextPage: false,
+      hasPrevPage: false,
+    });
+  } catch (error) {
+    return next(error);
+  }
+});
+
+router.get("/most-viewed", async (req, res, next) => {
+  try {
+    const limitRaw = Number(req.query.limit);
+    const limit =
+      Number.isFinite(limitRaw) && limitRaw > 0
+        ? Math.min(Math.floor(limitRaw), MAX_MOST_VIEWED)
+        : MAX_MOST_VIEWED;
+
+    const { items, meta } = await buildMostViewedMovies({ limit });
+
+    return success(res, items, "Eng ko'p ko'rilgan kinolar", 200, {
+      ...meta,
+      maxItems: MAX_MOST_VIEWED,
       page: 1,
       limit,
       totalPages: 1,
