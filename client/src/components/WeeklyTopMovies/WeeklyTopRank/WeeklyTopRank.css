@@ -1,0 +1,37 @@
+.weekly-top-rank {
+  position: absolute;
+  left: 0;
+  bottom: 0.35rem;
+  z-index: 3;
+  display: block;
+  width: auto;
+  height: 7rem;
+  pointer-events: none;
+  user-select: none;
+  transform: translateX(0.15rem) skewX(-8deg);
+  transform-origin: left bottom;
+  color: #f5c518;
+}
+
+.weekly-top-rank__svg {
+  display: block;
+  width: auto;
+  height: 100%;
+  overflow: visible;
+}
+
+.weekly-top-rank__path {
+  fill: currentColor;
+}
+
+@media (max-width: 768px) {
+  .weekly-top-rank {
+    height: 5rem;
+  }
+}
+
+@media (max-width: 450px) {
+  .weekly-top-rank {
+    height: 4.25rem;
+  }
+}

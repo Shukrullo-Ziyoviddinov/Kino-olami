@@ -5,6 +5,7 @@ import { fetchWeeklyTopMovies, WEEKLY_TOP_LIMIT } from '../../api/moviesApi';
 import HorizontalScroll from '../HorizontalScroll/HorizontalScroll';
 import LoaderSkeleton from '../LoaderSkeleton/LoaderSkeleton';
 import MovieItem from '../Movies/MovieItem';
+import WeeklyTopRank from './WeeklyTopRank/WeeklyTopRank';
 import './WeeklyTopMovies.css';
 
 const WeeklyTopMovies = () => {
@@ -65,9 +66,7 @@ const WeeklyTopMovies = () => {
                     <div className="movies-item movies-item-horizontal weekly-top-card">
                       <div className="movies-item-image-wrapper">
                         <LoaderSkeleton variant="image" />
-                        <span className="weekly-top-rank" aria-hidden="true">
-                          <span className="weekly-top-rank-text" data-rank={index + 1}>{index + 1}</span>
-                        </span>
+                        <WeeklyTopRank rank={index + 1} />
                       </div>
                       <LoaderSkeleton variant="text" className="movies-item-title-skeleton" width="85%" height={16} />
                     </div>
@@ -83,8 +82,8 @@ const WeeklyTopMovies = () => {
                         isDataLoading={isLoading}
                         isHorizontal
                         className="weekly-top-card"
-                        rank={rank}
                         hideAgeBadge
+                        imageOverlay={<WeeklyTopRank rank={rank} />}
                         onMovieClick={handleMovieClick}
                       />
                     </div>

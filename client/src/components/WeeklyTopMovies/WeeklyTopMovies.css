@@ -15,41 +15,6 @@
   overflow: visible;
 }
 
-/* Rank — age badge o‘rnida, pastki chap */
-.weekly-top-card .movies-item-image-wrapper .weekly-top-rank,
-.weekly-top-item .movies-item-image-wrapper .weekly-top-rank {
-  position: absolute;
-  left: 0;
-  bottom: 0.5rem;
-  z-index: 3;
-  display: flex;
-  align-items: flex-end;
-  justify-content: flex-start;
-  pointer-events: none;
-  user-select: none;
-  line-height: 1;
-  transform: translateX(-0.35rem);
-}
-
-.weekly-top-rank-text {
-  position: relative;
-  display: block;
-  font-family: "Arial Black", Impact, "Helvetica Neue", sans-serif;
-  font-size: 7rem;
-  font-weight: 900;
-  font-style: italic;
-  line-height: 0.82;
-  letter-spacing: -0.06em;
-  color: #f5c518;
-  -webkit-text-stroke: 0;
-  text-shadow: none;
-}
-
-.weekly-top-rank-text::before,
-.weekly-top-rank-text::after {
-  content: none;
-}
-
 /* Weekly topda age badge yo‘q */
 .weekly-top-card .movies-item-badge-age {
   display: none !important;
@@ -58,15 +23,5 @@
 @media (max-width: 768px) {
   .weekly-top-item {
     width: 150px;
-  }
-
-  .weekly-top-rank-text {
-    font-size: 5rem;
-  }
-}
-
-@media (max-width: 450px) {
-  .weekly-top-rank-text {
-    font-size: 4.25rem;
   }
 }
