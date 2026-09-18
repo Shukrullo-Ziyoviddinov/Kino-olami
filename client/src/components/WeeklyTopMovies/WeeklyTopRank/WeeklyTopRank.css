@@ -1,16 +1,18 @@
 .weekly-top-rank {
+  --rank-fill: #f5c518;
+  --rank-stroke: #1a1400;
   position: absolute;
   left: 0;
-  bottom: 0.35rem;
+  bottom: 0.2rem;
   z-index: 3;
   display: block;
   width: auto;
-  height: 7rem;
+  height: 7.5rem;
   pointer-events: none;
   user-select: none;
-  transform: translateX(0.15rem) skewX(-8deg);
+  transform: translateX(0.1rem) skewX(-10deg);
   transform-origin: left bottom;
-  color: #f5c518;
+  filter: drop-shadow(2px 3px 0 rgba(0, 0, 0, 0.55));
 }
 
 .weekly-top-rank__svg {
@@ -20,18 +22,32 @@
   overflow: visible;
 }
 
-.weekly-top-rank__path {
-  fill: currentColor;
+.weekly-top-rank__stroke path {
+  fill: var(--rank-stroke);
+  transform-box: fill-box;
+}
+
+.weekly-top-rank__stroke {
+  transform: translate(2.2px, 2.2px);
+}
+
+.weekly-top-rank__fill path {
+  fill: var(--rank-fill);
 }
 
 @media (max-width: 768px) {
   .weekly-top-rank {
-    height: 5rem;
+    height: 5.4rem;
+    filter: drop-shadow(1.5px 2px 0 rgba(0, 0, 0, 0.5));
+  }
+
+  .weekly-top-rank__stroke {
+    transform: translate(1.6px, 1.6px);
   }
 }
 
 @media (max-width: 450px) {
   .weekly-top-rank {
-    height: 4.25rem;
+    height: 4.5rem;
   }
 }
