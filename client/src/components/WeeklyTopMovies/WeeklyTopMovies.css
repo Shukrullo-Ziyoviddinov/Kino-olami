@@ -13,6 +13,12 @@
 .weekly-top-card .movies-item-image-wrapper {
   position: relative;
   overflow: visible;
+  border-radius: 8px;
+}
+
+.weekly-top-card .movies-item-image,
+.weekly-top-card .movies-item-image-wrapper .loader-skeleton {
+  border-radius: 8px;
 }
 
 /* Weekly topda age badge yo‘q */
