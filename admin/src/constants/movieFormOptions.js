@@ -35,7 +35,7 @@ export const CATEGORY_NAME_TO_SECTION = {
   tarixiyDoramalar: "animations",
   animationMovie: "animations",
   multFilm: "animations",
-  animation: "animation",
+  animation: "multfilmlar",
 };
 
 /** Admin dropdown — category va categoryName bir xil ro'yxat */

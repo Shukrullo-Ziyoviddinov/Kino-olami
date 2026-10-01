@@ -26,7 +26,7 @@ const CATALOG_SECTIONS = new Set([
   'kinolar',
   'worldMovies',
   'animations',
-  'animation',
+  'multfilmlar',
   'turkishSeries',
   'tvSeries',
   'actionMovies',
@@ -62,6 +62,7 @@ const resolveSectionKey = (categoryId, pathname) => {
   if (pathname === '/recommended') return 'recommended';
   if (!categoryId || categoryId === 'topRated' || isMostViewedCategory(categoryId)) return null;
   if (categoryId === 'korea') return 'koreaDrama';
+  if (categoryId === 'animation') return 'multfilmlar';
   if (CATALOG_SECTIONS.has(categoryId)) return categoryId;
   return null;
 };

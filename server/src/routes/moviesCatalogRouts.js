@@ -75,6 +75,7 @@ const resolveSectionQuery = (raw) => {
   const section = String(raw || "").trim();
   if (!section) return null;
   if (section === "korea") return "koreaDrama";
+  if (section === "animation") return "multfilmlar";
   if (section === "recommended") return "recommended";
   if (SECTION_TO_CATEGORY_NAMES[section]) return section;
   return null;
