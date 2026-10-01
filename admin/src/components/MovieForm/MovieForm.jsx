@@ -6,6 +6,7 @@ import { uploadToR2, UPLOAD_FOLDERS } from "../../services/uploadApi";
 import {
   CATEGORY_NAME_OPTIONS,
   CATEGORY_NAME_TO_SECTION,
+  getCategoryNameLabel,
   isAnonsCategory,
   TYPE_CATEGORY_OPTIONS,
 } from "../../constants/movieFormOptions";
@@ -1176,7 +1177,7 @@ export default function MovieForm({ onCancel, onSaved, mode = "create", initialD
                 className="movie-form__dropdown-trigger"
                 onClick={() => setCategoryNameOpen((v) => !v)}
               >
-                {form.categoryName || "Bo‘limni tanlang"}
+                {getCategoryNameLabel(form.categoryName) || "Bo‘limni tanlang"}
               </button>
               {categoryNameOpen && (
                 <div className="movie-form__dropdown-menu">
@@ -1187,7 +1188,7 @@ export default function MovieForm({ onCancel, onSaved, mode = "create", initialD
                       className={`movie-form__option-btn${form.categoryName === item ? " is-active" : ""}`}
                       onClick={() => selectCategoryName(item)}
                     >
-                      {item}
+                      {getCategoryNameLabel(item)}
                     </button>
                   ))}
                 </div>

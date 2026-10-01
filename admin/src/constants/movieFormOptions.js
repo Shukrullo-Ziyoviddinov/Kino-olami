@@ -32,9 +32,9 @@ export const CATEGORY_NAME_TO_SECTION = {
   anons: "anonslar",
   actionMovie: "actionMovies",
   tarixiyDoramalar: "animations",
-  animation: "animations",
   animationMovie: "animations",
   multFilm: "animations",
+  animation: "animation",
 };
 
 /** Admin dropdown — category va categoryName bir xil ro'yxat */
@@ -43,6 +43,7 @@ export const CATEGORY_NAME_OPTIONS = [
   "kinolar",
   "Detektiv",
   "tarixiyDoramalar",
+  "animation",
   "Komediya",
   "tvSeries",
   "actionMovie",
@@ -50,6 +51,14 @@ export const CATEGORY_NAME_OPTIONS = [
   "romanceMovie",
   "anons",
 ];
+
+/** Dropdownda ko'rinadigan nom (saqlanadigan qiymat o'zgarmaydi) */
+export const CATEGORY_NAME_LABELS = {
+  animation: "Multfilimlar",
+};
+
+export const getCategoryNameLabel = (value) =>
+  CATEGORY_NAME_LABELS[value] || value;
 
 export const CATEGORY_OPTIONS = CATEGORY_NAME_OPTIONS;
 

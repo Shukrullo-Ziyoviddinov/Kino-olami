@@ -26,6 +26,7 @@ const CATALOG_SECTIONS = new Set([
   'kinolar',
   'worldMovies',
   'animations',
+  'animation',
   'turkishSeries',
   'tvSeries',
   'actionMovies',

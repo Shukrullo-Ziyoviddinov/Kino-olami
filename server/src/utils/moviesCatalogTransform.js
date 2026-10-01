@@ -18,10 +18,10 @@ const CATEGORY_NAME_TO_SECTION = {
   actionMovie: "actionMovies",
   actionMovies: "actionMovies",
   tarixiyDoramalar: "animations",
-  animation: "animations",
   animationMovie: "animations",
   multFilm: "animations",
   animations: "animations",
+  animation: "animation",
 };
 
 const SECTION_TO_CATEGORY_NAMES = Object.entries(CATEGORY_NAME_TO_SECTION).reduce((acc, [categoryName, section]) => {
@@ -88,6 +88,7 @@ const buildMoviesCatalog = (movies, { user = null } = {}) => {
       kinolar: bySection("kinolar"),
       worldMovies: bySection("worldMovies"),
       animations: bySection("animations"),
+      animation: bySection("animation"),
       turkishSeries: bySection("turkishSeries"),
       tvSeries: bySection("tvSeries"),
       actionMovies: bySection("actionMovies"),
