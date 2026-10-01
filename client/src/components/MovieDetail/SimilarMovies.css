@@ -219,6 +219,10 @@
 }
 
 @media (max-width: 768px) {
+  .similar-movies {
+    padding: 0 0.75rem;
+  }
+
   .similar-movies-item {
     width: 140px;
   }

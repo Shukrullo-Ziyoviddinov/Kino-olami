@@ -66,6 +66,10 @@
 }
 
 @media (max-width: 768px) {
+  .most-viewed--detail {
+    padding: 0 0.75rem;
+  }
+
   .most-viewed-item {
     width: 150px;
   }
