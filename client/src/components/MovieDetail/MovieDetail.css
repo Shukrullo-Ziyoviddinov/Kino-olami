@@ -1291,13 +1291,53 @@
   }
 
   .movie-detail-info-block {
+    --info-overlap: 10rem;
     padding: 0 1rem;
     margin: 0;
-    margin-top: -10rem;
+    margin-top: calc(-1 * var(--info-overlap));
     position: relative;
     z-index: 2;
-    background: transparent;
     box-sizing: border-box;
+    background: transparent;
+  }
+
+  /* Video pastidagi soya — info yuqorisida (scroll paytida) */
+  .movie-detail-info-block::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: var(--info-overlap);
+    pointer-events: none;
+    z-index: 0;
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(0, 0, 0, 0.15) 22%,
+      rgba(0, 0, 0, 0.4) 42%,
+      rgba(0, 0, 0, 0.72) 62%,
+      rgba(0, 0, 0, 0.92) 82%,
+      var(--bg-body) 100%
+    );
+  }
+
+  /* Scroll qilganda info orqa foni — sahifa foni */
+  .movie-detail-info-block::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: var(--info-overlap);
+    bottom: 0;
+    z-index: 0;
+    pointer-events: none;
+    background: var(--bg-body);
+  }
+
+  .movie-detail-info-block > * {
+    position: relative;
+    z-index: 1;
   }
 
   .movie-detail-title {
@@ -1464,8 +1504,9 @@
   }
 
   .movie-detail-info-block {
+    --info-overlap: 6rem;
     padding: 0 0.75rem;
-    margin-top: -6rem;
+    margin-top: calc(-1 * var(--info-overlap));
   }
 
   .movie-detail-btn {
