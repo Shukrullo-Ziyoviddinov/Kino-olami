@@ -36,7 +36,7 @@ const Home = () => {
     kinolar: { title: t('movies.kinolar'), to: '/category/kinolar' },
     worldMovies: { title: t('movies.worldMovies'), to: '/category/worldMovies' },
     animations: { title: t('movies.animations'), to: '/category/animations' },
-    multfilmlar: { title: t('movies.multfilmlar'), to: '/category/multfilmlar' },
+    animation: { title: t('movies.animation'), to: '/category/animation' },
     turkishSeries: { title: t('movies.turkishSeries'), to: '/category/turkishSeries' },
     tvSeries: { title: t('movies.tvSeries'), to: '/category/tvSeries' },
     actionMovies: { title: t('movies.actionMovies'), to: '/category/actionMovies' },

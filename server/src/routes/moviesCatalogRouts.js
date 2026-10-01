@@ -75,7 +75,7 @@ const resolveSectionQuery = (raw) => {
   const section = String(raw || "").trim();
   if (!section) return null;
   if (section === "korea") return "koreaDrama";
-  if (section === "animation") return "multfilmlar";
+  if (section === "multfilmlar") return "animation";
   if (section === "recommended") return "recommended";
   if (SECTION_TO_CATEGORY_NAMES[section]) return section;
   return null;
@@ -113,8 +113,8 @@ const loadSectionPreview = async (sectionKey, limit, { user, popularMovieScores 
     .lean();
   const movies = rawMovies.map(normalizeMovie);
   const catalog = buildMoviesCatalog(movies, { user, popularMovieScores });
-  const sectionItems = catalog.sections?.[sectionKey] || [];
-  const items = sectionItems.length ? sectionItems : catalog.allMovies || [];
+  // Faqat so'ralgan bo'lim — allMovies fallback boshqa bo'limni chalkashtiradi
+  const items = catalog.sections?.[sectionKey] || [];
   return {
     items,
     hasMore: total > limit,
@@ -252,8 +252,7 @@ router.get("/", async (req, res, next) => {
       ).lean();
       const movies = rawMovies.map(normalizeMovie);
       const catalog = buildMoviesCatalog(movies, { user, popularMovieScores });
-      const sectionItems = catalog.sections?.[section] || [];
-      const allMovies = sectionItems.length ? sectionItems : catalog.allMovies || [];
+      const allMovies = catalog.sections?.[section] || [];
       return success(
         res,
         {

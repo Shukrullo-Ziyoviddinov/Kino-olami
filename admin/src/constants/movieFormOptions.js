@@ -17,7 +17,8 @@ export const TYPE_CATEGORY_OPTIONS = [
 
 /**
  * categoryName → catalog section (home/API).
- * category maydoni endi categoryName bilan bir xil saqlanadi.
+ * animation = Multfilmlar olami
+ * animations = Tarixiy doramalar (boshqa bo'lim)
  */
 export const CATEGORY_NAME_TO_SECTION = {
   romanceMovie: "romanceMovies",
@@ -35,7 +36,7 @@ export const CATEGORY_NAME_TO_SECTION = {
   tarixiyDoramalar: "animations",
   animationMovie: "animations",
   multFilm: "animations",
-  animation: "multfilmlar",
+  animation: "animation",
 };
 
 /** Admin dropdown — category va categoryName bir xil ro'yxat */
@@ -53,7 +54,7 @@ export const CATEGORY_NAME_OPTIONS = [
   "anons",
 ];
 
-/** Dropdownda ko'rinadigan nom (saqlanadigan qiymat o'zgarmaydi) */
+/** Dropdownda ko'rinadigan nom */
 export const CATEGORY_NAME_LABELS = {
   animation: "Multfilimlar",
 };

@@ -11,7 +11,7 @@ export const HOME_SECTION_ORDER = [
   'kinolar',
   'worldMovies',
   'animations',
-  'multfilmlar',
+  'animation',
   'turkishSeries',
   'tvSeries',
   'topRated',

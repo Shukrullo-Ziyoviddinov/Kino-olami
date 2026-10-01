@@ -21,8 +21,9 @@ const CATEGORY_NAME_TO_SECTION = {
   animationMovie: "animations",
   multFilm: "animations",
   animations: "animations",
-  animation: "multfilmlar",
-  multfilmlar: "multfilmlar",
+  // Multfilmlar olami
+  animation: "animation",
+  multfilmlar: "animation", // eski noto'g'ri saqlanganlar uchun
 };
 
 const SECTION_TO_CATEGORY_NAMES = Object.entries(CATEGORY_NAME_TO_SECTION).reduce((acc, [categoryName, section]) => {
@@ -37,7 +38,6 @@ const resolveSectionKey = (movie) => {
   if (movie?.categoryName && CATEGORY_NAME_TO_SECTION[movie.categoryName]) {
     return CATEGORY_NAME_TO_SECTION[movie.categoryName];
   }
-  // Fallback: to'g'ridan-to'g'ri category (section) saqlangan bo'lsa
   if (movie?.category && CATEGORY_NAME_TO_SECTION[movie.category]) {
     return CATEGORY_NAME_TO_SECTION[movie.category];
   }
@@ -89,7 +89,7 @@ const buildMoviesCatalog = (movies, { user = null } = {}) => {
       kinolar: bySection("kinolar"),
       worldMovies: bySection("worldMovies"),
       animations: bySection("animations"),
-      multfilmlar: bySection("multfilmlar"),
+      animation: bySection("animation"),
       turkishSeries: bySection("turkishSeries"),
       tvSeries: bySection("tvSeries"),
       actionMovies: bySection("actionMovies"),

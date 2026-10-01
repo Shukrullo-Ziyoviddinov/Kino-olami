@@ -373,8 +373,7 @@ export default function MovieForm({ onCancel, onSaved, mode = "create", initialD
   }, [form]);
 
   const selectCategoryName = (value) => {
-    const section = CATEGORY_NAME_TO_SECTION[value] || value;
-    patch({ categoryName: value, category: section });
+    patch({ categoryName: value, category: value });
     setCategoryNameOpen(false);
   };
 
@@ -576,7 +575,7 @@ export default function MovieForm({ onCancel, onSaved, mode = "create", initialD
         ratingNetflix: form.ratingNetflix === "" ? 0 : Number(form.ratingNetflix),
         ageRestriction,
         categoryName,
-        category: section || categoryName,
+        category: categoryName,
         genre: form.genre,
         description: form.description,
         watchVideo,
