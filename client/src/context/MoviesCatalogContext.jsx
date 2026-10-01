@@ -9,6 +9,7 @@ export const HOME_SECTION_ORDER = [
   'koreaDrama',
   'weeklyTop',
   'kinolar',
+  'diniy',
   'worldMovies',
   'animations',
   'animation',

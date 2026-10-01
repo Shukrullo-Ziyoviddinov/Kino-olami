@@ -24,6 +24,8 @@ const CATEGORY_NAME_TO_SECTION = {
   // Multfilmlar olami
   animation: "animation",
   multfilmlar: "animation", // eski noto'g'ri saqlanganlar uchun
+  // Diniy kinolar
+  diniy: "diniy",
 };
 
 const SECTION_TO_CATEGORY_NAMES = Object.entries(CATEGORY_NAME_TO_SECTION).reduce((acc, [categoryName, section]) => {
@@ -87,6 +89,7 @@ const buildMoviesCatalog = (movies, { user = null } = {}) => {
     sections: {
       koreaDrama: bySection("koreaDrama"),
       kinolar: bySection("kinolar"),
+      diniy: bySection("diniy"),
       worldMovies: bySection("worldMovies"),
       animations: bySection("animations"),
       animation: bySection("animation"),

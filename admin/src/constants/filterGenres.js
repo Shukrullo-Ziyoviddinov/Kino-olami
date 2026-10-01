@@ -13,4 +13,5 @@ export const FILTER_GENRE_OPTIONS = [
   "Multfilim",
   "Melodrama",
   "animation",
+  "diniy",
 ];

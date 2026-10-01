@@ -13,11 +13,13 @@ export const TYPE_CATEGORY_OPTIONS = [
   "korea",
   "usa xitoy",
   "animation",
+  "diniy",
 ];
 
 /**
  * categoryName → catalog section (home/API).
  * animation = Multfilmlar olami
+ * diniy = Diniy kinolar
  * animations = Tarixiy doramalar (boshqa bo'lim)
  */
 export const CATEGORY_NAME_TO_SECTION = {
@@ -31,6 +33,7 @@ export const CATEGORY_NAME_TO_SECTION = {
   Dorama: "koreaDrama",
   koreaDrama: "koreaDrama",
   kinolar: "kinolar",
+  diniy: "diniy",
   anons: "anonslar",
   actionMovie: "actionMovies",
   tarixiyDoramalar: "animations",
@@ -43,6 +46,7 @@ export const CATEGORY_NAME_TO_SECTION = {
 export const CATEGORY_NAME_OPTIONS = [
   "Dorama",
   "kinolar",
+  "diniy",
   "Detektiv",
   "tarixiyDoramalar",
   "animation",
@@ -57,6 +61,7 @@ export const CATEGORY_NAME_OPTIONS = [
 /** Dropdownda ko'rinadigan nom */
 export const CATEGORY_NAME_LABELS = {
   animation: "Multfilimlar",
+  diniy: "Diniy",
 };
 
 export const getCategoryNameLabel = (value) =>

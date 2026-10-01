@@ -34,6 +34,7 @@ const Home = () => {
   const sectionMeta = useMemo(() => ({
     koreaDrama: { title: t('movies.koreaDrama'), to: '/category/korea' },
     kinolar: { title: t('movies.kinolar'), to: '/category/kinolar' },
+    diniy: { title: t('movies.diniy'), to: '/category/diniy' },
     worldMovies: { title: t('movies.worldMovies'), to: '/category/worldMovies' },
     animations: { title: t('movies.animations'), to: '/category/animations' },
     animation: { title: t('movies.animation'), to: '/category/animation' },

@@ -24,6 +24,7 @@ const CATEGORY_GENRE_MAP = {
 const CATALOG_SECTIONS = new Set([
   'koreaDrama',
   'kinolar',
+  'diniy',
   'worldMovies',
   'animations',
   'animation',
