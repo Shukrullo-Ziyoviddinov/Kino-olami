@@ -12,6 +12,7 @@ export const TYPE_CATEGORY_OPTIONS = [
   "Qo'rqinchli",
   "korea",
   "usa xitoy",
+  "animation",
 ];
 
 /**

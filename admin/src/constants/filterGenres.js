@@ -12,4 +12,5 @@ export const FILTER_GENRE_OPTIONS = [
   "Fantastika",
   "Multfilim",
   "Melodrama",
+  "animation",
 ];
