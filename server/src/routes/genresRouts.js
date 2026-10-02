@@ -19,6 +19,8 @@ const ALLOWED_FILTER_GENRES = [
   "Fantastika",
   "Multfilim",
   "Melodrama",
+  "animation",
+  "diniy",
 ];
 
 router.get("/", async (req, res, next) => {
