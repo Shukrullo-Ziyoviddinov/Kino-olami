@@ -114,7 +114,7 @@
 
 .manga-content {
     position: absolute;
-    left: var(--embed-banner-inline-inset, clamp(28px, 5vw, 72px));
+    left: var(--catalog-inline-inset);
     bottom: clamp(48px, 7vw, 76px);
     z-index: 4;
     width: min(540px, 52%);

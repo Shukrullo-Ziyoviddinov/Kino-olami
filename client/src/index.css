@@ -1,6 +1,9 @@
 :root {
   --bg-body: #050506;
   --bg-card: #1c1a2e;
+  --catalog-inline-padding: 2rem;
+  --catalog-max-width: 1400px;
+  --catalog-inline-inset: max(var(--catalog-inline-padding), calc((100% - var(--catalog-max-width)) / 2));
 }
 
 * {
