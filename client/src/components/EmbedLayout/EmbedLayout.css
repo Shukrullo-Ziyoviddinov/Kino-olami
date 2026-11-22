@@ -6,6 +6,7 @@ html[data-kino-layout='embed'] {
   --embed-accent: #2A5FE0;
   --embed-font: system-ui, sans-serif;
   --embed-card-radius: 12px;
+  --embed-banner-inline-inset: clamp(28px, 5vw, 72px);
   color-scheme: dark;
 }
 
@@ -78,6 +79,10 @@ html[data-kino-layout='embed'] {
 }
 
 @media (min-width: 769px) {
+  .embed-catalog-header.embed-catalog-toolbar {
+    padding-inline: var(--embed-banner-inline-inset);
+  }
+
   .embed-kino-logo {
     width: 174px;
   }
