@@ -40,7 +40,8 @@ html[data-kino-layout='embed'] {
   padding: 12px 16px;
 }
 
-.embed-catalog-toolbar {
+.embed-catalog-header.embed-catalog-toolbar {
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
