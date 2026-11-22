@@ -1,9 +1,9 @@
-/* Temporary MoviyAI design values. Scoped to /embed, including body portals. */
+/* MoviyAI dark theme. Scoped to /embed, including body portals. */
 html[data-kino-layout='embed'] {
-  --bg-body: #0b1324;
-  --bg-card: #17253e;
-  --embed-text: #edf4ff;
-  --embed-accent: #9bc9ff;
+  --bg-body: #030308;
+  --bg-card: #070A12;
+  --embed-text: #F3F4F6;
+  --embed-accent: #2A5FE0;
   --embed-font: system-ui, sans-serif;
   --embed-card-radius: 12px;
   color-scheme: dark;
@@ -46,7 +46,6 @@ html[data-kino-layout='embed'] {
   gap: 8px;
 }
 
-.embed-catalog-controls a,
 .embed-catalog-controls button,
 .embed-catalog-header input {
   display: inline-flex;
@@ -61,14 +60,12 @@ html[data-kino-layout='embed'] {
   text-decoration: none;
 }
 
-.embed-catalog-controls a,
 .embed-catalog-controls button {
   cursor: pointer;
 }
 
 .embed-catalog-header input {
   width: 100%;
-  margin-top: 8px;
 }
 
 .embed-catalog-header :focus-visible {

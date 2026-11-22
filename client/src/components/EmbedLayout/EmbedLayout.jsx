@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Link, useLocation, useNavigate, useNavigationType, useSearchParams } from 'react-router-dom';
+import { useLocation, useNavigate, useNavigationType, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import SearchModalResults from '../SearchModalResults/SearchModalResults';
 import './EmbedLayout.css';
@@ -27,15 +27,13 @@ export default function EmbedLayout() {
 
   return (
     <header className="embed-catalog-header">
-      <nav className="embed-catalog-controls" aria-label={isRussian ? 'Каталог' : 'Katalog'}>
-        {!isHome && window.history.state?.idx > 0 && (
+      {!isHome && window.history.state?.idx > 0 && (
+        <div className="embed-catalog-controls">
           <button type="button" onClick={() => navigate(-1)}>
             {isRussian ? 'Назад' : 'Orqaga'}
           </button>
-        )}
-        <Link to="/">{isRussian ? 'Каталог' : 'Katalog'}</Link>
-        <Link to="/recommended">{isRussian ? 'Фильтры' : 'Filtrlar'}</Link>
-      </nav>
+        </div>
+      )}
       {isHome && (
         <>
           <input
