@@ -512,9 +512,9 @@ const Banner = () => {
                             <button
                                 type="button"
                                 className="manga-action-btn details"
+                                aria-label="Batafsil"
                                 onClick={(event) => handleBannerAction(event, image)}
                             >
-                                Batafsil
                                 <span className="manga-info-icon" aria-hidden="true">i</span>
                             </button>
                         </div>
