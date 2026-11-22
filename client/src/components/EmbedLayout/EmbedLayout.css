@@ -48,6 +48,28 @@ html[data-kino-layout='embed'] {
   gap: 12px;
 }
 
+[data-kino-layout='embed'] .App:has(.App-main .home > .banner) {
+  position: relative;
+}
+
+[data-kino-layout='embed'] .App:has(.App-main .home > .banner) > .embed-catalog-toolbar {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 25;
+  pointer-events: none;
+}
+
+.embed-catalog-toolbar .embed-search-button {
+  pointer-events: auto;
+}
+
+
+@media (max-width: 768px) {
+  .embed-catalog-header.embed-catalog-toolbar {
+    padding-block: 6px;
+  }
+}
+
 .embed-kino-logo {
   display: block;
   width: 54px;

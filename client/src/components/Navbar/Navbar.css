@@ -73,7 +73,7 @@
 .navbar-logo-img {
   height: auto;
   max-height: 100px;
-  max-width: 150px;
+  max-width: 174px;
   width: auto;
   object-fit: contain;
   display: block;
@@ -434,7 +434,7 @@
   }
 
   .navbar-logo-img {
-    max-height: 40px;
+    max-height: 36px;
     height: auto;
     max-width: 155px;
     width: auto;
