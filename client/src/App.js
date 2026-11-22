@@ -16,10 +16,21 @@ import { MoviesCatalogProvider } from './context/MoviesCatalogContext';
 import { ToastProvider } from './context/ToastContext';
 import { AuthModalProvider } from './context/AuthModalContext';
 import TelegramBackButton from './components/TelegramBackButton/TelegramBackButton';
+import EmbedLayout from './components/EmbedLayout/EmbedLayout';
 import './App.css';
+
+const embedPath = '/embed';
+const pathname = window.location.pathname;
+const isEmbed = pathname === embedPath || pathname.startsWith(`${embedPath}/`);
+
+if (isEmbed) {
+  document.documentElement.dataset.kinoLayout = 'embed';
+}
 
 function App() {
   useEffect(() => {
+    if (isEmbed) return;
+
     const tg = window?.Telegram?.WebApp;
     if (!tg) {
       return;
@@ -78,7 +89,7 @@ function App() {
   }, []);
 
   return (
-    <Router>
+    <Router basename={isEmbed ? embedPath : '/'}>
       <ToastProvider>
         <AuthModalProvider>
           <ContentLanguageProvider>
@@ -87,8 +98,8 @@ function App() {
           <WishlistProvider>
           <ViewedMoviesProvider>
           <div className="App">
-            <TelegramBackButton />
-            <Navbar />
+            {!isEmbed && <TelegramBackButton />}
+            {isEmbed ? <EmbedLayout /> : <Navbar />}
             <main className="App-main">
               <Routes>
                 <Route path="/" element={<Home />} />
@@ -101,7 +112,7 @@ function App() {
                 <Route path="/actor/:id" element={<ActorsPage />} />
               </Routes>
             </main>
-            <NavbarMobile />
+            {!isEmbed && <NavbarMobile />}
           </div>
           </ViewedMoviesProvider>
           </WishlistProvider>

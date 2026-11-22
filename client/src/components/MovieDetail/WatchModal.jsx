@@ -709,7 +709,7 @@ const WatchModal = ({ movie, videoUrl, onClose }) => {
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
                     allowFullScreen
                     referrerPolicy="strict-origin-when-cross-origin"
-                    sandbox="allow-scripts allow-same-origin allow-presentation allow-forms allow-fullscreen"
+                    sandbox="allow-scripts allow-same-origin allow-presentation allow-forms"
                   />
                 ) : (
                   <div className="watch-modal-embed-start">
@@ -743,6 +743,7 @@ const WatchModal = ({ movie, videoUrl, onClose }) => {
               <video
                 ref={videoRef}
                 src={watchSrc}
+                playsInline={document.documentElement.dataset.kinoLayout === 'embed'}
                 className="watch-modal-video"
                 onLoadStart={() => setIsVideoBuffering(true)}
                 onWaiting={() => setIsVideoBuffering(true)}

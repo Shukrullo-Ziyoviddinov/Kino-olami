@@ -82,6 +82,22 @@ const clientBuildPath = process.env.CLIENT_BUILD_PATH
   ? path.resolve(process.env.CLIENT_BUILD_PATH)
   : path.join(__dirname, "../../client/build");
 
+const moviyFrameOrigins = (process.env.MOVIYAI_FRAME_ORIGINS || "")
+  .split(",")
+  .flatMap((value) => {
+    const origin = value.trim();
+    // Accept only explicit HTTP(S) origins, with an optional trailing slash.
+    if (!/^https?:\/\/[^/\s]+\/?$/i.test(origin)) return [];
+    try {
+      const url = new URL(origin);
+      if (url.username || url.password || url.search || url.hash || url.pathname !== "/" ||
+          !/^[a-z0-9.:[\]-]+$/i.test(url.host)) return [];
+      return [url.origin];
+    } catch {
+      return [];
+    }
+  });
+
 if (fs.existsSync(clientBuildPath)) {
   app.use(express.static(clientBuildPath, { index: false }));
   app.use((req, res, next) => {
@@ -90,6 +106,11 @@ if (fs.existsSync(clientBuildPath)) {
     }
     if (req.method !== "GET" && req.method !== "HEAD") {
       return next();
+    }
+    if (req.path === "/embed" || req.path.startsWith("/embed/")) {
+      const ancestors = moviyFrameOrigins.length ? moviyFrameOrigins.join(" ") : "'none'";
+      res.set("Content-Security-Policy", `frame-ancestors ${ancestors}`);
+      if (!moviyFrameOrigins.length) res.set("X-Frame-Options", "DENY");
     }
     res.sendFile(path.join(clientBuildPath, "index.html"), (err) => {
       if (err) next(err);

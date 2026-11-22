@@ -5,7 +5,16 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 import uzTranslations from './locales/uz/translation.json';
 import ruTranslations from './locales/ru/translation.json';
 
-const savedLanguage = localStorage.getItem('i18nextLng') || 'uz';
+const getSavedLanguage = () => {
+  try {
+    return localStorage.getItem('i18nextLng') || 'uz';
+  } catch {
+    // Some browsers block storage in third-party iframes.
+    return 'uz';
+  }
+};
+
+const savedLanguage = getSavedLanguage();
 const validLanguage = (savedLanguage === 'uz' || savedLanguage === 'ru') ? savedLanguage : 'uz';
 
 const languageDetectorOptions = {
