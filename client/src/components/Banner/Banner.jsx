@@ -7,16 +7,35 @@ import { fetchActiveBanners } from '../../api/bannerApi';
 import { normalizeImagePath } from '../../utils/utils';
 import './Banner.css';
 
-const BannerSlideImage = ({ src, alt, showSkeleton, onImageLoad }) => {
-    const normalizedSrc = normalizeImagePath(src);
+const IMAGE_WAIT_MS = 6000;
+
+function useBannerImage(src, showSkeleton, onImageLoad) {
     const imgRef = useRef(null);
 
     useEffect(() => {
-        const img = imgRef.current;
-        if (img?.complete && img.naturalWidth > 0) {
-            onImageLoad(normalizedSrc);
+        const image = imgRef.current;
+        if (!image) return undefined;
+        if (image.complete) {
+            if (!image.naturalWidth) image.style.visibility = 'hidden';
+            onImageLoad(src);
+            return undefined;
         }
-    }, [normalizedSrc, onImageLoad]);
+        if (!showSkeleton) return undefined;
+        const timeout = window.setTimeout(() => onImageLoad(src), IMAGE_WAIT_MS);
+        return () => window.clearTimeout(timeout);
+    }, [src, showSkeleton, onImageLoad]);
+
+    return imgRef;
+}
+
+function handleImageError(event, src, onImageLoad) {
+    event.currentTarget.style.visibility = 'hidden';
+    onImageLoad(src);
+}
+
+const BannerSlideImage = ({ src, alt, showSkeleton, isActive, isVisible, onImageLoad }) => {
+    const normalizedSrc = normalizeImagePath(src);
+    const imgRef = useBannerImage(normalizedSrc, showSkeleton, onImageLoad);
 
     return (
         <>
@@ -24,20 +43,16 @@ const BannerSlideImage = ({ src, alt, showSkeleton, onImageLoad }) => {
                 <LoaderSkeleton variant="banner-image" className="manga-image-skeleton" />
             )}
             <img
+                key={normalizedSrc}
                 ref={imgRef}
                 src={normalizedSrc}
                 alt={alt}
                 draggable={false}
+                loading={isVisible ? 'eager' : 'lazy'}
+                fetchPriority={isActive ? 'high' : 'low'}
                 className={showSkeleton ? 'is-loading' : ''}
                 onLoad={() => onImageLoad(normalizedSrc)}
-                onError={(e) => {
-                    const fallbackSrc = normalizeImagePath('/img/no-image.png');
-                    if (e.currentTarget.src !== fallbackSrc) {
-                        e.currentTarget.src = fallbackSrc;
-                        return;
-                    }
-                    onImageLoad(normalizedSrc);
-                }}
+                onError={(event) => handleImageError(event, normalizedSrc, onImageLoad)}
             />
         </>
     );
@@ -45,14 +60,7 @@ const BannerSlideImage = ({ src, alt, showSkeleton, onImageLoad }) => {
 
 const BannerTitleImage = ({ src, showSkeleton, onImageLoad }) => {
     const normalizedSrc = normalizeImagePath(src);
-    const imgRef = useRef(null);
-
-    useEffect(() => {
-        const img = imgRef.current;
-        if (img?.complete && img.naturalWidth > 0) {
-            onImageLoad(normalizedSrc);
-        }
-    }, [normalizedSrc, onImageLoad]);
+    const imgRef = useBannerImage(normalizedSrc, showSkeleton, onImageLoad);
 
     return (
         <div className="manga-title-img-wrapper">
@@ -60,70 +68,23 @@ const BannerTitleImage = ({ src, showSkeleton, onImageLoad }) => {
                 <LoaderSkeleton variant="text" className="manga-title-img-skeleton" width="100%" height={120} />
             )}
             <img
+                key={normalizedSrc}
                 ref={imgRef}
                 className={`manga-title-img ${showSkeleton ? 'is-loading' : ''}`}
                 src={normalizedSrc}
                 alt=""
                 draggable={false}
                 onLoad={() => onImageLoad(normalizedSrc)}
-                onError={(e) => {
-                    const fallbackSrc = normalizeImagePath('/img/no-image.png');
-                    if (e.currentTarget.src !== fallbackSrc) {
-                        e.currentTarget.src = fallbackSrc;
-                        return;
-                    }
-                    onImageLoad(normalizedSrc);
-                }}
+                onError={(event) => handleImageError(event, normalizedSrc, onImageLoad)}
             />
         </div>
     );
 };
 
-const BannerTitlePreload = ({ src, onImageLoad }) => {
-    const normalizedSrc = normalizeImagePath(src);
-    const imgRef = useRef(null);
-
-    useEffect(() => {
-        const img = imgRef.current;
-        if (img?.complete && img.naturalWidth > 0) {
-            onImageLoad(normalizedSrc);
-        }
-    }, [normalizedSrc, onImageLoad]);
-
-    return (
-        <img
-            ref={imgRef}
-            src={normalizedSrc}
-            alt=""
-            aria-hidden="true"
-            className="manga-title-img-preload"
-            onLoad={() => onImageLoad(normalizedSrc)}
-            onError={(e) => {
-                const fallbackSrc = normalizeImagePath('/img/no-image.png');
-                if (e.currentTarget.src !== fallbackSrc) {
-                    e.currentTarget.src = fallbackSrc;
-                    return;
-                }
-                onImageLoad(normalizedSrc);
-            }}
-        />
-    );
-};
-
-const getSlideMediaState = (image, loadedImageUrls) => {
-    const normalizedSrc = normalizeImagePath(image.src);
-    const normalizedTitleSrc = image.titleImg ? normalizeImagePath(image.titleImg) : '';
-    const isMainLoaded = loadedImageUrls.has(normalizedSrc);
-    const isTitleLoaded = !normalizedTitleSrc || loadedImageUrls.has(normalizedTitleSrc);
-
-    return {
-        normalizedSrc,
-        normalizedTitleSrc,
-        isMainLoaded,
-        isTitleLoaded,
-        isSlideReady: isMainLoaded && isTitleLoaded,
-    };
-};
+const getSlideMediaState = (image, loadedImageUrls) => ({
+    isMainReady: loadedImageUrls.has(normalizeImagePath(image.src)),
+    isTitleReady: !image.titleImg || loadedImageUrls.has(normalizeImagePath(image.titleImg)),
+});
 
 const Banner = () => {
     const navigate = useNavigate();
@@ -141,7 +102,7 @@ const Banner = () => {
                 setLoading('banner', true);
                 if (isMounted) {
                     const data = await fetchActiveBanners(contentLang);
-                    setBanners(data);
+                    if (isMounted) setBanners(data);
                 }
             } catch (_error) {
                 if (isMounted) {
@@ -173,15 +134,6 @@ const Banner = () => {
             }))
             .filter((img) => img.src);
     }, [banners]);
-
-    const imageSrcKey = useMemo(
-        () => images.map((image) => `${image.src}|${image.titleImg || ''}`).join('||'),
-        [images]
-    );
-
-    useEffect(() => {
-        setLoadedImageUrls(new Set());
-    }, [imageSrcKey]);
 
     const handleImageLoaded = useCallback((src) => {
         setLoadedImageUrls((prev) => {
@@ -490,14 +442,13 @@ const Banner = () => {
 
     const renderSlideContent = (image, index, slideClass, isActive) => {
         const {
-            normalizedTitleSrc,
-            isTitleLoaded,
-            isSlideReady,
+            isTitleReady,
+            isMainReady,
         } = getSlideMediaState(image, loadedImageUrls);
         const isVisibleSlide = slideClass === 'center' || slideClass === 'left' || slideClass === 'right';
-        const showMainSkeleton = isVisibleSlide && (bannerLoading || !isSlideReady);
+        const showMainSkeleton = isVisibleSlide && (bannerLoading || !isMainReady);
         const showContentWrapper = isActive && !bannerLoading;
-        const showContentDetails = showContentWrapper && isSlideReady;
+        const showContentDetails = showContentWrapper && isMainReady;
 
         return (
         <>
@@ -505,22 +456,17 @@ const Banner = () => {
                 src={image.src}
                 alt={`Banner ${index + 1}`}
                 showSkeleton={showMainSkeleton}
+                isActive={isActive}
+                isVisible={isVisibleSlide}
                 onImageLoad={handleImageLoaded}
             />
-
-            {isVisibleSlide && normalizedTitleSrc && !isActive && !isTitleLoaded && (
-                <BannerTitlePreload
-                    src={normalizedTitleSrc}
-                    onImageLoad={handleImageLoaded}
-                />
-            )}
 
             {showContentWrapper && (
                 <div className="manga-content">
                     {image.titleImg && (
                         <BannerTitleImage
                             src={image.titleImg}
-                            showSkeleton={!isTitleLoaded}
+                            showSkeleton={!isTitleReady}
                             onImageLoad={handleImageLoaded}
                         />
                     )}
@@ -640,13 +586,13 @@ const Banner = () => {
                     {/* Oldingi rasmlar (clone) - infinite effect uchun */}
                     {images.map((image, index) => {
                         const slideClass = getSlideClass(index - images.length);
-                        const { isSlideReady } = getSlideMediaState(image, loadedImageUrls);
+                        const { isMainReady } = getSlideMediaState(image, loadedImageUrls);
                         return (
                         <li
                             key={`prev-${image.id || index}`}
                             className={`manga-image ${slideClass}`}
                             aria-hidden="true"
-                            onClick={() => isSlideReady && handleSlideClick(image)}
+                            onClick={() => isMainReady && handleSlideClick(image)}
                             role={image.link ? 'button' : undefined}
                         >
                             {renderSlideContent(image, index, slideClass, slideClass === 'center')}
@@ -657,13 +603,13 @@ const Banner = () => {
                     {/* Asosiy rasmlar */}
                     {images.map((image, index) => {
                         const slideClass = getSlideClass(index);
-                        const { isSlideReady } = getSlideMediaState(image, loadedImageUrls);
+                        const { isMainReady } = getSlideMediaState(image, loadedImageUrls);
                         return (
                         <li
                             key={image.id || index}
                             className={`manga-image ${slideClass}`}
                             aria-hidden={index !== currentIndex}
-                            onClick={() => isSlideReady && handleSlideClick(image)}
+                            onClick={() => isMainReady && handleSlideClick(image)}
                             role={image.link ? 'button' : undefined}
                         >
                             {renderSlideContent(image, index, slideClass, slideClass === 'center')}
@@ -674,13 +620,13 @@ const Banner = () => {
                     {/* Keyingi rasmlar (clone) - infinite effect uchun */}
                     {images.map((image, index) => {
                         const slideClass = getSlideClass(index + images.length);
-                        const { isSlideReady } = getSlideMediaState(image, loadedImageUrls);
+                        const { isMainReady } = getSlideMediaState(image, loadedImageUrls);
                         return (
                         <li
                             key={`next-${image.id || index}`}
                             className={`manga-image ${slideClass}`}
                             aria-hidden="true"
-                            onClick={() => isSlideReady && handleSlideClick(image)}
+                            onClick={() => isMainReady && handleSlideClick(image)}
                             role={image.link ? 'button' : undefined}
                         >
                             {renderSlideContent(image, index, slideClass, slideClass === 'center')}

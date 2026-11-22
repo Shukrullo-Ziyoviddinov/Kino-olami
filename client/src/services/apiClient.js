@@ -54,11 +54,15 @@ const dedupeRequest = async (key, factory) => {
 };
 
 export const apiClient = {
-  async get(path, { cacheKey, ttlMs = 0, dedupeKey, includeMeta = false } = {}) {
+  async get(path, { cacheKey, ttlMs = 0, dedupeKey, includeMeta = false, timeoutMs = 0 } = {}) {
     const key = dedupeKey || `GET:${path}`;
     try {
       const runner = async () => {
-        const json = await request(path);
+        const controller = timeoutMs > 0 ? new AbortController() : null;
+        const timeout = controller ? setTimeout(() => controller.abort(), timeoutMs) : undefined;
+        const json = await request(path, { signal: controller?.signal }).finally(() => {
+          clearTimeout(timeout);
+        });
         if (includeMeta) {
           return {
             data: json.data,
