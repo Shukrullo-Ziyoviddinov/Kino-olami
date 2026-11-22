@@ -54,7 +54,7 @@ html[data-kino-layout='embed'] {
 
 [data-kino-layout='embed'] .App:has(.App-main .home > .banner) > .embed-catalog-toolbar {
   position: absolute;
-  inset: 0 0 auto;
+  inset: 10px 0 auto;
   z-index: 25;
   pointer-events: none;
 }
