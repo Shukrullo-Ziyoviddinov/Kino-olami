@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { registerUser, loginUser } from '../../api/authApi';
 import { saveAuthSession } from '../../utils/authStorage';
 import { useToast } from '../../context/ToastContext';
+import KinoLogo from '../KinoLogo';
 import './SiginModal.css';
 
 const SiginModal = ({ onClose, onSuccess }) => {
@@ -129,11 +130,7 @@ const SiginModal = ({ onClose, onSuccess }) => {
       <div className="sigin-modal" onClick={(e) => e.stopPropagation()}>
         <div className="sigin-modal-header">
           <div className="sigin-modal-header-logo">
-            <img
-              src="/img/kinoolamilogo_preview_rev_1.png"
-              alt="Kino Olami"
-              className="sigin-modal-header-logo-img"
-            />
+            <KinoLogo className="sigin-modal-header-logo-img" />
           </div>
           <button className="sigin-modal-close" onClick={onClose} aria-label={t('detail.close')}>
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">

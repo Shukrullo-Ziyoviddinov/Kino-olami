@@ -40,35 +40,99 @@ html[data-kino-layout='embed'] {
   padding: 12px 16px;
 }
 
-.embed-catalog-controls {
+.embed-catalog-toolbar {
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
 }
 
-.embed-catalog-controls button,
-.embed-catalog-header input {
-  display: inline-flex;
-  align-items: center;
+.embed-kino-logo {
+  display: block;
+  width: 54px;
+  height: 42px;
+  object-fit: contain;
+}
+
+@media (min-width: 769px) {
+  .embed-kino-logo {
+    width: 174px;
+  }
+}
+
+.embed-back-button,
+.embed-search-button,
+.embed-search-row input {
   min-height: 44px;
-  padding: 8px 12px;
-  border: 1px solid var(--embed-accent);
+  border: 1px solid rgba(30, 50, 90, 0.28);
   border-radius: var(--embed-card-radius);
-  background: var(--bg-card);
+  background: #0a0e18;
   color: var(--embed-text);
   font: inherit;
-  text-decoration: none;
 }
 
-.embed-catalog-controls button {
+.embed-back-button {
+  padding: 8px 12px;
   cursor: pointer;
 }
 
-.embed-catalog-header input {
-  width: 100%;
+.embed-search-button {
+  display: grid;
+  width: 44px;
+  padding: 0;
+  flex: 0 0 44px;
+  place-items: center;
+  cursor: pointer;
 }
 
-.embed-catalog-header :focus-visible {
-  outline: 2px solid var(--embed-accent) !important;
+.embed-search-row input {
+  flex: 1;
+  min-width: 0;
+  padding: 8px 12px;
+}
+
+.embed-search-dialog {
+  width: min(640px, calc(100% - 24px));
+  max-height: 75dvh;
+  padding: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  border: 1px solid rgba(40, 70, 130, 0.35);
+  border-radius: 18px;
+  background: var(--bg-body);
+  color: var(--embed-text);
+}
+
+.embed-search-dialog[open] {
+  animation: embed-search-in 210ms ease-out both;
+}
+
+.embed-search-dialog::backdrop {
+  background: rgba(0, 0, 0, 0.65);
+}
+
+.embed-search-panel {
+  padding: 12px;
+}
+
+.embed-search-row {
+  display: flex;
+  gap: 8px;
+}
+
+.embed-catalog-header :focus-visible,
+.embed-search-dialog :focus-visible {
+  outline: 2px solid var(--embed-accent);
   outline-offset: 2px;
+}
+
+@keyframes embed-search-in {
+  from { opacity: 0; transform: translateY(10px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .embed-search-dialog[open] {
+    animation: none;
+  }
 }

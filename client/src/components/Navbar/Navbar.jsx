@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useLocation } from 'react-router-dom';
 import LanguageModal from './LanguageModal';
+import KinoLogo from '../KinoLogo';
 import SearchModalGenre from '../SearchModalGenre/SearchModalGenre';
 import SearchModalAnons from '../SearchModalAnons/SearchModalAnons';
 import SearchModalTavsiya from '../SearchModalTavsiya/SearchModalTavsiya';
@@ -208,7 +209,7 @@ const Navbar = () => {
       <div className="navbar-container">
         <div className="navbar-left">
           <div className="navbar-logo" onClick={() => navigate('/')}>
-            <img src="/img/kinoolamilogo_preview_rev_1.png" alt="Kino Olami" className="navbar-logo-img" />
+            <KinoLogo className="navbar-logo-img" />
           </div>
           <button
             className="navbar-mobile-search-trigger"
