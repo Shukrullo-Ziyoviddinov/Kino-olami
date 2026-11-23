@@ -1,7 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 import { useLocation, useNavigate, useNavigationType, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import SearchModalAnons from '../SearchModalAnons/SearchModalAnons';
+import SearchModalGenre from '../SearchModalGenre/SearchModalGenre';
 import SearchModalResults from '../SearchModalResults/SearchModalResults';
+import SearchModalTavsiya from '../SearchModalTavsiya/SearchModalTavsiya';
 import KinoLogo from '../KinoLogo';
 import './EmbedLayout.css';
 
@@ -11,7 +14,8 @@ export default function EmbedLayout() {
   const navigate = useNavigate();
   const navigationType = useNavigationType();
   const [params, setParams] = useSearchParams();
-  const dialog = useRef(null);
+  const desktopInput = useRef(null);
+  const mobileInput = useRef(null);
   const query = params.get('q') || '';
   const backLabel = i18n.resolvedLanguage === 'ru' ? 'Назад' : 'Orqaga';
   const searchLabel = t('navbar.search');
@@ -23,10 +27,20 @@ export default function EmbedLayout() {
   }, [pathname, navigationType]);
 
   useEffect(() => {
-    const element = dialog.current;
-    if (!searchOpen || !element || element.open) return;
-    element.showModal();
-    element.querySelector('input[type="search"]')?.focus();
+    if (!searchOpen) return undefined;
+    const focusInput = () => {
+      const input = window.matchMedia('(max-width: 768px)').matches ? mobileInput.current : desktopInput.current;
+      input?.focus();
+    };
+    const focusFrame = window.requestAnimationFrame(focusInput);
+    const onKeyDown = (event) => {
+      if (event.key === 'Escape') closeSearch();
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => {
+      window.cancelAnimationFrame(focusFrame);
+      window.removeEventListener('keydown', onKeyDown);
+    };
   }, [searchOpen]);
 
   function openSearch() {
@@ -51,6 +65,19 @@ export default function EmbedLayout() {
     setParams(nextParams, { replace: true, preventScrollReset: true });
   }
 
+  function renderSearchContent() {
+    if (query.trim()) {
+      return <SearchModalResults query={query.trim()} onMovieClick={closeSearch} />;
+    }
+    return (
+      <>
+        <SearchModalGenre onGenreClick={closeSearch} />
+        <SearchModalAnons onAnonsClick={closeSearch} />
+        <SearchModalTavsiya onMovieClick={closeSearch} />
+      </>
+    );
+  }
+
   if (!isHome) {
     if (!(window.history.state?.idx > 0)) return null;
     return (
@@ -64,13 +91,32 @@ export default function EmbedLayout() {
 
   return (
     <>
+      {searchOpen && <button className="embed-desktop-search-backdrop" type="button" aria-label={backLabel} onClick={closeSearch} />}
       <header className="embed-catalog-header embed-catalog-toolbar">
         <KinoLogo className="embed-kino-logo" />
+        {searchOpen && (
+          <div className="embed-desktop-search" role="search">
+            <div className="embed-desktop-search-input-wrap">
+              <input
+                ref={desktopInput}
+                type="search"
+                aria-label={searchLabel}
+                placeholder={searchLabel}
+                value={query}
+                onChange={(event) => updateQuery(event.target.value)}
+              />
+              <button type="button" className="embed-search-clear" onClick={closeSearch} aria-label={backLabel}>
+                {query.trim() ? '×' : '←'}
+              </button>
+            </div>
+            <div className="embed-desktop-search-dropdown">{renderSearchContent()}</div>
+          </div>
+        )}
         <button
           className="embed-search-button"
           type="button"
           aria-label={searchLabel}
-          aria-haspopup="dialog"
+          aria-expanded={searchOpen}
           onClick={openSearch}
         >
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
@@ -80,36 +126,30 @@ export default function EmbedLayout() {
         </button>
       </header>
       {searchOpen && (
-        <dialog
-          ref={dialog}
-          className="embed-search-dialog"
-          aria-label={searchLabel}
-          onCancel={(event) => {
-            event.preventDefault();
-            closeSearch();
-          }}
-          onClick={(event) => {
-            if (event.target === event.currentTarget) closeSearch();
-          }}
-        >
-          <div className="embed-search-panel">
-            <div className="embed-search-row">
-              <button className="embed-search-button" type="button" onClick={closeSearch} aria-label={backLabel}>
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <path d="M19 12H5m7-7-7 7 7 7" />
-                </svg>
-              </button>
-              <input
-                type="search"
-                aria-label={searchLabel}
-                placeholder={searchLabel}
-                value={query}
-                onChange={(event) => updateQuery(event.target.value)}
-              />
+        <div className="embed-mobile-search-overlay" onClick={closeSearch}>
+          <div className="navbar-mobile-search-box embed-mobile-search-box" onClick={(event) => event.stopPropagation()}>
+            <div className="navbar-mobile-search-form-row">
+              <button type="button" className="navbar-mobile-search-back" onClick={closeSearch} aria-label={backLabel}>←</button>
+              <div className="navbar-mobile-search-form">
+                <div className="navbar-mobile-search-input-wrap">
+                  <input
+                    ref={mobileInput}
+                    type="search"
+                    aria-label={searchLabel}
+                    placeholder={searchLabel}
+                    value={query}
+                    onChange={(event) => updateQuery(event.target.value)}
+                    className="navbar-mobile-search-input"
+                  />
+                  <button type="button" className="navbar-mobile-search-icon-btn" onClick={() => updateQuery('')} aria-label={query.trim() ? 'Tozalash' : searchLabel}>
+                    {query.trim() ? '×' : '⌕'}
+                  </button>
+                </div>
+              </div>
             </div>
-            {query.trim() && <SearchModalResults query={query.trim()} />}
+            {renderSearchContent()}
           </div>
-        </dialog>
+        </div>
       )}
     </>
   );
