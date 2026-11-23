@@ -8,6 +8,28 @@ import { normalizeImagePath } from '../../utils/utils';
 import './Banner.css';
 
 const IMAGE_WAIT_MS = 6000;
+const BANNER_RETRY_MAX_DELAY_MS = 15000;
+
+function bannerCacheKey(language) {
+    return `kino-olami:banners:${language || 'all'}`;
+}
+
+function readCachedBanners(key) {
+    try {
+        const cached = JSON.parse(window.sessionStorage.getItem(key) || '[]');
+        return Array.isArray(cached) ? cached.filter((banner) => banner?.image) : [];
+    } catch (_error) {
+        return [];
+    }
+}
+
+function cacheBanners(key, banners) {
+    try {
+        window.sessionStorage.setItem(key, JSON.stringify(banners));
+    } catch (_error) {
+        // The current response remains available even when storage is unavailable.
+    }
+}
 
 function useBannerImage(src, showSkeleton, onImageLoad) {
     const imgRef = useRef(null);
@@ -96,22 +118,35 @@ const Banner = () => {
 
     useEffect(() => {
         let isMounted = true;
+        let retryTimer;
+        let retryAttempt = 0;
+        const cacheKey = bannerCacheKey(contentLang);
+        const cachedBanners = readCachedBanners(cacheKey);
+        let hasBanners = cachedBanners.length > 0;
+
+        if (hasBanners) {
+            setBanners(cachedBanners);
+            setLoading('banner', false);
+        }
 
         const loadBanners = async () => {
             try {
-                setLoading('banner', true);
-                if (isMounted) {
-                    const data = await fetchActiveBanners(contentLang);
-                    if (isMounted) setBanners(data);
-                }
+                if (!hasBanners) setLoading('banner', true);
+                const data = await fetchActiveBanners(contentLang);
+                if (!data.length) throw new Error('Bannerlar topilmadi');
+                if (!isMounted) return;
+
+                hasBanners = true;
+                retryAttempt = 0;
+                setBanners(data);
+                cacheBanners(cacheKey, data);
+                setLoading('banner', false);
             } catch (_error) {
-                if (isMounted) {
-                    setBanners([]);
-                }
-            } finally {
-                if (isMounted) {
-                    setLoading('banner', false);
-                }
+                if (!isMounted) return;
+                if (!hasBanners) setLoading('banner', true);
+                const delay = Math.min(BANNER_RETRY_MAX_DELAY_MS, 1500 * (2 ** retryAttempt));
+                retryAttempt += 1;
+                retryTimer = window.setTimeout(loadBanners, delay);
             }
         };
 
@@ -119,6 +154,7 @@ const Banner = () => {
 
         return () => {
             isMounted = false;
+            window.clearTimeout(retryTimer);
         };
     }, [contentLang, setLoading]);
 

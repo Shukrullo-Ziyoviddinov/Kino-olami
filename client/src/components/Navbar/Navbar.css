@@ -36,11 +36,11 @@
 }
 
 .navbar-container {
-  max-width: 1400px;
+  max-width: calc(var(--catalog-max-width) + (var(--catalog-inline-padding) * 2));
   width: 100%;
   height: 100%;
   margin: 0 auto;
-  padding: 0 1.25rem;
+  padding: 0 var(--catalog-inline-padding);
   display: flex;
   align-items: center;
   justify-content: space-between;
