@@ -276,7 +276,7 @@ html[data-kino-layout='embed'] {
     place-items: center;
     border: 0;
     border-radius: 50%;
-    background: var(--bg-body);
+    background: #111b2e;
     color: var(--embed-text);
     font-size: 20px;
     cursor: pointer;
@@ -290,7 +290,7 @@ html[data-kino-layout='embed'] {
     border: 1px solid rgba(64, 98, 162, 0.38);
     border-radius: 20px;
     outline: 0;
-    background: #101827;
+    background: #111b2e;
     color: var(--embed-text);
     font: inherit;
   }
