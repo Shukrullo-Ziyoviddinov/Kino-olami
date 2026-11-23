@@ -160,7 +160,7 @@ html[data-kino-layout='embed'] {
     display: block;
     position: relative;
     grid-column: 2;
-    width: min(580px, 100%);
+    width: min(720px, 100%);
     margin-inline: auto;
     pointer-events: auto;
     animation: embed-search-in 210ms ease-out both;
@@ -189,6 +189,8 @@ html[data-kino-layout='embed'] {
   .embed-desktop-search-input-wrap {
     display: flex;
     align-items: center;
+    min-width: 0;
+    flex: 1;
     min-height: 44px;
     padding: 0 16px;
     border: 1px solid rgba(40, 70, 130, 0.5);
@@ -212,7 +214,10 @@ html[data-kino-layout='embed'] {
     top: calc(100% + 8px);
     right: 0;
     left: 54px;
+    width: calc(100% - 54px);
+    box-sizing: border-box;
     max-height: min(68dvh, 620px);
+    padding: 16px;
     overflow: auto;
     overscroll-behavior: contain;
     border: 1px solid rgba(40, 70, 130, 0.35);
