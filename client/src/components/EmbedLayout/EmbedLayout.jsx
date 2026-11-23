@@ -91,7 +91,6 @@ export default function EmbedLayout() {
 
   return (
     <>
-      {searchOpen && <button className="embed-desktop-search-backdrop" type="button" aria-label={backLabel} onClick={closeSearch} />}
       <header className="embed-catalog-header embed-catalog-toolbar">
         <KinoLogo className="embed-kino-logo" />
         {searchOpen && (
@@ -129,22 +128,24 @@ export default function EmbedLayout() {
         <div className="embed-mobile-search-overlay" onClick={closeSearch}>
           <div className="navbar-mobile-search-box embed-mobile-search-box" onClick={(event) => event.stopPropagation()}>
             <div className="navbar-mobile-search-form-row">
-              <button type="button" className="navbar-mobile-search-back" onClick={closeSearch} aria-label={backLabel}>&lt;</button>
+              <button type="button" className="navbar-mobile-search-back" onClick={closeSearch} aria-label={backLabel}>
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="m15 18-6-6 6-6" />
+                </svg>
+              </button>
               <div className="navbar-mobile-search-form">
-                <div className="navbar-mobile-search-input-wrap">
-                  <input
-                    ref={mobileInput}
-                    type="search"
-                    aria-label={searchLabel}
-                    placeholder={searchLabel}
-                    value={query}
-                    onChange={(event) => updateQuery(event.target.value)}
-                    className="navbar-mobile-search-input"
-                  />
-                  <button type="button" className="navbar-mobile-search-icon-btn" onClick={() => updateQuery('')} aria-label={query.trim() ? 'Tozalash' : searchLabel}>
-                    {query.trim() ? '×' : '⌕'}
-                  </button>
-                </div>
+                <input
+                  ref={mobileInput}
+                  type="search"
+                  aria-label={searchLabel}
+                  placeholder={searchLabel}
+                  value={query}
+                  onChange={(event) => updateQuery(event.target.value)}
+                  className="navbar-mobile-search-input"
+                />
+                <button type="button" className="navbar-mobile-search-icon-btn" onClick={() => updateQuery('')} aria-label={query.trim() ? 'Tozalash' : searchLabel}>
+                  {query.trim() ? '×' : '⌕'}
+                </button>
               </div>
             </div>
             {renderSearchContent()}

@@ -63,7 +63,6 @@ html[data-kino-layout='embed'] {
   pointer-events: auto;
 }
 
-.embed-desktop-search-backdrop,
 .embed-desktop-search,
 .embed-mobile-search-overlay {
   display: none;
@@ -144,26 +143,20 @@ html[data-kino-layout='embed'] {
 }
 
 @media (min-width: 769px) {
-  .embed-desktop-search-backdrop {
-    display: block;
-    position: fixed;
-    inset: 0;
-    z-index: 24;
-    border: 0;
-    background: rgba(0, 0, 0, 0.56);
-    cursor: default;
+  .embed-catalog-header.embed-catalog-toolbar {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
   }
 
   .embed-desktop-search {
     display: block;
-    position: absolute;
-    top: 0;
-    left: 50%;
-    z-index: 26;
-    width: min(580px, calc(100vw - 48px));
+    position: relative;
+    grid-column: 2;
+    width: min(580px, 100%);
+    margin-inline: auto;
     pointer-events: auto;
     animation: embed-search-in 210ms ease-out both;
-    transform: translateX(-50%);
+    transform: none;
   }
 
   .embed-desktop-search-input-wrap {
@@ -207,8 +200,11 @@ html[data-kino-layout='embed'] {
   }
 
   .embed-desktop-search-dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    left: 0;
     max-height: min(68dvh, 620px);
-    margin-top: 8px;
     overflow: auto;
     overscroll-behavior: contain;
     border: 1px solid rgba(40, 70, 130, 0.35);
@@ -263,17 +259,11 @@ html[data-kino-layout='embed'] {
   }
 
   .embed-mobile-search-overlay .navbar-mobile-search-form {
-    min-width: 0;
-    flex: 1;
-  }
-
-  .embed-mobile-search-overlay .navbar-mobile-search-input-wrap {
     display: flex;
     align-items: center;
-    min-height: 46px;
-    border: 0;
-    border-radius: 0;
-    background: transparent;
+    gap: 8px;
+    min-width: 0;
+    flex: 1;
   }
 
   .embed-mobile-search-overlay .navbar-mobile-search-input {
@@ -287,6 +277,11 @@ html[data-kino-layout='embed'] {
     background: #101827;
     color: var(--embed-text);
     font: inherit;
+  }
+
+  .embed-mobile-search-overlay .navbar-mobile-search-icon-btn {
+    position: static;
+    transform: none;
   }
 
   .embed-mobile-search-overlay .navbar-mobile-search-input:focus {
