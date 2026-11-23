@@ -240,13 +240,7 @@ html[data-kino-layout='embed'] {
   }
 }
 
-@media (width < 1070px) {
-  .embed-catalog-header.embed-section-wide-toolbar {
-    display: none;
-  }
-}
-
-@media (min-width: 1070px) {
+@media (min-width: 769px) {
   .embed-section-wide-toolbar {
     position: relative;
     z-index: 25;
@@ -258,6 +252,10 @@ html[data-kino-layout='embed'] {
 }
 
 @media (max-width: 768px) {
+  .embed-catalog-header.embed-section-wide-toolbar {
+    display: none;
+  }
+
   .embed-section-desktop-header {
     display: none;
   }
