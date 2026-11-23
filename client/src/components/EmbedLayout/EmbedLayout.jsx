@@ -95,18 +95,22 @@ export default function EmbedLayout() {
         <KinoLogo className="embed-kino-logo" />
         {searchOpen && (
           <div className="embed-desktop-search" role="search">
-            <div className="embed-desktop-search-input-wrap">
-              <input
-                ref={desktopInput}
-                type="search"
-                aria-label={searchLabel}
-                placeholder={searchLabel}
-                value={query}
-                onChange={(event) => updateQuery(event.target.value)}
-              />
-              <button type="button" className="embed-search-clear" onClick={closeSearch} aria-label={backLabel}>
-                {query.trim() ? '×' : '←'}
+            <div className="embed-desktop-search-row">
+              <button type="button" className="embed-desktop-search-back" onClick={closeSearch} aria-label={backLabel}>
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="m15 18-6-6 6-6" />
+                </svg>
               </button>
+              <div className="embed-desktop-search-input-wrap">
+                <input
+                  ref={desktopInput}
+                  type="search"
+                  aria-label={searchLabel}
+                  placeholder={searchLabel}
+                  value={query}
+                  onChange={(event) => updateQuery(event.target.value)}
+                />
+              </div>
             </div>
             <div className="embed-desktop-search-dropdown">{renderSearchContent()}</div>
           </div>
