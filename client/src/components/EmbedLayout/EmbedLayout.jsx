@@ -84,8 +84,8 @@ export default function EmbedLayout() {
 
   return (
     <>
-      {isHome ? (
-        <header className="embed-catalog-header embed-catalog-toolbar">
+      {(isHome || isSection) && (
+        <header className={`embed-catalog-header embed-catalog-toolbar${isSection ? ' embed-section-wide-toolbar' : ''}`}>
           <KinoLogo className="embed-kino-logo" />
           {searchOpen && (
             <div className="embed-desktop-search" role="search">
@@ -122,7 +122,8 @@ export default function EmbedLayout() {
             </svg>
           </button>
         </header>
-      ) : (
+      )}
+      {!isHome && (
         <>
           {canGoBack && (
             <header className={`embed-catalog-header${isSection ? ' embed-section-desktop-header' : ''}`}>
