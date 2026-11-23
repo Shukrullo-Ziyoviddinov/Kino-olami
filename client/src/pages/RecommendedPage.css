@@ -1,6 +1,6 @@
 .recommended-page {
   min-height: calc(100vh - 200px);
-  margin-top: 2rem;
+  margin-top: 1rem;
 }
 
 .recommended-page-loading-more {
@@ -8,8 +8,8 @@
   height: 48px;
 }
 
-@media (max-width: 500px) {
+@media (max-width: 768px) {
   .recommended-page {
-    margin-top: 1rem;
+    margin-top: 0;
   }
 }
