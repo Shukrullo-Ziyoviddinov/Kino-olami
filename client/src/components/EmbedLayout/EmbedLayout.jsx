@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import { useLocation, useNavigate, useNavigationType, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import SearchModalAnons from '../SearchModalAnons/SearchModalAnons';
@@ -22,6 +22,16 @@ export default function EmbedLayout() {
   const isHome = pathname === '/';
   const searchOpen = isHome && params.has('q');
 
+  const closeSearch = useCallback(() => {
+    if (state?.fromKinoSearchButton) {
+      navigate(-1);
+      return;
+    }
+    const nextParams = new URLSearchParams(params);
+    nextParams.delete('q');
+    setParams(nextParams, { replace: true, preventScrollReset: true });
+  }, [navigate, params, setParams, state]);
+
   useEffect(() => {
     if (navigationType === 'PUSH') window.scrollTo(0, 0);
   }, [pathname, navigationType]);
@@ -41,7 +51,7 @@ export default function EmbedLayout() {
       window.cancelAnimationFrame(focusFrame);
       window.removeEventListener('keydown', onKeyDown);
     };
-  }, [searchOpen]);
+  }, [closeSearch, searchOpen]);
 
   function openSearch() {
     const nextParams = new URLSearchParams(params);
@@ -53,16 +63,6 @@ export default function EmbedLayout() {
     const nextParams = new URLSearchParams(params);
     nextParams.set('q', value);
     setParams(nextParams, { replace: true, state, preventScrollReset: true });
-  }
-
-  function closeSearch() {
-    if (state?.fromKinoSearchButton) {
-      navigate(-1);
-      return;
-    }
-    const nextParams = new URLSearchParams(params);
-    nextParams.delete('q');
-    setParams(nextParams, { replace: true, preventScrollReset: true });
   }
 
   function renderSearchContent() {
