@@ -21,7 +21,7 @@ import './App.css';
 
 const embedPath = '/embed';
 const pathname = window.location.pathname;
-const isEmbed = pathname === embedPath || pathname.startsWith(`${embedPath}/`);
+export const isEmbed = pathname === embedPath || pathname.startsWith(`${embedPath}/`);
 
 if (isEmbed) {
   document.documentElement.dataset.kinoLayout = 'embed';
