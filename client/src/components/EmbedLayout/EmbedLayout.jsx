@@ -137,20 +137,18 @@ export default function EmbedLayout() {
                   <path d="m15 18-6-6 6-6" />
                 </svg>
               </button>
-              <div className="navbar-mobile-search-form">
-                <input
-                  ref={mobileInput}
-                  type="search"
-                  aria-label={searchLabel}
-                  placeholder={searchLabel}
-                  value={query}
-                  onChange={(event) => updateQuery(event.target.value)}
-                  className="navbar-mobile-search-input"
-                />
-                <button type="button" className="navbar-mobile-search-icon-btn" onClick={() => updateQuery('')} aria-label={query.trim() ? 'Tozalash' : searchLabel}>
-                  {query.trim() ? '×' : '⌕'}
-                </button>
-              </div>
+              <input
+                ref={mobileInput}
+                type="search"
+                aria-label={searchLabel}
+                placeholder={searchLabel}
+                value={query}
+                onChange={(event) => updateQuery(event.target.value)}
+                className="navbar-mobile-search-input"
+              />
+              <button type="button" className="navbar-mobile-search-icon-btn" onClick={() => updateQuery('')} aria-label={query.trim() ? 'Tozalash' : searchLabel}>
+                {query.trim() ? '×' : '⌕'}
+              </button>
             </div>
             {renderSearchContent()}
           </div>
