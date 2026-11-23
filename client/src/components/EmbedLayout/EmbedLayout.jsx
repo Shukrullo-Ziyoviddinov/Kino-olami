@@ -6,9 +6,11 @@ import SearchModalGenre from '../SearchModalGenre/SearchModalGenre';
 import SearchModalResults from '../SearchModalResults/SearchModalResults';
 import SearchModalTavsiya from '../SearchModalTavsiya/SearchModalTavsiya';
 import KinoLogo from '../KinoLogo';
+import useNativeMenuSwipe from '../../hooks/useNativeMenuSwipe';
 import './EmbedLayout.css';
 
 export default function EmbedLayout() {
+  useNativeMenuSwipe();
   const { t, i18n } = useTranslation();
   const { pathname, state } = useLocation();
   const navigate = useNavigate();
