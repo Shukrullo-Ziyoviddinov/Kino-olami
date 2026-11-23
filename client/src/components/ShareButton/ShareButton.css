@@ -50,11 +50,6 @@
   padding: 24px;
 }
 
-/* The host navbar sits outside the iframe, above its bottom edge. */
-.share-modal-overlay--moviy-frame {
-  padding-bottom: calc(78px + env(safe-area-inset-bottom, 0px));
-}
-
 .share-modal-content {
   background: var(--bg-card);
   border: 1px solid rgba(70, 65, 80, 0.5);

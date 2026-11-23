@@ -85,12 +85,20 @@ const ShareButton = ({ movie }) => {
 
   useEffect(() => {
     if (!isOpen) return;
+    const isEmbedFrame = window.self !== window.parent &&
+      document.documentElement.dataset.kinoLayout === 'embed';
+    if (isEmbedFrame) {
+      window.parent.postMessage({ type: 'kino-olami:share-modal', open: true }, '*');
+    }
     document.body.style.overflow = 'hidden';
     const onKey = (e) => {
       if (e.key === 'Escape') closeModal();
     };
     window.addEventListener('keydown', onKey);
     return () => {
+      if (isEmbedFrame) {
+        window.parent.postMessage({ type: 'kino-olami:share-modal', open: false }, '*');
+      }
       document.body.style.overflow = '';
       window.removeEventListener('keydown', onKey);
     };
@@ -224,13 +232,7 @@ const ShareButton = ({ movie }) => {
       {isOpen
         ? createPortal(
             <div
-              className={[
-                'share-modal-overlay',
-                !isMobileView && 'share-modal-overlay--desktop',
-                isMobileView && window.self !== window.parent &&
-                  document.documentElement.dataset.kinoLayout === 'embed' &&
-                  'share-modal-overlay--moviy-frame',
-              ].filter(Boolean).join(' ')}
+              className={`share-modal-overlay${isMobileView ? '' : ' share-modal-overlay--desktop'}`}
               onClick={handleOverlayClick}
             >
               <div
