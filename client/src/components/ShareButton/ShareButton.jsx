@@ -224,7 +224,13 @@ const ShareButton = ({ movie }) => {
       {isOpen
         ? createPortal(
             <div
-              className={`share-modal-overlay${isMobileView ? '' : ' share-modal-overlay--desktop'}`}
+              className={[
+                'share-modal-overlay',
+                !isMobileView && 'share-modal-overlay--desktop',
+                isMobileView && window.self !== window.parent &&
+                  document.documentElement.dataset.kinoLayout === 'embed' &&
+                  'share-modal-overlay--moviy-frame',
+              ].filter(Boolean).join(' ')}
               onClick={handleOverlayClick}
             >
               <div
