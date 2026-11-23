@@ -129,7 +129,7 @@ export default function EmbedLayout() {
         <div className="embed-mobile-search-overlay" onClick={closeSearch}>
           <div className="navbar-mobile-search-box embed-mobile-search-box" onClick={(event) => event.stopPropagation()}>
             <div className="navbar-mobile-search-form-row">
-              <button type="button" className="navbar-mobile-search-back" onClick={closeSearch} aria-label={backLabel}>←</button>
+              <button type="button" className="navbar-mobile-search-back" onClick={closeSearch} aria-label={backLabel}>&lt;</button>
               <div className="navbar-mobile-search-form">
                 <div className="navbar-mobile-search-input-wrap">
                   <input
