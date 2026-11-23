@@ -20,6 +20,7 @@ export default function EmbedLayout() {
   const backLabel = i18n.resolvedLanguage === 'ru' ? 'Назад' : 'Orqaga';
   const searchLabel = t('navbar.search');
   const isHome = pathname === '/';
+  const isMovieDetail = Boolean(matchPath('/movie/:id', pathname));
   const isSection = Boolean(matchPath('/recommended', pathname) || matchPath('/category/:categoryId', pathname));
   const canGoBack = window.history.state?.idx > 0;
   const searchOpen = (isHome || isSection) && params.has('q');
@@ -81,6 +82,8 @@ export default function EmbedLayout() {
       </>
     );
   }
+
+  if (isMovieDetail) return null;
 
   return (
     <>
