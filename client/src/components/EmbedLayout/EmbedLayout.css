@@ -159,6 +159,7 @@ html[data-kino-layout='embed'] {
   .embed-desktop-search {
     display: block;
     position: relative;
+    left: -27px;
     grid-column: 2;
     width: min(720px, 100%);
     margin-inline: auto;
