@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 import { useContentLanguage } from '../../context/ContentLanguageContext';
 import { getShareUrl } from '../../config/api';
+import useEmbedModalLayer from '../../hooks/useEmbedModalLayer';
 import './ShareButton.css';
 
 const MOBILE_BREAKPOINT = 768;
@@ -82,23 +83,16 @@ const ShareButton = ({ movie }) => {
   ];
 
   const closeModal = () => setIsOpen(false);
+  useEmbedModalLayer(isOpen);
 
   useEffect(() => {
     if (!isOpen) return;
-    const isEmbedFrame = window.self !== window.parent &&
-      document.documentElement.dataset.kinoLayout === 'embed';
-    if (isEmbedFrame) {
-      window.parent.postMessage({ type: 'kino-olami:share-modal', open: true }, '*');
-    }
     document.body.style.overflow = 'hidden';
     const onKey = (e) => {
       if (e.key === 'Escape') closeModal();
     };
     window.addEventListener('keydown', onKey);
     return () => {
-      if (isEmbedFrame) {
-        window.parent.postMessage({ type: 'kino-olami:share-modal', open: false }, '*');
-      }
       document.body.style.overflow = '';
       window.removeEventListener('keydown', onKey);
     };

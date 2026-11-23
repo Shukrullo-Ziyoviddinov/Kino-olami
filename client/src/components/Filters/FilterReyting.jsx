@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
+import useEmbedModalLayer from '../../hooks/useEmbedModalLayer';
 import './FilterReyting.css';
 
 const RATING_FIELD = 'ratingImdb';
@@ -12,6 +13,7 @@ const FilterReyting = ({
 }) => {
   const { t } = useTranslation();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  useEmbedModalLayer(isModalOpen);
   const [touchStart, setTouchStart] = useState(null);
   const [touchEnd, setTouchEnd] = useState(null);
   const [isDraggingModal, setIsDraggingModal] = useState(false);
