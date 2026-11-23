@@ -11,8 +11,18 @@ export default function useNativeMenuSwipe() {
   useEffect(() => {
     if (!window.ReactNativeWebView) return undefined;
     let start = null;
+    let dragging = false;
 
-    const cancel = () => { start = null; };
+    const send = (phase, dx = 0) => {
+      window.ReactNativeWebView.postMessage(JSON.stringify({
+        type: 'kino-olami:menu-swipe', phase, dx,
+      }));
+    };
+    const cancel = () => {
+      if (dragging) send('cancel');
+      dragging = false;
+      start = null;
+    };
     const onStart = (event) => {
       cancel();
       const touch = event.touches[0];
@@ -22,27 +32,35 @@ export default function useNativeMenuSwipe() {
     };
     const onMove = (event) => {
       if (!start) return;
+      if (event.touches.length !== 1) {
+        cancel();
+        return;
+      }
       const touch = event.touches[0];
-      if (event.touches.length !== 1 ||
-          (Math.abs(touch.clientY - start.y) > 12 &&
-           Math.abs(touch.clientY - start.y) >= Math.abs(touch.clientX - start.x))) cancel();
-    };
-    const onEnd = (event) => {
-      if (!start) return;
-      const touch = event.changedTouches[0];
       const dx = touch.clientX - start.x;
       const dy = Math.abs(touch.clientY - start.y);
-      cancel();
-      if (dx >= 56 && dx > dy * 1.5) {
-        window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'kino-olami:open-menu' }));
+      if (!dragging && dy > 12 && dy >= Math.abs(dx)) {
+        cancel();
+        return;
       }
+      if (!dragging && dx > 14 && dx > dy * 1.5) dragging = true;
+      if (dragging) {
+        if (event.cancelable) event.preventDefault();
+        send('move', Math.max(0, dx));
+      }
+    };
+    const onEnd = (event) => {
+      if (start && dragging) send('end', Math.max(0, event.changedTouches[0].clientX - start.x));
+      start = null;
+      dragging = false;
     };
 
     document.addEventListener('touchstart', onStart, { passive: true, capture: true });
-    document.addEventListener('touchmove', onMove, { passive: true, capture: true });
+    document.addEventListener('touchmove', onMove, { passive: false, capture: true });
     document.addEventListener('touchend', onEnd, { passive: true, capture: true });
     document.addEventListener('touchcancel', cancel, { passive: true, capture: true });
     return () => {
+      cancel();
       document.removeEventListener('touchstart', onStart, true);
       document.removeEventListener('touchmove', onMove, true);
       document.removeEventListener('touchend', onEnd, true);
