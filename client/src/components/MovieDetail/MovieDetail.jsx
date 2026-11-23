@@ -716,6 +716,18 @@ const MovieDetail = () => {
           <div className="movie-detail-content">
           <div className="movie-detail-image-block">
             <div className="movie-detail-image">
+              {document.documentElement.dataset.kinoLayout === 'embed' && (
+                <button
+                  type="button"
+                  className="movie-detail-embed-back"
+                  aria-label={i18n.resolvedLanguage === 'ru' ? 'Назад' : 'Orqaga'}
+                  onClick={() => window.history.state?.idx > 0 ? navigate(-1) : navigate('/', { replace: true })}
+                >
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="m15 18-6-6 6-6" />
+                  </svg>
+                </button>
+              )}
               {movieMediaImg ? (
                 <MovieDetailMediaImage src={movieMediaImg} alt={getMovieTitle()} />
               ) : (

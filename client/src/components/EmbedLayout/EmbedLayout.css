@@ -75,12 +75,32 @@ html[data-kino-layout='embed'] {
 
 .embed-desktop-search,
 .embed-mobile-search-overlay,
-.embed-section-mobile-header {
+.embed-section-mobile-header,
+.movie-detail-embed-back {
   display: none;
 }
 
 
 @media (max-width: 768px) {
+  .movie-detail-embed-back {
+    position: absolute;
+    z-index: 5;
+    inset: 10px auto auto 10px;
+    display: grid;
+    width: 44px;
+    height: 44px;
+    place-items: center;
+    border: 0;
+    background: transparent;
+    color: #fff;
+    filter: drop-shadow(0 1px 3px #000);
+    cursor: pointer;
+  }
+
+  .movie-detail-embed-back:focus-visible {
+    outline: 2px solid #fff;
+  }
+
   .embed-catalog-header.embed-catalog-toolbar {
     padding-block: 6px;
   }
