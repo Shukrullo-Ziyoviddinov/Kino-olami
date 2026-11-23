@@ -32,6 +32,12 @@ html[data-kino-layout='embed'] {
   padding-top: 2rem;
 }
 
+@media (width < 1032px) {
+  [data-kino-layout='embed'] .movie-detail-bg-block {
+    padding-top: 0;
+  }
+}
+
 [data-kino-layout='embed'] .movies-item-image-wrapper,
 [data-kino-layout='embed'] .search-modal-results-item-image-wrapper {
   background-color: var(--bg-card);
