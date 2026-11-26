@@ -28,6 +28,11 @@ html[data-kino-layout='embed'] {
   margin-top: 0;
 }
 
+[data-kino-layout='embed'] .actors-page {
+  margin-top: 1rem;
+  min-height: calc(100vh - 200px);
+}
+
 [data-kino-layout='embed'] .movie-detail-bg-block {
   padding-top: 2rem;
 }
