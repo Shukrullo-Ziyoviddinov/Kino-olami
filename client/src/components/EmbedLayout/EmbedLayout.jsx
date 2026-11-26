@@ -23,6 +23,7 @@ export default function EmbedLayout() {
   const searchLabel = t('navbar.search');
   const isHome = pathname === '/';
   const isMovieDetail = Boolean(matchPath('/movie/:id', pathname));
+  const isActorPage = Boolean(matchPath('/actor/:id', pathname));
   const isSection = Boolean(matchPath('/recommended', pathname) || matchPath('/category/:categoryId', pathname));
   const canGoBack = window.history.state?.idx > 0;
   const searchOpen = (isHome || isSection) && params.has('q');
@@ -128,7 +129,7 @@ export default function EmbedLayout() {
           </button>
         </header>
       )}
-      {!isHome && (
+      {!isHome && !isActorPage && (
         <>
           {canGoBack && (
             <header className={`embed-catalog-header${isSection ? ' embed-section-desktop-header' : ''}`}>
