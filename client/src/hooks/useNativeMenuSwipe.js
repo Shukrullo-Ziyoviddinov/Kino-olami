@@ -12,17 +12,21 @@ export default function useNativeMenuSwipe() {
     if (!window.ReactNativeWebView) return undefined;
     let start = null;
     let dragging = false;
+    let lastDistance = 0;
 
     const send = (phase, dx = 0) => {
       window.ReactNativeWebView.postMessage(JSON.stringify({
         type: 'kino-olami:menu-swipe', phase, dx,
       }));
     };
-    const cancel = () => {
-      if (dragging) send('cancel');
+    const finish = (phase, dx = 0) => {
+      if (dragging) send(phase, dx);
       dragging = false;
       start = null;
+      lastDistance = 0;
     };
+    const cancel = () => finish('cancel');
+    const onTouchCancel = () => finish('end', lastDistance);
     const onStart = (event) => {
       cancel();
       const touch = event.touches[0];
@@ -46,25 +50,25 @@ export default function useNativeMenuSwipe() {
       if (!dragging && dx > 14 && dx > dy * 1.5) dragging = true;
       if (dragging) {
         if (event.cancelable) event.preventDefault();
-        send('move', Math.max(0, dx));
+        lastDistance = Math.max(0, dx);
+        send('move', lastDistance);
       }
     };
     const onEnd = (event) => {
-      if (start && dragging) send('end', Math.max(0, event.changedTouches[0].clientX - start.x));
-      start = null;
-      dragging = false;
+      const touch = event.changedTouches[0];
+      finish('end', start && touch ? Math.max(0, touch.clientX - start.x) : lastDistance);
     };
 
     document.addEventListener('touchstart', onStart, { passive: true, capture: true });
     document.addEventListener('touchmove', onMove, { passive: false, capture: true });
     document.addEventListener('touchend', onEnd, { passive: true, capture: true });
-    document.addEventListener('touchcancel', cancel, { passive: true, capture: true });
+    document.addEventListener('touchcancel', onTouchCancel, { passive: true, capture: true });
     return () => {
       cancel();
       document.removeEventListener('touchstart', onStart, true);
       document.removeEventListener('touchmove', onMove, true);
       document.removeEventListener('touchend', onEnd, true);
-      document.removeEventListener('touchcancel', cancel, true);
+      document.removeEventListener('touchcancel', onTouchCancel, true);
     };
   }, []);
 }
