@@ -13,10 +13,13 @@ const parseJsonSafe = async (res) => {
   }
 };
 
-const request = async (path, payload) => {
+const request = async (path, payload, token) => {
   const response = await fetch(toUrl(path), {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
     body: JSON.stringify(payload),
   });
   const json = await parseJsonSafe(response);
@@ -31,6 +34,8 @@ const request = async (path, payload) => {
 
   return json?.data;
 };
+
+export const linkMoviyAccount = (payload, token) => request('/api/auth/moviy/link', payload, token);
 
 export const registerUser = async (payload) => {
   try {

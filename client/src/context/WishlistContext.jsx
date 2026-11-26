@@ -27,9 +27,9 @@ export const WishlistProvider = ({ children }) => {
 
       try {
         const serverWishlist = await fetchWishlist();
-        if (isMounted) setWishlistIds(serverWishlist.map((item) => toId(item)).filter((item) => item !== null));
+        if (isMounted && getAuthToken() === token) setWishlistIds(serverWishlist.map((item) => toId(item)).filter((item) => item !== null));
       } catch (_error) {
-        if (isMounted) setWishlistIds([]);
+        if (isMounted && getAuthToken() === token) setWishlistIds([]);
       }
     };
 
@@ -67,7 +67,7 @@ export const WishlistProvider = ({ children }) => {
     try {
       await addWishlist(id);
     } catch (_error) {
-      if (shouldRollback) {
+      if (shouldRollback && getAuthToken() === token) {
         setWishlistIds((prev) => prev.filter((item) => item !== id));
       }
     }
@@ -92,7 +92,7 @@ export const WishlistProvider = ({ children }) => {
     try {
       await removeWishlist(id);
     } catch (_error) {
-      if (removed) {
+      if (removed && getAuthToken() === token) {
         setWishlistIds((prev) => (prev.includes(id) ? prev : [...prev, id]));
       }
     }

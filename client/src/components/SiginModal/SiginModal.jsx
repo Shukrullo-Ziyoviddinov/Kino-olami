@@ -1,12 +1,14 @@
 import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { registerUser, loginUser } from '../../api/authApi';
-import { saveAuthSession } from '../../utils/authStorage';
+import { registerUser, loginUser, linkMoviyAccount } from '../../api/authApi';
+import { getAuthToken, saveAuthSession, setMoviySession } from '../../utils/authStorage';
 import { useToast } from '../../context/ToastContext';
+import useEmbedModalLayer from '../../hooks/useEmbedModalLayer';
 import KinoLogo from '../KinoLogo';
 import './SiginModal.css';
 
-const SiginModal = ({ onClose, onSuccess }) => {
+const SiginModal = ({ onClose, onSuccess, linkAccount = false }) => {
+  useEmbedModalLayer(linkAccount);
   const { t } = useTranslation();
   const { showToast } = useToast();
   const [mode, setMode] = useState('register');
@@ -22,7 +24,8 @@ const SiginModal = ({ onClose, onSuccess }) => {
   const [showRegisterPassword, setShowRegisterPassword] = useState(false);
   const [showLoginPassword, setShowLoginPassword] = useState(false);
 
-  const isRegister = mode === 'register';
+  const isRegister = !linkAccount && mode === 'register';
+  const linkLabel = t('wishlist.linkAccount', 'Kino Olami hisobini bog‘lash');
 
   const registerValidation = useMemo(
     () => ({
@@ -99,11 +102,18 @@ const SiginModal = ({ onClose, onSuccess }) => {
 
     setLoading(true);
     try {
-      const result = await loginUser({
+      const payload = {
         phone: loginForm.phone.trim(),
         password: loginForm.password.trim(),
-      });
-      saveAuthSession(result);
+      };
+      if (linkAccount) {
+        const token = getAuthToken();
+        const result = await linkMoviyAccount(payload, token);
+        if (getAuthToken() !== token) return;
+        setMoviySession(result.token);
+      } else {
+        saveAuthSession(await loginUser(payload));
+      }
       showToast(t('auth.loginSuccess'), 'success');
       onSuccess?.();
     } catch (error) {
@@ -138,9 +148,9 @@ const SiginModal = ({ onClose, onSuccess }) => {
             </svg>
           </button>
         </div>
-        <h3 className="sigin-modal-title">{t('auth.register')}</h3>
+        <h3 className="sigin-modal-title">{linkAccount ? linkLabel : t('auth.register')}</h3>
 
-        <div className="sigin-modal-switch">
+        {!linkAccount && <div className="sigin-modal-switch">
           <button
             type="button"
             className={`sigin-modal-switch-btn ${isRegister ? 'active' : ''}`}
@@ -155,7 +165,7 @@ const SiginModal = ({ onClose, onSuccess }) => {
           >
             {t('auth.login')}
           </button>
-        </div>
+        </div>}
 
         {isRegister ? (
           <form className="sigin-modal-form" onSubmit={handleSubmitRegister}>

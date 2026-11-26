@@ -1,4 +1,5 @@
 const { success } = require("../utils/apiResponse");
+const User = require("../models/User");
 const MovieComment = require("../models/movieComment");
 const { registerMovieView, toMovieId } = require("../utils/movieViews");
 const toReaction = (value) => (value === "like" || value === "dislike" ? value : null);
@@ -69,13 +70,10 @@ const addWishlistItem = async (req, res, next) => {
       throw error;
     }
 
-    const current = Array.isArray(req.user.wishlist) ? req.user.wishlist : [];
-    if (!current.includes(movieId)) {
-      req.user.wishlist = [...current, movieId];
-      await req.user.save();
-    }
-
-    return success(res, { wishlist: req.user.wishlist }, "Wishlistga qo'shildi.");
+    const user = await User.findByIdAndUpdate(req.user._id, {
+      $addToSet: { wishlist: movieId },
+    }, { returnDocument: "after" });
+    return success(res, { wishlist: user?.wishlist || [] }, "Wishlistga qo'shildi.");
   } catch (error) {
     return next(error);
   }
@@ -90,11 +88,10 @@ const removeWishlistItem = async (req, res, next) => {
       throw error;
     }
 
-    const current = Array.isArray(req.user.wishlist) ? req.user.wishlist : [];
-    req.user.wishlist = current.filter((id) => id !== movieId);
-    await req.user.save();
-
-    return success(res, { wishlist: req.user.wishlist }, "Wishlistdan olib tashlandi.");
+    const user = await User.findByIdAndUpdate(req.user._id, {
+      $pull: { wishlist: movieId },
+    }, { returnDocument: "after" });
+    return success(res, { wishlist: user?.wishlist || [] }, "Wishlistdan olib tashlandi.");
   } catch (error) {
     return next(error);
   }

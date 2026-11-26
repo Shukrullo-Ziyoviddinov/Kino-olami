@@ -72,6 +72,15 @@
   margin-top: 1rem;
 }
 
+.wishlist-account-action {
+  display: block;
+  margin: 0 auto 1rem;
+}
+
+.wishlist-empty .wishlist-account-action {
+  margin: 0.75rem 0 0;
+}
+
 @media (max-width: 720px) {
   .wishlist-page {
   padding: 2rem 0;

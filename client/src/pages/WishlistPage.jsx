@@ -1,9 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, useSyncExternalStore } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useWishlist } from '../context/WishlistContext';
 import { useMoviesCatalog } from '../context/MoviesCatalogContext';
 import Movies from '../components/Movies/Movies';
+import SiginModal from '../components/SiginModal/SiginModal';
+import { fetchMovieById } from '../api/moviesApi';
+import { isAuthenticated, subscribeToAuthSession } from '../utils/authStorage';
+import { sendMoviyMessage, usesMoviySession } from '../utils/moviyBridge';
 import './WishlistPage.css';
 
 const WishlistPage = () => {
@@ -11,15 +15,48 @@ const WishlistPage = () => {
   const { t } = useTranslation();
   const { wishlistIds } = useWishlist();
   const { allMovies, isLoading: wishlistLoading, ensureFullCatalog } = useMoviesCatalog();
+  const [linking, setLinking] = useState(false);
+  const [extraMovies, setExtraMovies] = useState({ key: '', movies: [] });
+  const authenticated = useSyncExternalStore(subscribeToAuthSession, isAuthenticated);
 
   useEffect(() => {
     ensureFullCatalog();
   }, [ensureFullCatalog]);
 
-  const wishlistMovies = allMovies.filter((m) => wishlistIds.includes(m.id));
-  const isEmpty = wishlistMovies.length === 0;
+  const byId = new Map(allMovies.map((movie) => [Number(movie.id), movie]));
+  const missingKey = wishlistIds.filter((id) => !byId.has(id)).join(',');
+  useEffect(() => {
+    if (wishlistLoading || !missingKey) return undefined;
+    let active = true;
+    Promise.allSettled(missingKey.split(',').map(fetchMovieById)).then((results) => {
+      if (!active) return;
+      const movies = results.flatMap((result) => result.status === 'fulfilled' && result.value ? [result.value] : []);
+      setExtraMovies({ key: missingKey, movies });
+    });
+    return () => { active = false; };
+  }, [missingKey, wishlistLoading]);
 
-  if (wishlistLoading) {
+  for (const movie of extraMovies.key === missingKey ? extraMovies.movies : []) {
+    byId.set(Number(movie.id), movie);
+  }
+  const wishlistMovies = wishlistIds.map((id) => byId.get(id)).filter(Boolean);
+  const isEmpty = wishlistMovies.length === 0;
+  const accountAction = usesMoviySession && (
+    <button className="wishlist-empty-btn wishlist-account-action" type="button" onClick={() => {
+      if (authenticated) setLinking(true);
+      else sendMoviyMessage({ type: 'kino-olami:login-required' });
+    }}>
+      {authenticated ? t('wishlist.linkAccount', 'Kino Olami hisobini bog‘lash') : t('auth.login')}
+    </button>
+  );
+  const linkModal = linking && authenticated && (
+    <SiginModal linkAccount onClose={() => setLinking(false)} onSuccess={() => {
+      setLinking(false);
+      sendMoviyMessage({ type: 'kino-olami:linked' });
+    }} />
+  );
+
+  if (wishlistLoading || (missingKey && extraMovies.key !== missingKey)) {
     return (
       <div className="wishlist-page">
         <Movies
@@ -36,6 +73,7 @@ const WishlistPage = () => {
   if (isEmpty) {
     return (
       <div className="wishlist-page wishlist-page--empty">
+        {linkModal}
         <div className="wishlist-empty">
           <div className="wishlist-empty-img" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -51,6 +89,7 @@ const WishlistPage = () => {
           >
             {t('wishlist.goToHome')}
           </button>
+          {accountAction}
         </div>
       </div>
     );
@@ -58,6 +97,8 @@ const WishlistPage = () => {
 
   return (
     <div className="wishlist-page">
+      {linkModal}
+      {accountAction}
       <Movies
         sectionType="wishlist"
         limit={null}

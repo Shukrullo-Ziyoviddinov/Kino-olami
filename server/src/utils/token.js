@@ -8,8 +8,8 @@ const getJwtSecret = () => {
   return secret;
 };
 
-const createToken = (payload) => {
-  return jwt.sign(payload, getJwtSecret(), { expiresIn: "7d" });
+const createToken = (payload, expiresIn = "7d") => {
+  return jwt.sign(payload, getJwtSecret(), { expiresIn });
 };
 
 const verifyToken = (token) => {

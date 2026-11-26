@@ -1,6 +1,7 @@
 import { BASE_URL } from '../config/api';
 import { createApiError, normalizeApiError } from '../utils/errorHandler';
 import { clearAuthSession, getAuthToken } from '../utils/authStorage';
+import { sendMoviyMessage } from '../utils/moviyBridge';
 
 const getBase = () => BASE_URL.replace(/\/$/, '');
 const toUrl = (path) => `${getBase()}${path.startsWith('/') ? path : `/${path}`}`;
@@ -13,25 +14,26 @@ const parseJsonSafe = async (res) => {
   }
 };
 
-const authHeaders = () => ({
-  'Content-Type': 'application/json',
-  Authorization: `Bearer ${getAuthToken()}`,
-});
-
 const hasToken = () => Boolean(getAuthToken());
-const handleUnauthorized = (response) => {
-  if (response?.status === 401) {
+const authFetch = async (url, options) => {
+  const token = getAuthToken();
+  const response = await fetch(url, { ...options, headers: {
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${token}`,
+  } });
+  if (response.status === 401 && token === getAuthToken()) {
     clearAuthSession();
+    sendMoviyMessage({ type: 'kino-olami:refresh-session' });
   }
+  return response;
 };
 
 export const fetchWishlist = async () => {
   try {
     if (!hasToken()) return [];
-    const response = await fetch(toUrl('/api/user/wishlist'), { headers: authHeaders() });
+    const response = await authFetch(toUrl('/api/user/wishlist'));
     const json = await parseJsonSafe(response);
     if (!response.ok || !(json?.success ?? json?.ok)) {
-      handleUnauthorized(response);
       throw createApiError(json?.message || `HTTP ${response.status}`, response.status, json);
     }
     return Array.isArray(json?.data?.wishlist) ? json.data.wishlist : [];
@@ -43,10 +45,9 @@ export const fetchWishlist = async () => {
 export const fetchUserProfile = async () => {
   try {
     if (!hasToken()) return null;
-    const response = await fetch(toUrl('/api/user/profile'), { headers: authHeaders() });
+    const response = await authFetch(toUrl('/api/user/profile'));
     const json = await parseJsonSafe(response);
     if (!response.ok || !(json?.success ?? json?.ok)) {
-      handleUnauthorized(response);
       throw createApiError(json?.message || `HTTP ${response.status}`, response.status, json);
     }
     return json?.data || null;
@@ -58,14 +59,12 @@ export const fetchUserProfile = async () => {
 export const updateUserProfile = async ({ firstName, lastName, avatar }) => {
   try {
     if (!hasToken()) throw createApiError('Unauthorized', 401);
-    const response = await fetch(toUrl('/api/user/profile'), {
+    const response = await authFetch(toUrl('/api/user/profile'), {
       method: 'PUT',
-      headers: authHeaders(),
       body: JSON.stringify({ firstName, lastName, avatar }),
     });
     const json = await parseJsonSafe(response);
     if (!response.ok || !(json?.success ?? json?.ok)) {
-      handleUnauthorized(response);
       throw createApiError(json?.message || `HTTP ${response.status}`, response.status, json);
     }
     return json?.data || null;
@@ -77,14 +76,12 @@ export const updateUserProfile = async ({ firstName, lastName, avatar }) => {
 export const addWishlist = async (movieId) => {
   try {
     if (!hasToken()) throw createApiError('Unauthorized', 401);
-    const response = await fetch(toUrl('/api/user/wishlist'), {
+    const response = await authFetch(toUrl('/api/user/wishlist'), {
       method: 'POST',
-      headers: authHeaders(),
       body: JSON.stringify({ movieId }),
     });
     const json = await parseJsonSafe(response);
     if (!response.ok || !(json?.success ?? json?.ok)) {
-      handleUnauthorized(response);
       throw createApiError(json?.message || `HTTP ${response.status}`, response.status, json);
     }
     return Array.isArray(json?.data?.wishlist) ? json.data.wishlist : [];
@@ -96,13 +93,11 @@ export const addWishlist = async (movieId) => {
 export const removeWishlist = async (movieId) => {
   try {
     if (!hasToken()) throw createApiError('Unauthorized', 401);
-    const response = await fetch(toUrl(`/api/user/wishlist/${movieId}`), {
+    const response = await authFetch(toUrl(`/api/user/wishlist/${movieId}`), {
       method: 'DELETE',
-      headers: authHeaders(),
     });
     const json = await parseJsonSafe(response);
     if (!response.ok || !(json?.success ?? json?.ok)) {
-      handleUnauthorized(response);
       throw createApiError(json?.message || `HTTP ${response.status}`, response.status, json);
     }
     return Array.isArray(json?.data?.wishlist) ? json.data.wishlist : [];
@@ -114,10 +109,9 @@ export const removeWishlist = async (movieId) => {
 export const fetchMovieReaction = async (movieId) => {
   try {
     if (!hasToken()) return null;
-    const response = await fetch(toUrl(`/api/user/reactions/movie/${movieId}`), { headers: authHeaders() });
+    const response = await authFetch(toUrl(`/api/user/reactions/movie/${movieId}`));
     const json = await parseJsonSafe(response);
     if (!response.ok || !(json?.success ?? json?.ok)) {
-      handleUnauthorized(response);
       throw createApiError(json?.message || `HTTP ${response.status}`, response.status, json);
     }
     return json?.data?.reaction || null;
@@ -129,14 +123,12 @@ export const fetchMovieReaction = async (movieId) => {
 export const setMovieReaction = async (movieId, reaction) => {
   try {
     if (!hasToken()) throw createApiError('Unauthorized', 401);
-    const response = await fetch(toUrl('/api/user/reactions/movie'), {
+    const response = await authFetch(toUrl('/api/user/reactions/movie'), {
       method: 'POST',
-      headers: authHeaders(),
       body: JSON.stringify({ movieId, reaction }),
     });
     const json = await parseJsonSafe(response);
     if (!response.ok || !(json?.success ?? json?.ok)) {
-      handleUnauthorized(response);
       throw createApiError(json?.message || `HTTP ${response.status}`, response.status, json);
     }
     return json?.data?.reaction || null;
@@ -148,13 +140,11 @@ export const setMovieReaction = async (movieId, reaction) => {
 export const removeMovieReaction = async (movieId) => {
   try {
     if (!hasToken()) throw createApiError('Unauthorized', 401);
-    const response = await fetch(toUrl(`/api/user/reactions/movie/${movieId}`), {
+    const response = await authFetch(toUrl(`/api/user/reactions/movie/${movieId}`), {
       method: 'DELETE',
-      headers: authHeaders(),
     });
     const json = await parseJsonSafe(response);
     if (!response.ok || !(json?.success ?? json?.ok)) {
-      handleUnauthorized(response);
       throw createApiError(json?.message || `HTTP ${response.status}`, response.status, json);
     }
     return null;
@@ -166,14 +156,12 @@ export const removeMovieReaction = async (movieId) => {
 export const addViewedMovie = async (movieId) => {
   try {
     if (!hasToken()) return [];
-    const response = await fetch(toUrl('/api/user/viewed-movies'), {
+    const response = await authFetch(toUrl('/api/user/viewed-movies'), {
       method: 'POST',
-      headers: authHeaders(),
       body: JSON.stringify({ movieId }),
     });
     const json = await parseJsonSafe(response);
     if (!response.ok || !(json?.success ?? json?.ok)) {
-      handleUnauthorized(response);
       throw createApiError(json?.message || `HTTP ${response.status}`, response.status, json);
     }
     return Array.isArray(json?.data?.viewedMovies) ? json.data.viewedMovies : [];

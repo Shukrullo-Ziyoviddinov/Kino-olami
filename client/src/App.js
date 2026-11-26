@@ -17,6 +17,8 @@ import { ToastProvider } from './context/ToastContext';
 import { AuthModalProvider } from './context/AuthModalContext';
 import TelegramBackButton from './components/TelegramBackButton/TelegramBackButton';
 import EmbedLayout from './components/EmbedLayout/EmbedLayout';
+import MoviySession from './components/EmbedLayout/MoviySession';
+import { usesMoviySession } from './utils/moviyBridge';
 import './App.css';
 
 const embedPath = '/embed';
@@ -98,6 +100,7 @@ function App() {
           <WishlistProvider>
           <ViewedMoviesProvider>
           <div className="App">
+            {usesMoviySession && <MoviySession />}
             {!isEmbed && <TelegramBackButton />}
             {isEmbed ? <EmbedLayout /> : <Navbar />}
             <main className="App-main">

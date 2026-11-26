@@ -120,6 +120,14 @@ html[data-kino-layout='embed'] {
 }
 
 @media (min-width: 769px) {
+  .embed-catalog-header.embed-catalog-toolbar:has(.embed-desktop-wishlist) {
+    grid-template-columns: auto minmax(0, 1fr) auto auto;
+  }
+
+  .embed-catalog-toolbar .embed-desktop-wishlist.embed-search-button {
+    grid-column: 4;
+  }
+
   .embed-catalog-header.embed-catalog-toolbar {
     padding-inline: var(--catalog-inline-inset);
   }
@@ -288,6 +296,10 @@ html[data-kino-layout='embed'] {
 }
 
 @media (max-width: 768px) {
+  .embed-catalog-toolbar .embed-desktop-wishlist.embed-search-button {
+    display: none;
+  }
+
   .embed-catalog-header.embed-section-wide-toolbar {
     display: none;
   }

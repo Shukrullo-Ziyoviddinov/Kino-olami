@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SiginModal from '../components/SiginModal/SiginModal';
+import { sendMoviyMessage, usesMoviySession } from '../utils/moviyBridge';
 
 const AuthModalContext = createContext(null);
 
@@ -12,6 +13,10 @@ export const AuthModalProvider = ({ children }) => {
   });
 
   const openAuthModal = ({ redirectToProfile = false } = {}) => {
+    if (usesMoviySession) {
+      sendMoviyMessage({ type: 'kino-olami:login-required' });
+      return;
+    }
     setAuthModalState({ open: true, redirectToProfile });
   };
 

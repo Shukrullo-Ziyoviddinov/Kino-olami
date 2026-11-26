@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import React, { useState, useEffect, useRef, useMemo, useSyncExternalStore } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { fetchMovieById } from '../../api/moviesApi';
@@ -15,7 +15,7 @@ import MostViewedMovies from '../MostViewedMovies/MostViewedMovies';
 import ScrollTouch from '../ScrollTouch/ScrollTouch';
 import ShareButton from '../ShareButton/ShareButton';
 import { formatActionCount } from '../../utils/utils';
-import { getAuthToken } from '../../utils/authStorage';
+import { getAuthToken, subscribeToAuthSession } from '../../utils/authStorage';
 import { useAuthModal } from '../../context/AuthModalContext';
 import { fetchMovieReaction, removeMovieReaction, setMovieReaction } from '../../api/userApi';
 import { getVideoEmbed, getYouTubeVideoId } from '../../utils/videoEmbed';
@@ -132,6 +132,7 @@ const MovieDetail = () => {
   const { t, i18n } = useTranslation();
   const { toggleWishlist, isInWishlist } = useWishlist();
   const { openAuthModal } = useAuthModal();
+  const authToken = useSyncExternalStore(subscribeToAuthSession, getAuthToken);
   const { detailLoading, setLoading } = useLoading();
   const [movie, setMovie] = useState(null);
   const [showWatchModal, setShowWatchModal] = useState(false);
@@ -271,8 +272,7 @@ const MovieDetail = () => {
       ? (parseInt(movie.dislike, 10) || 0)
       : 0;
 
-    const token = getAuthToken();
-    if (!token) {
+    if (!authToken) {
       setLikeCount(baseLikes);
       setDislikeCount(baseDislikes);
       setIsLiked(false);
@@ -300,7 +300,7 @@ const MovieDetail = () => {
 
     loadReaction();
     return () => { cancelled = true; };
-  }, [movie]);
+  }, [movie, authToken]);
 
   useEffect(() => {
     if (showDescriptionModal) {

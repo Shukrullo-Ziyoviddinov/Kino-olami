@@ -1,7 +1,10 @@
+import { usesMoviySession } from './moviyBridge';
+
 export const AUTH_TOKEN_KEY = 'violet_auth_token';
 export const PROFILE_STORAGE_KEY = 'violet_profile';
 const AUTH_SESSION_EVENT = 'auth-session-changed';
 let inMemoryToken = '';
+let moviyToken = '';
 
 const notifyAuthSessionChanged = () => {
   if (typeof window !== 'undefined') {
@@ -10,6 +13,7 @@ const notifyAuthSessionChanged = () => {
 };
 
 export const getAuthToken = () => {
+  if (usesMoviySession) return moviyToken;
   try {
     return localStorage.getItem(AUTH_TOKEN_KEY) || inMemoryToken;
   } catch {
@@ -18,6 +22,12 @@ export const getAuthToken = () => {
 };
 
 export const isAuthenticated = () => Boolean(getAuthToken());
+
+export const setMoviySession = (token) => {
+  if (!usesMoviySession || token === moviyToken) return;
+  moviyToken = typeof token === 'string' ? token : '';
+  notifyAuthSessionChanged();
+};
 
 export const saveAuthSession = ({ token, user }) => {
   if (token) {
@@ -48,6 +58,10 @@ export const saveAuthSession = ({ token, user }) => {
 };
 
 export const clearAuthSession = () => {
+  if (usesMoviySession) {
+    setMoviySession('');
+    return;
+  }
   inMemoryToken = '';
   try {
     localStorage.removeItem(AUTH_TOKEN_KEY);
@@ -58,3 +72,12 @@ export const clearAuthSession = () => {
 };
 
 export const AUTH_SESSION_CHANGED_EVENT = AUTH_SESSION_EVENT;
+
+export function subscribeToAuthSession(listener) {
+  window.addEventListener(AUTH_SESSION_EVENT, listener);
+  window.addEventListener('storage', listener);
+  return () => {
+    window.removeEventListener(AUTH_SESSION_EVENT, listener);
+    window.removeEventListener('storage', listener);
+  };
+}

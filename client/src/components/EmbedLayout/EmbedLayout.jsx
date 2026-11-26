@@ -7,6 +7,7 @@ import SearchModalResults from '../SearchModalResults/SearchModalResults';
 import SearchModalTavsiya from '../SearchModalTavsiya/SearchModalTavsiya';
 import KinoLogo from '../KinoLogo';
 import useNativeMenuSwipe from '../../hooks/useNativeMenuSwipe';
+import { usesMoviySession } from '../../utils/moviyBridge';
 import './EmbedLayout.css';
 
 export default function EmbedLayout() {
@@ -127,6 +128,14 @@ export default function EmbedLayout() {
               <path d="m16 16 4 4" />
             </svg>
           </button>
+          {usesMoviySession && (
+            <button className="embed-desktop-wishlist embed-search-button" type="button"
+              aria-label={t('navbar.favorites')} onClick={() => navigate('/wishlist')}>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78Z" />
+              </svg>
+            </button>
+          )}
         </header>
       )}
       {!isHome && !isActorPage && (

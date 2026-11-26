@@ -13,6 +13,7 @@ const authMiddleware = async (req, res, next) => {
     }
 
     const payload = verifyToken(token);
+    req.moviySubject = payload.moviySubject;
     const user = await User.findById(payload.userId);
 
     if (!user) {
