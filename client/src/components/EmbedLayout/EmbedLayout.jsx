@@ -23,11 +23,12 @@ export default function EmbedLayout() {
   const backLabel = i18n.resolvedLanguage === 'ru' ? 'Назад' : 'Orqaga';
   const searchLabel = t('navbar.search');
   const isHome = pathname === '/';
+  const isMoviyWishlist = usesMoviySession && Boolean(matchPath('/wishlist', pathname));
   const isMovieDetail = Boolean(matchPath('/movie/:id', pathname));
   const isActorPage = Boolean(matchPath('/actor/:id', pathname));
   const isSection = Boolean(matchPath('/recommended', pathname) || matchPath('/category/:categoryId', pathname));
   const canGoBack = window.history.state?.idx > 0;
-  const searchOpen = (isHome || isSection) && params.has('q');
+  const searchOpen = (isHome || isSection || isMoviyWishlist) && params.has('q');
 
   const closeSearch = useCallback(() => {
     if (state?.fromKinoSearchButton) {
@@ -73,7 +74,7 @@ export default function EmbedLayout() {
   }
 
   function renderSearchContent() {
-    // Section results navigate away from the modal URL themselves.
+    // Outside home, search results navigate away from the modal URL themselves.
     const closeOnSelect = isHome ? closeSearch : undefined;
     if (query.trim()) {
       return <SearchModalResults query={query.trim()} onMovieClick={closeOnSelect} />;
@@ -87,12 +88,13 @@ export default function EmbedLayout() {
     );
   }
 
-  if (isMovieDetail || (usesMoviySession && matchPath('/wishlist', pathname))) return null;
+  if (isMovieDetail) return null;
 
+  const toolbarClass = isSection ? ' embed-section-wide-toolbar' : isMoviyWishlist ? ' embed-wishlist-toolbar' : '';
   return (
     <>
-      {(isHome || isSection) && (
-        <header className={`embed-catalog-header embed-catalog-toolbar${isSection ? ' embed-section-wide-toolbar' : ''}`}>
+      {(isHome || isSection || isMoviyWishlist) && (
+        <header className={`embed-catalog-header embed-catalog-toolbar${toolbarClass}`}>
           <KinoLogo className="embed-kino-logo" />
           {searchOpen && (
             <div className="embed-desktop-search" role="search">
@@ -128,7 +130,7 @@ export default function EmbedLayout() {
               <path d="m16 16 4 4" />
             </svg>
           </button>
-          {usesMoviySession && (
+          {usesMoviySession && !isMoviyWishlist && (
             <button className="embed-desktop-wishlist embed-search-button" type="button"
               aria-label={t('navbar.favorites')} onClick={() => navigate('/wishlist')}>
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
@@ -138,7 +140,7 @@ export default function EmbedLayout() {
           )}
         </header>
       )}
-      {!isHome && !isActorPage && (
+      {!isHome && !isActorPage && !isMoviyWishlist && (
         <>
           {canGoBack && (
             <header className={`embed-catalog-header${isSection ? ' embed-section-desktop-header' : ''}`}>

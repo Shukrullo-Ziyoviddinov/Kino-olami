@@ -78,6 +78,11 @@ html[data-kino-layout='embed'] {
   pointer-events: auto;
 }
 
+.embed-wishlist-toolbar {
+  position: relative;
+  z-index: 25;
+}
+
 .embed-desktop-search,
 .embed-mobile-search-overlay,
 .embed-section-mobile-header,
