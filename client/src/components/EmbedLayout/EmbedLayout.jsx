@@ -87,7 +87,7 @@ export default function EmbedLayout() {
     );
   }
 
-  if (isMovieDetail) return null;
+  if (isMovieDetail || (usesMoviySession && matchPath('/wishlist', pathname))) return null;
 
   return (
     <>

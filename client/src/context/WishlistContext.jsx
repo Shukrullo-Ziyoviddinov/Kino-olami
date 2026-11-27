@@ -13,6 +13,7 @@ const toId = (movieOrId) => {
 
 export const WishlistProvider = ({ children }) => {
   const [wishlistIds, setWishlistIds] = useState([]);
+  const [linkStatus, setLinkStatus] = useState({ token: '', linked: null });
   const { openAuthModal } = useAuthModal();
 
   useEffect(() => {
@@ -26,8 +27,11 @@ export const WishlistProvider = ({ children }) => {
       }
 
       try {
-        const serverWishlist = await fetchWishlist();
-        if (isMounted && getAuthToken() === token) setWishlistIds(serverWishlist.map((item) => toId(item)).filter((item) => item !== null));
+        const { wishlist, moviyLinked } = await fetchWishlist();
+        if (isMounted && getAuthToken() === token) {
+          setWishlistIds(wishlist.map(toId).filter((item) => item !== null));
+          setLinkStatus({ token, linked: moviyLinked });
+        }
       } catch (_error) {
         if (isMounted && getAuthToken() === token) setWishlistIds([]);
       }
@@ -118,6 +122,7 @@ export const WishlistProvider = ({ children }) => {
     <WishlistContext.Provider
       value={{
         wishlistIds,
+        moviyLinked: linkStatus.token === getAuthToken() ? linkStatus.linked : null,
         addToWishlist,
         removeFromWishlist,
         toggleWishlist,

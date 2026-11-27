@@ -13,7 +13,7 @@ import './WishlistPage.css';
 const WishlistPage = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const { wishlistIds } = useWishlist();
+  const { wishlistIds, moviyLinked } = useWishlist();
   const { allMovies, isLoading: wishlistLoading, ensureFullCatalog } = useMoviesCatalog();
   const [linking, setLinking] = useState(false);
   const [extraMovies, setExtraMovies] = useState({ key: '', movies: [] });
@@ -41,7 +41,7 @@ const WishlistPage = () => {
   }
   const wishlistMovies = wishlistIds.map((id) => byId.get(id)).filter(Boolean);
   const isEmpty = wishlistMovies.length === 0;
-  const accountAction = usesMoviySession && (
+  const accountAction = usesMoviySession && (!authenticated || moviyLinked === false) && (
     <button className="wishlist-empty-btn wishlist-account-action" type="button" onClick={() => {
       if (authenticated) setLinking(true);
       else sendMoviyMessage({ type: 'kino-olami:login-required' });

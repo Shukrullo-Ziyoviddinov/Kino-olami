@@ -30,13 +30,16 @@ const authFetch = async (url, options) => {
 
 export const fetchWishlist = async () => {
   try {
-    if (!hasToken()) return [];
+    if (!hasToken()) return { wishlist: [], moviyLinked: null };
     const response = await authFetch(toUrl('/api/user/wishlist'));
     const json = await parseJsonSafe(response);
     if (!response.ok || !(json?.success ?? json?.ok)) {
       throw createApiError(json?.message || `HTTP ${response.status}`, response.status, json);
     }
-    return Array.isArray(json?.data?.wishlist) ? json.data.wishlist : [];
+    return {
+      wishlist: Array.isArray(json?.data?.wishlist) ? json.data.wishlist : [],
+      moviyLinked: typeof json?.data?.moviyLinked === 'boolean' ? json.data.moviyLinked : null,
+    };
   } catch (error) {
     throw normalizeApiError(error);
   }

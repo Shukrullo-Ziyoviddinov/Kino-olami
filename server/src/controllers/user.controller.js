@@ -55,7 +55,8 @@ const updateProfile = async (req, res, next) => {
 const getWishlist = async (req, res, next) => {
   try {
     const wishlist = Array.isArray(req.user.wishlist) ? req.user.wishlist : [];
-    return success(res, { wishlist }, "Wishlist olindi.");
+    const moviyLinked = req.moviySubject ? /^\d+$/.test(req.user.phone) : null;
+    return success(res, { wishlist, moviyLinked }, "Wishlist olindi.");
   } catch (error) {
     return next(error);
   }
