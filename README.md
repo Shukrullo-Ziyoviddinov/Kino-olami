@@ -2,7 +2,7 @@
 
 ## Google qidiruvi
 
-Express servisida `SITE_URL` qiymatiga saytning asosiy HTTPS manzilini kiriting. Standart qiymat `https://kino-olami.uz`. Client build Express orqali xizmat qilishi kerak. Frontend alohida hostingda bo‘lsa, bosh sahifa, `/movie/*`, `/robots.txt` va `/sitemap.xml` so‘rovlarini Express’ga yo‘naltiring.
+Express servisida `SITE_URL` qiymatiga saytning asosiy HTTPS manzilini kiriting. Standart qiymat `https://kino-olami.uz`. Express `/robots.txt` va `/sitemap.xml`ni client buildsiz ham beradi. Frontend alohida hostingda bo‘lsa, SPA fallback qoidasidan oldin shu ikki yo‘lni Express servisiga yo‘naltiring. Bosh sahifa va `/movie/*` uchun dastlabki SEO HTML’ni olish uchun Express servisiga client buildni ham joylang va bu yo‘llarni Express’ga yo‘naltiring.
 
 Deploydan keyin `/sitemap.xml`ni Google Search Console’ga yuboring va URL Inspection orqali mavjud kino sahifasini tekshiring.
 

@@ -74,12 +74,6 @@ function createSeoRoutes(indexPath) {
     throw new Error("SITE_URL must be an HTTP(S) origin");
   }
   const origin = siteUrl.origin;
-  const readIndex = async () => {
-    const html = await fs.readFile(indexPath, "utf8");
-    return html.replace("</head>", () =>
-      `<meta name="site-origin" content="${escape(origin)}" /></head>`);
-  };
-
   router.get("/robots.txt", (_req, res) => {
     res.type("text/plain").send(`User-agent: *\nAllow: /\nSitemap: ${origin}/sitemap.xml\n`);
   });
@@ -100,6 +94,14 @@ function createSeoRoutes(indexPath) {
       `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${entries.join("\n")}\n</urlset>`
     );
   });
+
+  if (!indexPath) return router;
+
+  const readIndex = async () => {
+    const html = await fs.readFile(indexPath, "utf8");
+    return html.replace("</head>", () =>
+      `<meta name="site-origin" content="${escape(origin)}" /></head>`);
+  };
 
   router.get("/", async (_req, res) => {
     const html = await readIndex();

@@ -99,8 +99,11 @@ const moviyFrameOrigins = (process.env.MOVIYAI_FRAME_ORIGINS || "")
     }
   });
 
-if (fs.existsSync(clientBuildPath)) {
-  app.use(createSeoRoutes(path.join(clientBuildPath, "index.html")));
+const clientIndexPath = path.join(clientBuildPath, "index.html");
+const hasClientBuild = fs.existsSync(clientIndexPath);
+app.use(createSeoRoutes(hasClientBuild ? clientIndexPath : null));
+
+if (hasClientBuild) {
   app.use(express.static(clientBuildPath, { index: false }));
   app.use((req, res, next) => {
     if (req.path.startsWith("/api")) {
@@ -115,7 +118,7 @@ if (fs.existsSync(clientBuildPath)) {
       res.set("Content-Security-Policy", `frame-ancestors ${ancestors}`);
       if (!moviyFrameOrigins.length) res.set("X-Frame-Options", "DENY");
     }
-    res.sendFile(path.join(clientBuildPath, "index.html"), (err) => {
+    res.sendFile(clientIndexPath, (err) => {
       if (err) next(err);
     });
   });
