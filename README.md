@@ -1,5 +1,11 @@
 ﻿# Kino-olami
 
+## Google qidiruvi
+
+Express servisida `SITE_URL` qiymatiga saytning asosiy HTTPS manzilini kiriting. Standart qiymat `https://kino-olami.uz`. Client build Express orqali xizmat qilishi kerak. Frontend alohida hostingda bo‘lsa, bosh sahifa, `/movie/*`, `/robots.txt` va `/sitemap.xml` so‘rovlarini Express’ga yo‘naltiring.
+
+Deploydan keyin `/sitemap.xml`ni Google Search Console’ga yuboring va URL Inspection orqali mavjud kino sahifasini tekshiring.
+
 ## MoviyAI
 
 MoviyAI orqali kirgan foydalanuvchi /embed ichida alohida Kino Olami ro‘yxatidan o‘tmaydi. MoviyAI API odatdagi Google yoki Telegram sessiyasini tekshiradi va Kino Olami API bilan serverdan serverga qisqa muddatli sessiya almashadi. Kino Olami sessiyasi freym yoki WebView xotirasida saqlanadi.

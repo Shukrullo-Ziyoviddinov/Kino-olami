@@ -315,19 +315,31 @@ const MovieDetail = () => {
 
   // SEO: title (movies.js), description, og:image, JSON-LD — Google uchun kuchaytirilgan
   useEffect(() => {
-    if (!movie) return;
+    if (!movie || window.location.pathname.startsWith('/embed/')) return;
     const lang = contentLang;
     // movies.js title.uz / title.ru — to'g'ri ishlatiladi
-    const pageTitle = movie.title?.[lang] || movie.title?.uz || movie.title?.ru || '';
+    const pageTitle = movie.title?.[lang] || movie.title?.uz || movie.title?.ru
+      || (typeof movie.title === 'string' ? movie.title : '');
     const descSource = movie.description?.[lang] || movie.description?.uz || movie.description?.ru || movie.description;
-    const pageDesc = typeof descSource === 'object' && descSource?.text ? descSource.text : (descSource || '');
-    const imgUrl = movie.titleImg?.[lang] || movie.titleImg?.uz || movie.titleImg?.ru
-      || movie.homeImg?.[lang] || movie.homeImg?.uz || movie.homeImg?.ru;
-    const fullImgUrl = imgUrl ? `${window.location.origin}${imgUrl}` : '';
-    const canonicalUrl = `${window.location.origin}/movie/${movie.id}`;
+    const descText = descSource?.text ?? descSource;
+    const pageDesc = typeof descText === 'string' ? descText : '';
+    const imgUrl = movie.homeImg?.[lang] || movie.homeImg?.uz || movie.homeImg?.ru
+      || movie.titleImg?.[lang] || movie.titleImg?.uz || movie.titleImg?.ru;
+    const origin = document.querySelector('meta[name="site-origin"]')?.content || window.location.origin;
+    let fullImgUrl = '';
+    if (imgUrl && imgUrl !== 'none') {
+      try {
+        const image = new URL(imgUrl, origin);
+        if (['http:', 'https:'].includes(image.protocol)) fullImgUrl = image.href;
+      } catch {
+        // Invalid media URLs should not be used in search metadata.
+      }
+    }
+    const canonicalUrl = `${origin}/movie/${movie.id}`;
     const genres = movie.genre?.[lang] || movie.genre?.uz || movie.genre?.ru || [];
     const keywords = Array.isArray(genres) ? genres.join(', ') : (genres || '');
 
+    const movieMeta = [];
     const setMeta = (name, content, isProperty = false) => {
       const attr = isProperty ? 'property' : 'name';
       let el = document.querySelector(`meta[${attr}="${name}"]`);
@@ -337,6 +349,7 @@ const MovieDetail = () => {
         document.head.appendChild(el);
       }
       el.setAttribute('content', content || '');
+      movieMeta.push(el);
     };
 
     const setLink = (rel, href) => {
@@ -350,7 +363,7 @@ const MovieDetail = () => {
     };
 
     // Title — movies.js title.uz / title.ru
-    document.title = pageTitle ? `${pageTitle} | Kinolar Olami - Filmlar onlayn` : 'Kinolar Olami - Filmlar onlayn';
+    document.title = pageTitle ? `${pageTitle} | Kinolar Olami` : 'Kinolar Olami - Filmlar onlayn';
     setMeta('description', pageDesc?.substring(0, 160) || '');
     setMeta('keywords', `${pageTitle}, ${keywords}, film, kino, online, Kinolar Olami`.trim());
 
@@ -373,17 +386,14 @@ const MovieDetail = () => {
     // Canonical URL
     setLink('canonical', canonicalUrl);
 
-    // JSON-LD — Google rich results (rejting, yil, aktyorlar)
-    const descData = movie.description?.[lang] || movie.description?.uz || movie.description?.ru;
-    const year = (typeof descData === 'object' && descData?.year) || movie.specs?.year;
+    // Film yoki serial uchun strukturali ma'lumot.
     const jsonLd = {
       '@context': 'https://schema.org',
-      '@type': 'Movie',
+      '@type': ['tvSeries', 'turkishSeries'].includes(movie.category) ? 'TVSeries' : 'Movie',
       name: pageTitle,
+      url: canonicalUrl,
       description: pageDesc?.substring(0, 200) || '',
-      image: fullImgUrl,
-      datePublished: year ? `${year}-01-01` : undefined,
-      ...(movie.ratingImdb && { aggregateRating: { '@type': 'AggregateRating', ratingValue: movie.ratingImdb, bestRating: 10, worstRating: 0 } }),
+      image: fullImgUrl || undefined,
       ...(Array.isArray(genres) && genres.length && { genre: genres })
     };
     let scriptEl = document.getElementById('movie-json-ld');
@@ -395,7 +405,13 @@ const MovieDetail = () => {
     document.head.appendChild(scriptEl);
 
     return () => {
-      document.title = 'Kinolar Olami - Filmlar onlayn';
+      document.title = 'Kinolar Olami - Filmlar va seriallar onlayn tomosha qilish platformasi';
+      movieMeta.forEach((element) => element.remove());
+      setMeta('description', "Kinolar Olami - Filmlar va seriallar onlayn. O'zbek va rus tillarida. Hollywood, O'zbek kino va boshqa janrlar.");
+      setMeta('og:type', 'website', true);
+      setMeta('og:site_name', 'Kinolar Olami', true);
+      document.querySelector('link[rel="canonical"]')?.remove();
+      if (window.location.pathname === '/') setLink('canonical', `${origin}/`);
       document.getElementById('movie-json-ld')?.remove();
     };
   }, [movie, contentLang]);

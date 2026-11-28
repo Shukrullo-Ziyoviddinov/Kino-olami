@@ -18,6 +18,7 @@ const authRoutes = require("./routes/auth.routes");
 const userRoutes = require("./routes/user.routes");
 const adminRoutes = require("./routes/adminRouts");
 const uploadRoutes = require("./routes/upload.routes");
+const createSeoRoutes = require("./routes/seoRoutes");
 const { success, fail } = require("./utils/apiResponse");
 const { notFoundHandler, errorHandler } = require("./middlewares/errorHandler");
 
@@ -99,6 +100,7 @@ const moviyFrameOrigins = (process.env.MOVIYAI_FRAME_ORIGINS || "")
   });
 
 if (fs.existsSync(clientBuildPath)) {
+  app.use(createSeoRoutes(path.join(clientBuildPath, "index.html")));
   app.use(express.static(clientBuildPath, { index: false }));
   app.use((req, res, next) => {
     if (req.path.startsWith("/api")) {
@@ -108,6 +110,7 @@ if (fs.existsSync(clientBuildPath)) {
       return next();
     }
     if (req.path === "/embed" || req.path.startsWith("/embed/")) {
+      res.set("X-Robots-Tag", "noindex");
       const ancestors = moviyFrameOrigins.length ? moviyFrameOrigins.join(" ") : "'none'";
       res.set("Content-Security-Policy", `frame-ancestors ${ancestors}`);
       if (!moviyFrameOrigins.length) res.set("X-Frame-Options", "DENY");

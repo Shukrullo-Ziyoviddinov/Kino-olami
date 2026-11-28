@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 import { useWishlist } from '../../context/WishlistContext';
 import { useContentLanguage } from '../../context/ContentLanguageContext';
 import { normalizeMediaUrl } from '../../utils/mediaUrl';
@@ -100,10 +101,14 @@ const MovieItem = ({
           </>
         )}
       </div>
-      {showLoading ? (
+      {isDataLoading ? (
         <LoaderSkeleton variant="text" className="movies-item-title-skeleton" width="85%" height={16} />
       ) : (
-        title && <p className="movies-item-title">{title}</p>
+        title && (
+          <p className="movies-item-title">
+            <Link to={`/movie/${movie.id}`} onClick={(event) => event.stopPropagation()}>{title}</Link>
+          </p>
+        )
       )}
     </div>
   );
